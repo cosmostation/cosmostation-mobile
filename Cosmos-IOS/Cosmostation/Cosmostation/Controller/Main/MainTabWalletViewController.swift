@@ -154,7 +154,7 @@ class MainTabWalletViewController: BaseViewController, UITableViewDelegate, UITa
             titleAlarmBtn.isHidden = true
         } else if (chainType! == ChainType.SIF_MAIN) {
             titleChainImg.image = UIImage(named: "chainsifchain")
-            titleChainName.text = "(Sifchain Mainnet)"
+            titleChainName.text = "(SifChain Mainnet)"
             titleAlarmBtn.isHidden = true
         } else if (chainType! == ChainType.KI_MAIN) {
             titleChainImg.image = UIImage(named: "chainKifoundation")

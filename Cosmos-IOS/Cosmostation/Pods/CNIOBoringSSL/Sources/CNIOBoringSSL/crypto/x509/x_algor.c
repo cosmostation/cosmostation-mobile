@@ -61,8 +61,6 @@
 #include <CNIOBoringSSL_digest.h>
 #include <CNIOBoringSSL_obj.h>
 
-#include "../asn1/asn1_locl.h"
-
 
 ASN1_SEQUENCE(X509_ALGOR) = {
         ASN1_SIMPLE(X509_ALGOR, algorithm, ASN1_OBJECT),
@@ -79,7 +77,8 @@ IMPLEMENT_ASN1_DUP_FUNCTION(X509_ALGOR)
 
 IMPLEMENT_ASN1_SET_OF(X509_ALGOR)
 
-int X509_ALGOR_set0(X509_ALGOR *alg, ASN1_OBJECT *aobj, int ptype, void *pval)
+int X509_ALGOR_set0(X509_ALGOR *alg, const ASN1_OBJECT *aobj, int ptype,
+                    void *pval)
 {
     if (!alg)
         return 0;
@@ -90,8 +89,9 @@ int X509_ALGOR_set0(X509_ALGOR *alg, ASN1_OBJECT *aobj, int ptype, void *pval)
             return 0;
     }
     if (alg) {
-        ASN1_OBJECT_free(alg->algorithm);
-        alg->algorithm = aobj;
+        if (alg->algorithm)
+            ASN1_OBJECT_free(alg->algorithm);
+        alg->algorithm = (ASN1_OBJECT *)aobj;
     }
     if (ptype == 0)
         return 1;
@@ -105,23 +105,19 @@ int X509_ALGOR_set0(X509_ALGOR *alg, ASN1_OBJECT *aobj, int ptype, void *pval)
     return 1;
 }
 
-void X509_ALGOR_get0(const ASN1_OBJECT **out_obj, int *out_param_type,
-                     const void **out_param_value, const X509_ALGOR *alg)
+void X509_ALGOR_get0(const ASN1_OBJECT **paobj, int *pptype, const void **ppval,
+                     const X509_ALGOR *algor)
 {
-    if (out_obj != NULL) {
-        *out_obj = alg->algorithm;
-    }
-    if (out_param_type != NULL) {
-        int type = V_ASN1_UNDEF;
-        const void *value = NULL;
-        if (alg->parameter != NULL) {
-            type = alg->parameter->type;
-            value = asn1_type_value_as_pointer(alg->parameter);
-        }
-        *out_param_type = type;
-        if (out_param_value != NULL) {
-            *out_param_value = value;
-        }
+    if (paobj)
+        *paobj = algor->algorithm;
+    if (pptype) {
+        if (algor->parameter == NULL) {
+            *pptype = V_ASN1_UNDEF;
+            return;
+        } else
+            *pptype = algor->parameter->type;
+        if (ppval)
+            *ppval = algor->parameter->value.ptr;
     }
 }
 

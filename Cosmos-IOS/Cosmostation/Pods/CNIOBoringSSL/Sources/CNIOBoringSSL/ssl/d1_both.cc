@@ -771,11 +771,6 @@ static int send_flight(SSL *ssl) {
     return -1;
   }
 
-  if (ssl->wbio == nullptr) {
-    OPENSSL_PUT_ERROR(SSL, SSL_R_BIO_NOT_SET);
-    return -1;
-  }
-
   dtls1_update_mtu(ssl);
 
   int ret = -1;

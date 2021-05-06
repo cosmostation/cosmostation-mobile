@@ -22,6 +22,31 @@ import Dispatch
 import Network
 import Security
 
+/// Execute the given function and synchronously complete the given `EventLoopPromise` (if not `nil`).
+@available(OSX 10.14, iOS 12.0, tvOS 12.0, watchOS 6.0, *)
+func executeAndComplete<T>(_ promise: EventLoopPromise<T>?, _ body: () throws -> T) {
+    do {
+        let result = try body()
+        promise?.succeed(result)
+    } catch let e {
+        promise?.fail(e)
+    }
+}
+
+/// Merge two possible promises together such that firing the result will fire both.
+@available(OSX 10.14, iOS 12.0, tvOS 12.0, watchOS 6.0, *)
+private func mergePromises(_ first: EventLoopPromise<Void>?, _ second: EventLoopPromise<Void>?) -> EventLoopPromise<Void>? {
+    if let first = first {
+        if let second = second {
+            first.futureResult.cascade(to: second)
+        }
+        return first
+    } else {
+        return second
+    }
+}
+
+
 /// Channel options for the connection channel.
 @available(OSX 10.14, iOS 12.0, tvOS 12.0, watchOS 6.0, *)
 private struct ConnectionChannelOptions {
@@ -273,15 +298,17 @@ extension NIOTSConnectionChannel: Channel {
     }
 
     public func setOption<Option: ChannelOption>(_ option: Option, value: Option.Value) -> EventLoopFuture<Void> {
-        if self.eventLoop.inEventLoop {
-            return self.eventLoop.makeCompletedFuture(Result { try setOption0(option: option, value: value) })
+        if eventLoop.inEventLoop {
+            let promise: EventLoopPromise<Void> = eventLoop.makePromise()
+            executeAndComplete(promise) { try setOption0(option: option, value: value) }
+            return promise.futureResult
         } else {
-            return self.eventLoop.submit { try self.setOption0(option: option, value: value) }
+            return eventLoop.submit { try self.setOption0(option: option, value: value) }
         }
     }
 
     private func setOption0<Option: ChannelOption>(option: Option, value: Option.Value) throws {
-        self.eventLoop.preconditionInEventLoop()
+        self.eventLoop.assertInEventLoop()
 
         guard !self.closed else {
             throw ChannelError.ioOnClosedChannel
@@ -327,15 +354,17 @@ extension NIOTSConnectionChannel: Channel {
     }
 
     public func getOption<Option: ChannelOption>(_ option: Option) -> EventLoopFuture<Option.Value> {
-        if self.eventLoop.inEventLoop {
-            return self.eventLoop.makeCompletedFuture(Result { try getOption0(option: option) })
+        if eventLoop.inEventLoop {
+            let promise: EventLoopPromise<Option.Value> = eventLoop.makePromise()
+            executeAndComplete(promise) { try getOption0(option: option) }
+            return promise.futureResult
         } else {
             return eventLoop.submit { try self.getOption0(option: option) }
         }
     }
 
     func getOption0<Option: ChannelOption>(option: Option) throws -> Option.Value {
-        self.eventLoop.preconditionInEventLoop()
+        self.eventLoop.assertInEventLoop()
 
         guard !self.closed else {
             throw ChannelError.ioOnClosedChannel
@@ -860,29 +889,6 @@ fileprivate extension ChannelState where ActiveSubstate == NIOTSConnectionChanne
         case .idle, .registered, .activating, .inactive:
             throw NIOTSErrors.InvalidChannelStateTransition()
         }
-    }
-}
-
-@available(OSX 10.14, iOS 12.0, tvOS 12.0, watchOS 6.0, *)
-extension NIOTSConnectionChannel {
-    internal struct SynchronousOptions: NIOSynchronousChannelOptions {
-        private let channel: NIOTSConnectionChannel
-
-        fileprivate init(channel: NIOTSConnectionChannel) {
-            self.channel = channel
-        }
-
-        public func setOption<Option: ChannelOption>(_ option: Option, value: Option.Value) throws {
-            try self.channel.setOption0(option: option, value: value)
-        }
-
-        public func getOption<Option: ChannelOption>(_ option: Option) throws -> Option.Value {
-            return try self.channel.getOption0(option: option)
-        }
-    }
-
-    public var syncOptions: NIOSynchronousChannelOptions? {
-        return SynchronousOptions(channel: self)
     }
 }
 #endif

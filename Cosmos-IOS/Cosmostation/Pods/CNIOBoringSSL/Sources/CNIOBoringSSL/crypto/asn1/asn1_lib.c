@@ -370,7 +370,8 @@ int ASN1_STRING_set(ASN1_STRING *str, const void *_data, int len)
 
 void ASN1_STRING_set0(ASN1_STRING *str, void *data, int len)
 {
-    OPENSSL_free(str->data);
+    if (str->data)
+        OPENSSL_free(str->data);
     str->data = data;
     str->length = len;
 }

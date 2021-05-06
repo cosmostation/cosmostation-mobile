@@ -225,7 +225,13 @@ class StepHtlcSend0ViewController: BaseViewController, SBCardPopupDelegate {
     }
     
     func onCheckSwapParam() {
-        let request = Alamofire.request(BaseNetWork.paramBep3Url(pageHolderVC.chainType), method: .get, parameters: [:], encoding: URLEncoding.default, headers: [:])
+        var url: String?
+        if (pageHolderVC.chainType! == ChainType.BINANCE_MAIN || pageHolderVC.chainType! == ChainType.KAVA_MAIN) {
+            url = KAVA_CHECK_SWAP_PARAM
+        } else if (pageHolderVC.chainType! == ChainType.BINANCE_TEST || pageHolderVC.chainType! == ChainType.KAVA_TEST) {
+            url = KAVA_TEST_CHECK_SWAP_PARAM
+        }
+        let request = Alamofire.request(url!, method: .get, parameters: [:], encoding: URLEncoding.default, headers: [:])
         request.responseJSON { (response) in
             switch response.result {
                 case .success(let res):
@@ -246,7 +252,13 @@ class StepHtlcSend0ViewController: BaseViewController, SBCardPopupDelegate {
     }
     
     func onCheckSwapSupply() {
-        let request = Alamofire.request(BaseNetWork.supplyBep3Url(pageHolderVC.chainType), method: .get, parameters: [:], encoding: URLEncoding.default, headers: [:])
+        var url: String?
+        if (pageHolderVC.chainType! == ChainType.BINANCE_MAIN || pageHolderVC.chainType! == ChainType.KAVA_MAIN) {
+            url = KAVA_CHECK_SWAP_SUPPLY
+        } else if (pageHolderVC.chainType! == ChainType.BINANCE_TEST || pageHolderVC.chainType! == ChainType.KAVA_TEST) {
+            url = KAVA_TEST_CHECK_SWAP_SUPPLY
+        }
+        let request = Alamofire.request(url!, method: .get, parameters: [:], encoding: URLEncoding.default, headers: [:])
         request.responseJSON { (response) in
             switch response.result {
                 case .success(let res):

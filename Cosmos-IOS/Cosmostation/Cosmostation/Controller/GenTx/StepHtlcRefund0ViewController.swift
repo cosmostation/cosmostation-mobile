@@ -70,7 +70,20 @@ class StepHtlcRefund0ViewController: BaseViewController {
     
     
     func onFetchSwapInfo(_ swapId: String) {
-        let url = BaseNetWork.swapIdBep3Url(self.chainType, swapId)
+        var url = ""
+        if (self.chainType! == ChainType.BINANCE_MAIN) {
+            url = BNB_URL_CHECK_SWAPID + swapId
+            
+        } else if (self.chainType! == ChainType.BINANCE_TEST) {
+            url = BNB_TEST_URL_CHECK_SWAPID + swapId
+            
+        } else if (self.chainType! == ChainType.KAVA_MAIN) {
+            url = KAVA_CHECK_SWAPID + swapId
+            
+        } else if (self.chainType! == ChainType.KAVA_TEST) {
+            url = KAVA_TEST_CHECK_SWAPID + swapId
+        }
+        
         let request = Alamofire.request(url, method: .get, parameters: [:], encoding: URLEncoding.default, headers: [:])
         request.responseJSON { (response) in
             switch response.result {

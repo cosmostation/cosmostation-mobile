@@ -254,7 +254,13 @@ class HardListViewController: BaseViewController, UITableViewDelegate, UITableVi
     
     
     func onFetchHardParam() {
-        let request = Alamofire.request(BaseNetWork.paramHardPoolUrl(chainType), method: .get, parameters: [:], encoding: URLEncoding.default, headers: [:])
+        var url: String?
+        if (chainType == ChainType.KAVA_MAIN) {
+            url = KAVA_HARD_PARAM
+        } else if (chainType == ChainType.KAVA_TEST) {
+            url = KAVA_TEST_HARD_PARAM
+        }
+        let request = Alamofire.request(url!, method: .get, parameters: [:], encoding: URLEncoding.default, headers: [:])
         request.responseJSON { (response) in
             switch response.result {
                 case .success(let res):
@@ -274,7 +280,13 @@ class HardListViewController: BaseViewController, UITableViewDelegate, UITableVi
     }
     
     func onFetchHardInterestRate() {
-        let request = Alamofire.request(BaseNetWork.interestRateHardPoolUrl(chainType), method: .get, parameters: [:], encoding: URLEncoding.default, headers: [:])
+        var url: String?
+        if (chainType == ChainType.KAVA_MAIN) {
+            url = KAVA_HARD_INTERESTRATE
+        } else if (chainType == ChainType.KAVA_TEST) {
+            url = KAVA_TEST_HARD_INTERESTRATE
+        }
+        let request = Alamofire.request(url!, method: .get, parameters: [:], encoding: URLEncoding.default, headers: [:])
         request.responseJSON { (response) in
             switch response.result {
                 case .success(let res):
@@ -293,7 +305,13 @@ class HardListViewController: BaseViewController, UITableViewDelegate, UITableVi
     }
     
     func onFetchHardTotalDeposit() {
-        let request = Alamofire.request(BaseNetWork.totalDepositHardPoolUrl(chainType), method: .get, parameters: [:], encoding: URLEncoding.default, headers: [:])
+        var url: String?
+        if (chainType == ChainType.KAVA_MAIN) {
+            url = KAVA_HARD_TOTAL_DEPOIST
+        } else if (chainType == ChainType.KAVA_TEST) {
+            url = KAVA_TEST_HARD_TOTAL_DEPOIST
+        }
+        let request = Alamofire.request(url!, method: .get, parameters: [:], encoding: URLEncoding.default, headers: [:])
         request.responseJSON { (response) in
             switch response.result {
                 case .success(let res):
@@ -312,7 +330,13 @@ class HardListViewController: BaseViewController, UITableViewDelegate, UITableVi
     }
     
     func onFetchHardTotalBorrow() {
-        let request = Alamofire.request(BaseNetWork.totalBorrowHardPoolUrl(chainType), method: .get, parameters: [:], encoding: URLEncoding.default, headers: [:])
+        var url: String?
+        if (chainType == ChainType.KAVA_MAIN) {
+            url = KAVA_HARD_TOTAL_BORROW
+        } else if (chainType == ChainType.KAVA_TEST) {
+            url = KAVA_TEST_HARD_TOTAL_BORROW
+        }
+        let request = Alamofire.request(url!, method: .get, parameters: [:], encoding: URLEncoding.default, headers: [:])
         request.responseJSON { (response) in
             switch response.result {
                 case .success(let res):
@@ -331,7 +355,13 @@ class HardListViewController: BaseViewController, UITableViewDelegate, UITableVi
     }
     
     func onFetchHardMyDeposit(_ address: String) {
-        let request = Alamofire.request(BaseNetWork.depositHardPoolUrl(chainType), method: .get, parameters: ["owner":address], encoding: URLEncoding.default, headers: [:])
+        var url: String?
+        if (chainType == ChainType.KAVA_MAIN) {
+            url = KAVA_HARD_MY_DEPOSIT
+        } else if (chainType == ChainType.KAVA_TEST) {
+            url = KAVA_TEST_HARD_MY_DEPOSIT
+        }
+        let request = Alamofire.request(url!, method: .get, parameters: ["owner":address], encoding: URLEncoding.default, headers: [:])
         request.responseJSON { (response) in
             switch response.result {
                 case .success(let res):
@@ -351,7 +381,13 @@ class HardListViewController: BaseViewController, UITableViewDelegate, UITableVi
     }
     
     func onFetchHardMyBorrow(_ address: String) {
-        let request = Alamofire.request(BaseNetWork.borrowHardPoolUrl(chainType), method: .get, parameters: ["owner":address], encoding: URLEncoding.default, headers: [:])
+        var url: String?
+        if (chainType == ChainType.KAVA_MAIN) {
+            url = KAVA_HARD_MY_BORROW
+        } else if (chainType == ChainType.KAVA_TEST) {
+            url = KAVA_TEST_HARD_MY_BORROW
+        }
+        let request = Alamofire.request(url!, method: .get, parameters: ["owner":address], encoding: URLEncoding.default, headers: [:])
         request.responseJSON { (response) in
             switch response.result {
                 case .success(let res):
@@ -371,7 +407,13 @@ class HardListViewController: BaseViewController, UITableViewDelegate, UITableVi
     }
     
     func onFetchIncentiveReward(_ address: String) {
-        let request = Alamofire.request(BaseNetWork.incentiveUrl(chainType), method: .get, parameters: ["owner":address], encoding: URLEncoding.default, headers: [:])
+        var url: String?
+        if (chainType == ChainType.KAVA_MAIN) {
+            url = KAVA_INCENTIVE_REWARD
+        } else if (chainType == ChainType.KAVA_TEST) {
+            url = KAVA_TEST_INCENTIVE_REWARD
+        }
+        let request = Alamofire.request(url!, method: .get, parameters: ["owner":address], encoding: URLEncoding.default, headers: [:]);
         request.responseJSON { (response) in
             switch response.result {
                 case .success(let res):

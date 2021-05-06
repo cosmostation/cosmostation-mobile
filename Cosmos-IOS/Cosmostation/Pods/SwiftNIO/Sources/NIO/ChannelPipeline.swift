@@ -170,17 +170,16 @@ public final class ChannelPipeline: ChannelInvoker {
     public func addHandler(_ handler: ChannelHandler,
                            name: String? = nil,
                            position: ChannelPipeline.Position = .last) -> EventLoopFuture<Void> {
-        let future: EventLoopFuture<Void>
-
+        let promise = self.eventLoop.makePromise(of: Void.self)
         if self.eventLoop.inEventLoop {
-            future = self.eventLoop.makeCompletedFuture(self.addHandlerSync(handler, name: name, position: position))
+            promise.completeWith(self.addHandlerSync(handler, name: name, position: position))
         } else {
-            future = self.eventLoop.submit {
-                try self.addHandlerSync(handler, name: name, position: position).get()
+            self.eventLoop.execute {
+                promise.completeWith(self.addHandlerSync(handler, name: name, position: position))
             }
         }
 
-        return future
+        return promise.futureResult
     }
 
     /// Synchronously add a `ChannelHandler` to the `ChannelPipeline`.
@@ -935,17 +934,17 @@ extension ChannelPipeline {
     /// - returns: A future that will be completed when all of the supplied `ChannelHandler`s were added.
     public func addHandlers(_ handlers: [ChannelHandler],
                             position: ChannelPipeline.Position = .last) -> EventLoopFuture<Void> {
-        let future: EventLoopFuture<Void>
+        let promise = self.eventLoop.makePromise(of: Void.self)
 
         if self.eventLoop.inEventLoop {
-            future = self.eventLoop.makeCompletedFuture(self.addHandlersSync(handlers, position: position))
+            promise.completeWith(self.addHandlersSync(handlers, position: position))
         } else {
-            future = self.eventLoop.submit {
-                try self.addHandlersSync(handlers, position: position).get()
+            self.eventLoop.execute {
+                promise.completeWith(self.addHandlersSync(handlers, position: position))
             }
         }
 
-        return future
+        return promise.futureResult
     }
 
     /// Adds the provided channel handlers to the pipeline in the order given, taking account
@@ -1016,11 +1015,6 @@ extension ChannelPipeline {
 
         fileprivate init(pipeline: ChannelPipeline) {
             self._pipeline = pipeline
-        }
-
-        /// The `EventLoop` of the `Channel` this synchronous operations view corresponds to.
-        public var eventLoop: EventLoop {
-            return self._pipeline.eventLoop
         }
 
         /// Add a handler to the pipeline.
@@ -1723,11 +1717,11 @@ extension ChannelPipeline: CustomDebugStringConvertible {
         let maxOutgoingTypeNameCount = debugInfos.filter { $0.isOutgoing }
             .map { $0.typeName.count }
             .max() ?? 0
-
+        
         func whitespace(count: Int) -> String {
             return String(repeating: " ", count: count)
         }
-
+        
         if debugInfos.isEmpty {
             desc.append(" <no handlers>")
         } else {
@@ -1753,10 +1747,10 @@ extension ChannelPipeline: CustomDebugStringConvertible {
                 desc.append(line.joined())
             }
         }
-
+        
         return desc.joined(separator: "\n")
     }
-
+    
     /// Returns the first `ChannelHandler` of the given type.
     ///
     /// - parameters:
@@ -1767,7 +1761,7 @@ extension ChannelPipeline: CustomDebugStringConvertible {
             guard let typedContext = context.handler as? Handler else {
                 preconditionFailure("Expected channel handler of type \(Handler.self), got \(type(of: context.handler)) instead.")
             }
-
+            
             return typedContext
         }
     }
@@ -1786,7 +1780,7 @@ extension ChannelPipeline: CustomDebugStringConvertible {
             return typedContext
         }
     }
-
+    
     private struct ChannelHandlerDebugInfo {
         let handler: ChannelHandler
         let name: String
@@ -1800,7 +1794,7 @@ extension ChannelPipeline: CustomDebugStringConvertible {
             return "\(type(of: self.handler))"
         }
     }
-
+    
     private func collectHandlerDebugInfos() -> [ChannelHandlerDebugInfo] {
         var handlers = [ChannelHandlerDebugInfo]()
         var node = self.head?.next

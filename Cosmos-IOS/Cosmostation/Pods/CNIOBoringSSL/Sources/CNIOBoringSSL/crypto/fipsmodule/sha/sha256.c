@@ -139,18 +139,19 @@ int SHA224_Final(uint8_t out[SHA224_DIGEST_LENGTH], SHA256_CTX *ctx) {
 // hash 'final' function can fail. This should never happen.
 #define HASH_MAKE_STRING(c, s)                              \
   do {                                                      \
+    uint32_t ll;                                            \
     unsigned int nn;                                        \
     switch ((c)->md_len) {                                  \
       case SHA224_DIGEST_LENGTH:                            \
         for (nn = 0; nn < SHA224_DIGEST_LENGTH / 4; nn++) { \
-          CRYPTO_store_u32_be((s), (c)->h[nn]);             \
-          (s) += 4;                                         \
+          ll = (c)->h[nn];                                  \
+          HOST_l2c(ll, (s));                                \
         }                                                   \
         break;                                              \
       case SHA256_DIGEST_LENGTH:                            \
         for (nn = 0; nn < SHA256_DIGEST_LENGTH / 4; nn++) { \
-          CRYPTO_store_u32_be((s), (c)->h[nn]);             \
-          (s) += 4;                                         \
+          ll = (c)->h[nn];                                  \
+          HOST_l2c(ll, (s));                                \
         }                                                   \
         break;                                              \
       default:                                              \
@@ -158,8 +159,8 @@ int SHA224_Final(uint8_t out[SHA224_DIGEST_LENGTH], SHA256_CTX *ctx) {
           return 0;                                         \
         }                                                   \
         for (nn = 0; nn < (c)->md_len / 4; nn++) {          \
-          CRYPTO_store_u32_be((s), (c)->h[nn]);             \
-          (s) += 4;                                         \
+          ll = (c)->h[nn];                                  \
+          HOST_l2c(ll, (s));                                \
         }                                                   \
         break;                                              \
     }                                                       \
@@ -240,53 +241,55 @@ static void sha256_block_data_order(uint32_t *state, const uint8_t *data,
     g = state[6];
     h = state[7];
 
-    T1 = X[0] = CRYPTO_load_u32_be(data);
-    data += 4;
+    uint32_t l;
+
+    HOST_c2l(data, l);
+    T1 = X[0] = l;
     ROUND_00_15(0, a, b, c, d, e, f, g, h);
-    T1 = X[1] = CRYPTO_load_u32_be(data);
-    data += 4;
+    HOST_c2l(data, l);
+    T1 = X[1] = l;
     ROUND_00_15(1, h, a, b, c, d, e, f, g);
-    T1 = X[2] = CRYPTO_load_u32_be(data);
-    data += 4;
+    HOST_c2l(data, l);
+    T1 = X[2] = l;
     ROUND_00_15(2, g, h, a, b, c, d, e, f);
-    T1 = X[3] = CRYPTO_load_u32_be(data);
-    data += 4;
+    HOST_c2l(data, l);
+    T1 = X[3] = l;
     ROUND_00_15(3, f, g, h, a, b, c, d, e);
-    T1 = X[4] = CRYPTO_load_u32_be(data);
-    data += 4;
+    HOST_c2l(data, l);
+    T1 = X[4] = l;
     ROUND_00_15(4, e, f, g, h, a, b, c, d);
-    T1 = X[5] = CRYPTO_load_u32_be(data);
-    data += 4;
+    HOST_c2l(data, l);
+    T1 = X[5] = l;
     ROUND_00_15(5, d, e, f, g, h, a, b, c);
-    T1 = X[6] = CRYPTO_load_u32_be(data);
-    data += 4;
+    HOST_c2l(data, l);
+    T1 = X[6] = l;
     ROUND_00_15(6, c, d, e, f, g, h, a, b);
-    T1 = X[7] = CRYPTO_load_u32_be(data);
-    data += 4;
+    HOST_c2l(data, l);
+    T1 = X[7] = l;
     ROUND_00_15(7, b, c, d, e, f, g, h, a);
-    T1 = X[8] = CRYPTO_load_u32_be(data);
-    data += 4;
+    HOST_c2l(data, l);
+    T1 = X[8] = l;
     ROUND_00_15(8, a, b, c, d, e, f, g, h);
-    T1 = X[9] = CRYPTO_load_u32_be(data);
-    data += 4;
+    HOST_c2l(data, l);
+    T1 = X[9] = l;
     ROUND_00_15(9, h, a, b, c, d, e, f, g);
-    T1 = X[10] = CRYPTO_load_u32_be(data);
-    data += 4;
+    HOST_c2l(data, l);
+    T1 = X[10] = l;
     ROUND_00_15(10, g, h, a, b, c, d, e, f);
-    T1 = X[11] = CRYPTO_load_u32_be(data);
-    data += 4;
+    HOST_c2l(data, l);
+    T1 = X[11] = l;
     ROUND_00_15(11, f, g, h, a, b, c, d, e);
-    T1 = X[12] = CRYPTO_load_u32_be(data);
-    data += 4;
+    HOST_c2l(data, l);
+    T1 = X[12] = l;
     ROUND_00_15(12, e, f, g, h, a, b, c, d);
-    T1 = X[13] = CRYPTO_load_u32_be(data);
-    data += 4;
+    HOST_c2l(data, l);
+    T1 = X[13] = l;
     ROUND_00_15(13, d, e, f, g, h, a, b, c);
-    T1 = X[14] = CRYPTO_load_u32_be(data);
-    data += 4;
+    HOST_c2l(data, l);
+    T1 = X[14] = l;
     ROUND_00_15(14, c, d, e, f, g, h, a, b);
-    T1 = X[15] = CRYPTO_load_u32_be(data);
-    data += 4;
+    HOST_c2l(data, l);
+    T1 = X[15] = l;
     ROUND_00_15(15, b, c, d, e, f, g, h, a);
 
     for (i = 16; i < 64; i += 8) {
@@ -336,3 +339,5 @@ void SHA256_TransformBlocks(uint32_t state[8], const uint8_t *data,
 #undef Maj
 #undef ROUND_00_15
 #undef ROUND_16_63
+#undef HOST_c2l
+#undef HOST_l2c

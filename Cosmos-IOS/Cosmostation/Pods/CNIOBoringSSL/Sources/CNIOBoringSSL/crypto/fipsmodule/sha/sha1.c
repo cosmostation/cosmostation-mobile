@@ -88,18 +88,19 @@ uint8_t *SHA1(const uint8_t *data, size_t len, uint8_t out[SHA_DIGEST_LENGTH]) {
 #define HASH_CTX                SHA_CTX
 #define HASH_CBLOCK             64
 #define HASH_DIGEST_LENGTH      20
-#define HASH_MAKE_STRING(c, s)           \
-  do {                                   \
-    CRYPTO_store_u32_be((s), (c)->h[0]); \
-    (s) += 4;                            \
-    CRYPTO_store_u32_be((s), (c)->h[1]); \
-    (s) += 4;                            \
-    CRYPTO_store_u32_be((s), (c)->h[2]); \
-    (s) += 4;                            \
-    CRYPTO_store_u32_be((s), (c)->h[3]); \
-    (s) += 4;                            \
-    CRYPTO_store_u32_be((s), (c)->h[4]); \
-    (s) += 4;                            \
+#define HASH_MAKE_STRING(c, s) \
+  do {                         \
+    uint32_t ll;               \
+    ll = (c)->h[0];            \
+    HOST_l2c(ll, (s));         \
+    ll = (c)->h[1];            \
+    HOST_l2c(ll, (s));         \
+    ll = (c)->h[2];            \
+    HOST_l2c(ll, (s));         \
+    ll = (c)->h[3];            \
+    HOST_l2c(ll, (s));         \
+    ll = (c)->h[4];            \
+    HOST_l2c(ll, (s));         \
   } while (0)
 
 #define HASH_UPDATE SHA1_Update
@@ -192,7 +193,7 @@ static void sha1_block_data_order(uint32_t *state, const uint8_t *data,
 #if !defined(SHA1_ASM)
 static void sha1_block_data_order(uint32_t *state, const uint8_t *data,
                                   size_t num) {
-  register uint32_t A, B, C, D, E, T;
+  register uint32_t A, B, C, D, E, T, l;
   uint32_t XX0, XX1, XX2, XX3, XX4, XX5, XX6, XX7, XX8, XX9, XX10,
       XX11, XX12, XX13, XX14, XX15;
 
@@ -203,52 +204,52 @@ static void sha1_block_data_order(uint32_t *state, const uint8_t *data,
   E = state[4];
 
   for (;;) {
-    X(0) = CRYPTO_load_u32_be(data);
-    data += 4;
-    X(1) = CRYPTO_load_u32_be(data);
-    data += 4;
+    HOST_c2l(data, l);
+    X(0) = l;
+    HOST_c2l(data, l);
+    X(1) = l;
     BODY_00_15(0, A, B, C, D, E, T, X(0));
-    X(2) = CRYPTO_load_u32_be(data);
-    data += 4;
+    HOST_c2l(data, l);
+    X(2) = l;
     BODY_00_15(1, T, A, B, C, D, E, X(1));
-    X(3) = CRYPTO_load_u32_be(data);
-    data += 4;
+    HOST_c2l(data, l);
+    X(3) = l;
     BODY_00_15(2, E, T, A, B, C, D, X(2));
-    X(4) = CRYPTO_load_u32_be(data);
-    data += 4;
+    HOST_c2l(data, l);
+    X(4) = l;
     BODY_00_15(3, D, E, T, A, B, C, X(3));
-    X(5) = CRYPTO_load_u32_be(data);
-    data += 4;
+    HOST_c2l(data, l);
+    X(5) = l;
     BODY_00_15(4, C, D, E, T, A, B, X(4));
-    X(6) = CRYPTO_load_u32_be(data);
-    data += 4;
+    HOST_c2l(data, l);
+    X(6) = l;
     BODY_00_15(5, B, C, D, E, T, A, X(5));
-    X(7) = CRYPTO_load_u32_be(data);
-    data += 4;
+    HOST_c2l(data, l);
+    X(7) = l;
     BODY_00_15(6, A, B, C, D, E, T, X(6));
-    X(8) = CRYPTO_load_u32_be(data);
-    data += 4;
+    HOST_c2l(data, l);
+    X(8) = l;
     BODY_00_15(7, T, A, B, C, D, E, X(7));
-    X(9) = CRYPTO_load_u32_be(data);
-    data += 4;
+    HOST_c2l(data, l);
+    X(9) = l;
     BODY_00_15(8, E, T, A, B, C, D, X(8));
-    X(10) = CRYPTO_load_u32_be(data);
-    data += 4;
+    HOST_c2l(data, l);
+    X(10) = l;
     BODY_00_15(9, D, E, T, A, B, C, X(9));
-    X(11) = CRYPTO_load_u32_be(data);
-    data += 4;
+    HOST_c2l(data, l);
+    X(11) = l;
     BODY_00_15(10, C, D, E, T, A, B, X(10));
-    X(12) = CRYPTO_load_u32_be(data);
-    data += 4;
+    HOST_c2l(data, l);
+    X(12) = l;
     BODY_00_15(11, B, C, D, E, T, A, X(11));
-    X(13) = CRYPTO_load_u32_be(data);
-    data += 4;
+    HOST_c2l(data, l);
+    X(13) = l;
     BODY_00_15(12, A, B, C, D, E, T, X(12));
-    X(14) = CRYPTO_load_u32_be(data);
-    data += 4;
+    HOST_c2l(data, l);
+    X(14) = l;
     BODY_00_15(13, T, A, B, C, D, E, X(13));
-    X(15) = CRYPTO_load_u32_be(data);
-    data += 4;
+    HOST_c2l(data, l);
+    X(15) = l;
     BODY_00_15(14, E, T, A, B, C, D, X(14));
     BODY_00_15(15, D, E, T, A, B, C, X(15));
 
@@ -366,3 +367,5 @@ static void sha1_block_data_order(uint32_t *state, const uint8_t *data,
 #undef BODY_40_59
 #undef BODY_60_79
 #undef X
+#undef HOST_c2l
+#undef HOST_l2c

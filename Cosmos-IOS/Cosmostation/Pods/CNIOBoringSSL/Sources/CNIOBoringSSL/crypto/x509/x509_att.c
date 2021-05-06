@@ -62,10 +62,6 @@
 #include <CNIOBoringSSL_stack.h>
 #include <CNIOBoringSSL_x509.h>
 
-#include "../asn1/asn1_locl.h"
-#include "internal.h"
-
-
 int X509at_get_attr_count(const STACK_OF(X509_ATTRIBUTE) *x)
 {
     return sk_X509_ATTRIBUTE_num(x);
@@ -218,7 +214,7 @@ void *X509at_get0_data_by_OBJ(STACK_OF(X509_ATTRIBUTE) *x,
 }
 
 X509_ATTRIBUTE *X509_ATTRIBUTE_create_by_NID(X509_ATTRIBUTE **attr, int nid,
-                                             int attrtype, const void *data,
+                                             int atrtype, const void *data,
                                              int len)
 {
     const ASN1_OBJECT *obj;
@@ -228,12 +224,12 @@ X509_ATTRIBUTE *X509_ATTRIBUTE_create_by_NID(X509_ATTRIBUTE **attr, int nid,
         OPENSSL_PUT_ERROR(X509, X509_R_UNKNOWN_NID);
         return (NULL);
     }
-    return X509_ATTRIBUTE_create_by_OBJ(attr, obj, attrtype, data, len);
+    return X509_ATTRIBUTE_create_by_OBJ(attr, obj, atrtype, data, len);
 }
 
 X509_ATTRIBUTE *X509_ATTRIBUTE_create_by_OBJ(X509_ATTRIBUTE **attr,
                                              const ASN1_OBJECT *obj,
-                                             int attrtype, const void *data,
+                                             int atrtype, const void *data,
                                              int len)
 {
     X509_ATTRIBUTE *ret;
@@ -248,7 +244,7 @@ X509_ATTRIBUTE *X509_ATTRIBUTE_create_by_OBJ(X509_ATTRIBUTE **attr,
 
     if (!X509_ATTRIBUTE_set1_object(ret, obj))
         goto err;
-    if (!X509_ATTRIBUTE_set1_data(ret, attrtype, data, len))
+    if (!X509_ATTRIBUTE_set1_data(ret, atrtype, data, len))
         goto err;
 
     if ((attr != NULL) && (*attr == NULL))
@@ -261,17 +257,17 @@ X509_ATTRIBUTE *X509_ATTRIBUTE_create_by_OBJ(X509_ATTRIBUTE **attr,
 }
 
 X509_ATTRIBUTE *X509_ATTRIBUTE_create_by_txt(X509_ATTRIBUTE **attr,
-                                             const char *attrname, int type,
+                                             const char *atrname, int type,
                                              const unsigned char *bytes,
                                              int len)
 {
     ASN1_OBJECT *obj;
     X509_ATTRIBUTE *nattr;
 
-    obj = OBJ_txt2obj(attrname, 0);
+    obj = OBJ_txt2obj(atrname, 0);
     if (obj == NULL) {
         OPENSSL_PUT_ERROR(X509, X509_R_INVALID_FIELD_NAME);
-        ERR_add_error_data(2, "name=", attrname);
+        ERR_add_error_data(2, "name=", atrname);
         return (NULL);
     }
     nattr = X509_ATTRIBUTE_create_by_OBJ(attr, obj, type, bytes, len);
@@ -311,6 +307,9 @@ int X509_ATTRIBUTE_set1_data(X509_ATTRIBUTE *attr, int attrtype,
             goto err;
         atype = attrtype;
     }
+    if (!(attr->value.set = sk_ASN1_TYPE_new_null()))
+        goto err;
+    attr->single = 0;
     /*
      * This is a bit naughty because the attribute should really have at
      * least one value but some types use and zero length SET and require
@@ -329,7 +328,7 @@ int X509_ATTRIBUTE_set1_data(X509_ATTRIBUTE *attr, int attrtype,
         ASN1_TYPE_set(ttmp, atype, stmp);
         stmp = NULL;
     }
-    if (!sk_ASN1_TYPE_push(attr->set, ttmp))
+    if (!sk_ASN1_TYPE_push(attr->value.set, ttmp))
         goto err;
     return 1;
  err:
@@ -339,9 +338,13 @@ int X509_ATTRIBUTE_set1_data(X509_ATTRIBUTE *attr, int attrtype,
     return 0;
 }
 
-int X509_ATTRIBUTE_count(const X509_ATTRIBUTE *attr)
+int X509_ATTRIBUTE_count(X509_ATTRIBUTE *attr)
 {
-    return sk_ASN1_TYPE_num(attr->set);
+    if (!attr->single)
+        return sk_ASN1_TYPE_num(attr->value.set);
+    if (attr->value.single)
+        return 1;
+    return 0;
 }
 
 ASN1_OBJECT *X509_ATTRIBUTE_get0_object(X509_ATTRIBUTE *attr)
@@ -352,24 +355,27 @@ ASN1_OBJECT *X509_ATTRIBUTE_get0_object(X509_ATTRIBUTE *attr)
 }
 
 void *X509_ATTRIBUTE_get0_data(X509_ATTRIBUTE *attr, int idx,
-                               int attrtype, void *unused)
+                               int atrtype, void *data)
 {
     ASN1_TYPE *ttmp;
     ttmp = X509_ATTRIBUTE_get0_type(attr, idx);
     if (!ttmp)
         return NULL;
-    if (attrtype != ASN1_TYPE_get(ttmp)) {
+    if (atrtype != ASN1_TYPE_get(ttmp)) {
         OPENSSL_PUT_ERROR(X509, X509_R_WRONG_TYPE);
         return NULL;
     }
-    return (void *)asn1_type_value_as_pointer(ttmp);
+    return ttmp->value.ptr;
 }
 
 ASN1_TYPE *X509_ATTRIBUTE_get0_type(X509_ATTRIBUTE *attr, int idx)
 {
     if (attr == NULL)
-        return NULL;
+        return (NULL);
     if (idx >= X509_ATTRIBUTE_count(attr))
         return NULL;
-    return sk_ASN1_TYPE_value(attr->set, idx);
+    if (!attr->single)
+        return sk_ASN1_TYPE_value(attr->value.set, idx);
+    else
+        return attr->value.single;
 }

@@ -338,12 +338,12 @@ OPENSSL_EXPORT int OBJ_nid2cbb(CBB *out, int nid) {
   return 1;
 }
 
-ASN1_OBJECT *OBJ_nid2obj(int nid) {
+const ASN1_OBJECT *OBJ_nid2obj(int nid) {
   if (nid >= 0 && nid < NUM_NID) {
     if (nid != NID_undef && kObjects[nid].nid == NID_undef) {
       goto err;
     }
-    return (ASN1_OBJECT *)&kObjects[nid];
+    return &kObjects[nid];
   }
 
   CRYPTO_STATIC_MUTEX_lock_read(&global_added_lock);
@@ -411,7 +411,7 @@ ASN1_OBJECT *OBJ_txt2obj(const char *s, int dont_search_names) {
     }
 
     if (nid != NID_undef) {
-      return OBJ_nid2obj(nid);
+      return (ASN1_OBJECT*) OBJ_nid2obj(nid);
     }
   }
 
