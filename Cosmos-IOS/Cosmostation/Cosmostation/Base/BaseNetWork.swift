@@ -5,7 +5,6 @@
 //  Created by 정용주 on 2020/12/09.
 //  Copyright © 2020 wannabit. All rights reserved.
 //
-
 import Foundation
 import GRPC
 import NIO
@@ -13,17 +12,6 @@ import NIO
 
 class BaseNetWork {
     
-<<<<<<< HEAD
-    /*
-    static func validatorUrl(_ chain: ChainType) -> String {
-        var result = ""
-        if (chain == ChainType.COSMOS_MAIN) {
-            result = COSMOS_MAIN_VALIDATORS
-        } else if (chain == ChainType.IRIS_MAIN) {
-            result = IRIS_MAIN_VALIDATORS
-        } else if (chain == ChainType.AKASH_MAIN) {
-            result = AKASH_MAIN_VALIDATORS
-=======
     static func nodeInfoUrl(_ chain: ChainType?) -> String {
         if (chain == ChainType.BINANCE_MAIN) {
             return BNB_URL + "api/v1/node-info"
@@ -156,27 +144,18 @@ class BaseNetWork {
             return SIF_URL + "staking/validators" + "/" + opAddress
         } else if (chain == ChainType.KI_MAIN) {
             return KI_URL + "staking/validators" + "/" + opAddress
->>>>>>> b2dab5419736fcb45af41a45373728510dc2b5ca
         }
         
-        else if (chain == ChainType.COSMOS_TEST) {
-            result = COSMOS_TEST_VALIDATORS
-        } else if (chain == ChainType.IRIS_TEST) {
-            result = IRIS_TEST_VALIDATORS
+        if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "staking/validators" + "/" + opAddress
+        } else if (chain == ChainType.IOV_TEST) {
+            return IOV_TEST_URL + "staking/validators" + "/" + opAddress
+        } else if (chain == ChainType.CERTIK_TEST) {
+            return CERTIK_TEST_URL + "staking/validators" + "/" + opAddress
         }
-        return result
+        return ""
     }
     
-<<<<<<< HEAD
-    static func delegationUrl(_ chain: ChainType, _ address: String) -> String {
-        var result = ""
-        if (chain == ChainType.COSMOS_MAIN) {
-            result = COSMOS_MAIN_DELEGATIONS + address
-        } else if (chain == ChainType.IRIS_MAIN) {
-            result = IRIS_MAIN_DELEGATIONS + address
-        } else if (chain == ChainType.AKASH_MAIN) {
-            result = AKASH_MAIN_DELEGATIONS + address
-=======
     static func bondingsUrl(_ chain: ChainType, _ address: String) -> String {
         if (chain == ChainType.KAVA_MAIN) {
             return KAVA_URL + "staking/delegators/" + address + "/delegations"
@@ -196,27 +175,18 @@ class BaseNetWork {
             return SIF_URL + "staking/delegators/" + address + "/delegations"
         } else if (chain == ChainType.KI_MAIN) {
             return KI_URL + "staking/delegators/" + address + "/delegations"
->>>>>>> b2dab5419736fcb45af41a45373728510dc2b5ca
         }
         
-        else if (chain == ChainType.COSMOS_TEST) {
-            result = COSMOS_TEST_DELEGATIONS + address
-        } else if (chain == ChainType.IRIS_TEST) {
-            result = IRIS_TEST_DELEGATIONS + address
+        else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "staking/delegators/" + address + "/delegations"
+        } else if (chain == ChainType.IOV_TEST) {
+            return IOV_TEST_URL + "staking/delegators/" + address + "/delegations"
+        } else if (chain == ChainType.CERTIK_TEST) {
+            return CERTIK_TEST_URL + "staking/delegators/" + address + "/delegations"
         }
-        return result
+        return ""
     }
     
-<<<<<<< HEAD
-    static func undelegationUrl(_ chain: ChainType, _ address: String) -> String {
-        var result = ""
-        if (chain == ChainType.COSMOS_MAIN) {
-            result = COSMOS_MAIN_UNDELEGATIONS + address + COSMOS_MAIN_UNDELEGATIONS_T
-        } else if (chain == ChainType.IRIS_MAIN) {
-            result = IRIS_MAIN_UNDELEGATIONS + address + IRIS_MAIN_UNDELEGATIONS_T
-        } else if (chain == ChainType.AKASH_MAIN) {
-            result = AKASH_MAIN_UNDELEGATIONS + address + AKASH_MAIN_UNDELEGATIONS_T
-=======
     static func bondingUrl(_ chain: ChainType?, _ address: String, _ opAddress: String) -> String {
         if (chain == ChainType.KAVA_MAIN) {
             return KAVA_URL + "staking/delegators/" + address + "/delegations/" + opAddress
@@ -236,27 +206,18 @@ class BaseNetWork {
             return SIF_URL + "staking/delegators/" + address + "/delegations/" + opAddress
         } else if (chain == ChainType.KI_MAIN) {
             return KI_URL + "staking/delegators/" + address + "/delegations/" + opAddress
->>>>>>> b2dab5419736fcb45af41a45373728510dc2b5ca
         }
         
-        else if (chain == ChainType.COSMOS_TEST) {
-            result = COSMOS_TEST_UNDELEGATIONS + address + COSMOS_TEST_UNDELEGATIONS_T
-        } else if (chain == ChainType.IRIS_TEST) {
-            result = IRIS_TEST_UNDELEGATIONS + address + IRIS_TEST_UNDELEGATIONS_T
+        else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "staking/delegators/" + address + "/delegations/" + opAddress
+        } else if (chain == ChainType.IOV_TEST) {
+            return IOV_TEST_URL + "staking/delegators/" + address + "/delegations/" + opAddress
+        } else if (chain == ChainType.CERTIK_TEST) {
+            return CERTIK_TEST_URL + "staking/delegators/" + address + "/delegations/" + opAddress
         }
-        return result
+        return ""
     }
     
-<<<<<<< HEAD
-    static func balanceUrl(_ chain: ChainType, _ address: String) -> String {
-        var result = ""
-        if (chain == ChainType.COSMOS_MAIN) {
-            result = COSMOS_MAIN_BALANCE + address
-        } else if (chain == ChainType.IRIS_MAIN) {
-            result = IRIS_MAIN_BALANCE + address
-        } else if (chain == ChainType.AKASH_MAIN) {
-            result = AKASH_MAIN_BALANCE + address
-=======
     static func unbondingsUrl(_ chain: ChainType, _ address: String) -> String {
         if (chain == ChainType.KAVA_MAIN) {
             return KAVA_URL + "staking/delegators/" + address + "/unbonding_delegations"
@@ -276,27 +237,18 @@ class BaseNetWork {
             return SIF_URL + "staking/delegators/" + address + "/unbonding_delegations"
         } else if (chain == ChainType.KI_MAIN) {
             return KI_URL + "staking/delegators/" + address + "/unbonding_delegations"
->>>>>>> b2dab5419736fcb45af41a45373728510dc2b5ca
         }
         
-        else if (chain == ChainType.COSMOS_TEST) {
-            result = COSMOS_TEST_BALANCE + address
-        } else if (chain == ChainType.IRIS_TEST) {
-            result = IRIS_TEST_BALANCE + address
+        else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "staking/delegators/" + address + "/unbonding_delegations"
+        } else if (chain == ChainType.IOV_TEST) {
+            return IOV_TEST_URL + "staking/delegators/" + address + "/unbonding_delegations"
+        } else if (chain == ChainType.CERTIK_TEST) {
+            return CERTIK_TEST_URL + "staking/delegators/" + address + "/unbonding_delegations"
         }
-        return result
+        return ""
     }
     
-<<<<<<< HEAD
-    static func authUrl(_ chain: ChainType, _ address: String) -> String {
-        var result = ""
-        if (chain == ChainType.COSMOS_MAIN) {
-            result = COSMOS_MAIN_AUTH + address
-        } else if (chain == ChainType.IRIS_MAIN) {
-            result = IRIS_MAIN_AUTH + address
-        } else if (chain == ChainType.AKASH_MAIN) {
-            result = AKASH_MAIN_AUTH + address
-=======
     static func unbondingUrl(_ chain: ChainType?, _ address: String, _ opAddress: String) -> String {
         if (chain == ChainType.KAVA_MAIN) {
             return KAVA_URL + "staking/delegators/" + address + "/unbonding_delegations/" + opAddress
@@ -316,27 +268,18 @@ class BaseNetWork {
             return SIF_URL + "staking/delegators/" + address + "/unbonding_delegations/" + opAddress
         } else if (chain == ChainType.KI_MAIN) {
             return KI_URL + "staking/delegators/" + address + "/unbonding_delegations/" + opAddress
->>>>>>> b2dab5419736fcb45af41a45373728510dc2b5ca
         }
         
-        else if (chain == ChainType.COSMOS_TEST) {
-            result = COSMOS_TEST_AUTH + address
-        } else if (chain == ChainType.IRIS_TEST) {
-            result = IRIS_TEST_AUTH + address
+        else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "staking/delegators/" + address + "/unbonding_delegations/" + opAddress
+        } else if (chain == ChainType.IOV_TEST) {
+            return IOV_TEST_URL + "staking/delegators/" + address + "/unbonding_delegations/" + opAddress
+        } else if (chain == ChainType.CERTIK_TEST) {
+            return CERTIK_TEST_URL + "staking/delegators/" + address + "/unbonding_delegations/" + opAddress
         }
-        return result
+        return ""
     }
     
-<<<<<<< HEAD
-    static func rewardAddressUrl(_ chain: ChainType, _ address: String) -> String {
-        var result = ""
-        if (chain == ChainType.COSMOS_MAIN) {
-            result = COSMOS_MAIN_REWARD_ADDRESS + address + COSMOS_MAIN_REWARD_ADDRESS_T
-        } else if (chain == ChainType.IRIS_MAIN) {
-            result = IRIS_MAIN_REWARD_ADDRESS + address + IRIS_MAIN_REWARD_ADDRESS_T
-        } else if (chain == ChainType.AKASH_MAIN) {
-            result = AKASH_MAIN_REWARD_ADDRESS + address + AKASH_MAIN_REWARD_ADDRESS_T
-=======
     static func redelegationsUrl(_ chain: ChainType?) -> String {
         if (chain == ChainType.KAVA_MAIN) {
             return KAVA_URL + "staking/redelegations"
@@ -356,27 +299,19 @@ class BaseNetWork {
             return SIF_URL + "staking/redelegations"
         } else if (chain == ChainType.KI_MAIN) {
             return KI_URL + "staking/redelegations"
->>>>>>> b2dab5419736fcb45af41a45373728510dc2b5ca
         }
         
-        else if (chain == ChainType.COSMOS_TEST) {
-            result = COSMOS_TEST_REWARD_ADDRESS + address + COSMOS_TEST_REWARD_ADDRESS_T
-        } else if (chain == ChainType.IRIS_TEST) {
-            result = IRIS_TEST_REWARD_ADDRESS + address + IRIS_TEST_REWARD_ADDRESS_T
+        else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "staking/redelegations"
+        } else if (chain == ChainType.IOV_TEST) {
+            return IOV_TEST_URL + "staking/redelegations"
+        } else if (chain == ChainType.CERTIK_TEST) {
+            return CERTIK_TEST_URL + "staking/redelegations"
         }
-        return result
+        return ""
     }
     
     static func rewardsUrl(_ chain: ChainType, _ address: String) -> String {
-<<<<<<< HEAD
-        var result = ""
-        if (chain == ChainType.COSMOS_MAIN) {
-            result = COSMOS_MAIN_REWARDS + address + COSMOS_MAIN_REWARDS_T
-        } else if (chain == ChainType.IRIS_MAIN) {
-            result = IRIS_MAIN_REWARDS + address + IRIS_MAIN_REWARDS_T
-        } else if (chain == ChainType.AKASH_MAIN) {
-            result = AKASH_MAIN_REWARDS + address + AKASH_MAIN_REWARDS_T
-=======
         if (chain == ChainType.KAVA_MAIN) {
             return KAVA_URL + "distribution/delegators/" + address + "/rewards"
         } else if (chain == ChainType.BAND_MAIN) {
@@ -426,27 +361,18 @@ class BaseNetWork {
             return SIF_URL + "distribution/delegators/" + address + "/rewards/" + opAddress
         } else if (chain == ChainType.KI_MAIN) {
             return KI_URL + "distribution/delegators/" + address + "/rewards/" + opAddress
->>>>>>> b2dab5419736fcb45af41a45373728510dc2b5ca
         }
         
-        else if (chain == ChainType.COSMOS_TEST) {
-            result = COSMOS_TEST_REWARDS + address + COSMOS_TEST_REWARDS_T
-        } else if (chain == ChainType.IRIS_TEST) {
-            result = IRIS_TEST_REWARDS + address + IRIS_TEST_REWARDS_T
+        else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "distribution/delegators/" + address + "/rewards/" + opAddress
+        } else if (chain == ChainType.IOV_TEST) {
+            return IOV_TEST_URL + "distribution/delegators/" + address + "/rewards/" + opAddress
+        } else if (chain == ChainType.CERTIK_TEST) {
+            return CERTIK_TEST_URL + "distribution/delegators/" + address + "/rewards/" + opAddress
         }
-        return result
+        return ""
     }
     
-<<<<<<< HEAD
-    static func redelegation(_ chain: ChainType, _ address: String) -> String {
-        var result = ""
-        if (chain == ChainType.COSMOS_MAIN) {
-            result = COSMOS_MAIN_REDELEGATION + address + COSMOS_MAIN_REDELEGATION_T
-        } else if (chain == ChainType.IRIS_MAIN) {
-            result = IRIS_MAIN_REDELEGATION + address + IRIS_MAIN_REDELEGATION
-        } else if (chain == ChainType.AKASH_MAIN) {
-            result = AKASH_MAIN_REDELEGATION + address + AKASH_MAIN_REDELEGATION_T
-=======
     static func rewardAddressUrl(_ chain: ChainType?, _ address: String) -> String {
         if (chain == ChainType.KAVA_MAIN) {
             return KAVA_URL + "distribution/delegators/" + address + "/withdraw_address"
@@ -466,27 +392,28 @@ class BaseNetWork {
             return SIF_URL + "distribution/delegators/" + address + "/withdraw_address"
         } else if (chain == ChainType.KI_MAIN) {
             return KI_URL + "distribution/delegators/" + address + "/withdraw_address"
->>>>>>> b2dab5419736fcb45af41a45373728510dc2b5ca
         }
         
-        else if (chain == ChainType.COSMOS_TEST) {
-            result = COSMOS_TEST_REDELEGATION + address + COSMOS_TEST_REDELEGATION_T
-        } else if (chain == ChainType.IRIS_TEST) {
-            result = IRIS_TEST_REDELEGATION + address + IRIS_TEST_REDELEGATION_T
+        else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "distribution/delegators/" + address + "/withdraw_address"
+        } else if (chain == ChainType.IOV_TEST) {
+            return IOV_TEST_URL + "distribution/delegators/" + address + "/withdraw_address"
+        } else if (chain == ChainType.CERTIK_TEST) {
+            return CERTIK_TEST_URL + "distribution/delegators/" + address + "/withdraw_address"
         }
-        return result
+        return ""
     }
     
-<<<<<<< HEAD
-    static func mintParamUrl(_ chain: ChainType) -> String {
-        var result = ""
-        if (chain == ChainType.COSMOS_MAIN) {
-            result = COSMOS_MAIN_MINT_PARAM
-        } else if (chain == ChainType.IRIS_MAIN) {
-            result = IRIS_MAIN_MINT_PARAM
-        } else if (chain == ChainType.AKASH_MAIN) {
-            result = AKASH_MAIN_MINT_PARAM
-=======
+    static func supplyUrl(_ chain: ChainType?) -> String {
+        if (chain == ChainType.KAVA_MAIN) {
+            return KAVA_URL + "supply/total"
+        }
+        else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "supply/total"
+        }
+        return ""
+    }
+    
     static func paramMintUrl(_ chain: ChainType) -> String {
         if (chain == ChainType.KAVA_MAIN) {
             return KAVA_URL + "minting/parameters"
@@ -504,25 +431,19 @@ class BaseNetWork {
             return FETCH_URL + "minting/parameters"
         } else if (chain == ChainType.KI_MAIN) {
             return KI_URL + "minting/parameters"
->>>>>>> b2dab5419736fcb45af41a45373728510dc2b5ca
         }
         
-        else if (chain == ChainType.COSMOS_TEST) {
-            result = COSMOS_TEST_MINT_PARAM
-        } else if (chain == ChainType.IRIS_TEST) {
-            result = IRIS_TEST_MINT_PARAM
+        else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "minting/parameters"
+        } else if (chain == ChainType.IOV_TEST) {
+            return IOV_TEST_URL + "minting/parameters"
+        } else if (chain == ChainType.CERTIK_TEST) {
+            return CERTIK_TEST_URL + "minting/parameters"
         }
-        return result
+        return ""
     }
     
     static func inflationUrl(_ chain: ChainType) -> String {
-<<<<<<< HEAD
-        var result = ""
-        if (chain == ChainType.COSMOS_MAIN) {
-            result = COSMOS_MAIN_INFLATION
-        } else if (chain == ChainType.AKASH_MAIN) {
-            result = AKASH_MAIN_INFLATION
-=======
         if (chain == ChainType.KAVA_MAIN) {
             return KAVA_URL + "minting/inflation"
         } else if (chain == ChainType.BAND_MAIN) {
@@ -539,23 +460,19 @@ class BaseNetWork {
             return FETCH_URL + "minting/inflation"
         } else if (chain == ChainType.KI_MAIN) {
             return KI_URL + "minting/inflation"
->>>>>>> b2dab5419736fcb45af41a45373728510dc2b5ca
         }
         
-        else if (chain == ChainType.COSMOS_TEST) {
-            result = COSMOS_TEST_INFLATION
+        else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "minting/inflation"
+        } else if (chain == ChainType.IOV_TEST) {
+            return IOV_TEST_URL + "minting/inflation"
+        } else if (chain == ChainType.CERTIK_TEST) {
+            return CERTIK_TEST_URL + "minting/inflation"
         }
-        return result
+        return ""
     }
     
     static func provisionUrl(_ chain: ChainType) -> String {
-<<<<<<< HEAD
-        var result = ""
-        if (chain == ChainType.COSMOS_MAIN) {
-            result = COSMOS_MAIN_PROVISIONS
-        } else if (chain == ChainType.AKASH_MAIN) {
-            result = AKASH_MAIN_PROVISIONS
-=======
         if (chain == ChainType.KAVA_MAIN) {
             return KAVA_URL + "minting/annual-provisions"
         } else if (chain == ChainType.BAND_MAIN) {
@@ -572,25 +489,19 @@ class BaseNetWork {
             return FETCH_URL + "minting/annual-provisions"
         } else if (chain == ChainType.KI_MAIN) {
             return KI_URL + "minting/annual-provisions"
->>>>>>> b2dab5419736fcb45af41a45373728510dc2b5ca
         }
         
-        else if (chain == ChainType.COSMOS_TEST) {
-            result = COSMOS_TEST_PROVISIONS
+        else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "minting/annual-provisions"
+        } else if (chain == ChainType.IOV_TEST) {
+            return IOV_TEST_URL + "minting/annual-provisions"
+        } else if (chain == ChainType.CERTIK_TEST) {
+            return CERTIK_TEST_URL + "minting/annual-provisions"
         }
-        return result
+        return ""
     }
     
     static func stakingPoolUrl(_ chain: ChainType) -> String {
-<<<<<<< HEAD
-        var result = ""
-        if (chain == ChainType.COSMOS_MAIN) {
-            result = COSMOS_MAIN_STAKING_POOL
-        } else if (chain == ChainType.IRIS_MAIN) {
-            result = IRIS_MAIN_STAKING_POOL
-        } else if (chain == ChainType.AKASH_MAIN) {
-            result = AKASH_MAIN_STAKING_POOL
-=======
         if (chain == ChainType.KAVA_MAIN) {
             return KAVA_URL + "staking/pool"
         } else if (chain == ChainType.BAND_MAIN) {
@@ -609,25 +520,18 @@ class BaseNetWork {
             return SIF_URL + "staking/pool"
         } else if (chain == ChainType.KI_MAIN) {
             return KI_URL + "staking/pool"
->>>>>>> b2dab5419736fcb45af41a45373728510dc2b5ca
         }
         
-        else if (chain == ChainType.COSMOS_TEST) {
-            result = COSMOS_TEST_STAKING_POOL
-        } else if (chain == ChainType.IRIS_TEST) {
-            result = IRIS_TEST_STAKING_POOL
+        else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "staking/pool"
+        } else if (chain == ChainType.IOV_TEST) {
+            return IOV_TEST_URL + "staking/pool"
+        } else if (chain == ChainType.CERTIK_TEST) {
+            return CERTIK_TEST_URL + "staking/pool"
         }
-        return result
+        return ""
     }
     
-<<<<<<< HEAD
-    static func irisTokensUrl(_ chain: ChainType) -> String {
-        var result = ""
-        if (chain == ChainType.IRIS_MAIN) {
-            result = IRIS_MAIN_TOKENS
-        } else if (chain == ChainType.IRIS_TEST) {
-            result = IRIS_TEST_TOKENS
-=======
     static func proposalsUrl(_ chain: ChainType?) -> String {
         if (chain == ChainType.KAVA_MAIN) {
             return KAVA_URL + "gov/proposals"
@@ -655,23 +559,10 @@ class BaseNetWork {
             return IOV_TEST_URL + "gov/proposals"
         } else if (chain == ChainType.CERTIK_TEST) {
             return CERTIK_TEST_URL + "gov/proposals"
->>>>>>> b2dab5419736fcb45af41a45373728510dc2b5ca
         }
-        return result
+        return ""
     }
     
-<<<<<<< HEAD
-    
-    
-    static func singleValidatorUrl(_ chain: ChainType, _ opAddress: String) -> String {
-        var result = ""
-        if (chain == ChainType.COSMOS_MAIN) {
-            result = COSMOS_MAIN_SINGLE_VALIDATOR + opAddress
-        } else if (chain == ChainType.IRIS_MAIN) {
-            result = IRIS_MAIN_SINGLE_VALIDATOR + opAddress
-        } else if (chain == ChainType.AKASH_MAIN) {
-            result = AKASH_MAIN_SINGLE_VALIDATOR + opAddress
-=======
     static func proposalUrl(_ chain: ChainType?, _ id: String) -> String {
         if (chain == ChainType.KAVA_MAIN) {
             return KAVA_URL + "gov/proposals" + "/" + id
@@ -753,27 +644,18 @@ class BaseNetWork {
             return SIF_URL + "gov/proposals" + "/" + id + "/votes/" + address
         } else if (chain == ChainType.KI_MAIN) {
             return KI_URL + "gov/proposals" + "/" + id + "/votes/" + address
->>>>>>> b2dab5419736fcb45af41a45373728510dc2b5ca
         }
         
-        else if (chain == ChainType.COSMOS_TEST) {
-            result = COSMOS_TEST_SINGLE_VALIDATOR + opAddress
-        } else if (chain == ChainType.IRIS_TEST) {
-            result = IRIS_TEST_SINGLE_VALIDATOR + opAddress
+        else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "gov/proposals" + "/" + id + "/tally"
+        } else if (chain == ChainType.IOV_TEST) {
+            return IOV_TEST_URL + "gov/proposals" + "/" + id + "/tally"
+        } else if (chain == ChainType.CERTIK_TEST) {
+            return CERTIK_TEST_URL + "gov/proposals" + "/" + id + "/tally"
         }
-        return result
+        return ""
     }
     
-<<<<<<< HEAD
-    static func singleDelegationUrl(_ chain: ChainType, _ address: String, _ opAddress: String) -> String {
-        var result = ""
-        if (chain == ChainType.COSMOS_MAIN) {
-            result = COSMOS_MAIN_SINGLE_DELEGATION + opAddress + COSMOS_MAIN_SINGLE_DELEGATION_M + address
-        } else if (chain == ChainType.IRIS_MAIN) {
-            result = IRIS_MAIN_SINGLE_DELEGATION + opAddress + IRIS_MAIN_SINGLE_DELEGATION_M + address
-        } else if (chain == ChainType.AKASH_MAIN) {
-            result = AKASH_MAIN_SINGLE_DELEGATION + opAddress + AKASH_MAIN_SINGLE_DELEGATION_M + address
-=======
     static func proposerUrl(_ chain: ChainType?, _ id: String) -> String {
         if (chain == ChainType.KAVA_MAIN) {
             return KAVA_URL + "gov/proposals" + "/" + id + "/proposer"
@@ -793,27 +675,18 @@ class BaseNetWork {
             return SIF_URL + "gov/proposals" + "/" + id + "/proposer"
         } else if (chain == ChainType.KI_MAIN) {
             return KI_URL + "gov/proposals" + "/" + id + "/proposer"
->>>>>>> b2dab5419736fcb45af41a45373728510dc2b5ca
         }
         
-        else if (chain == ChainType.COSMOS_TEST) {
-            result = COSMOS_TEST_SINGLE_DELEGATION + opAddress + COSMOS_TEST_SINGLE_DELEGATION_M + address
-        } else if (chain == ChainType.IRIS_TEST) {
-            result = IRIS_TEST_SINGLE_DELEGATION + opAddress + IRIS_TEST_SINGLE_DELEGATION_M + address
+        else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "gov/proposals" + "/" + id + "/proposer"
+        } else if (chain == ChainType.IOV_TEST) {
+            return IOV_TEST_URL + "gov/proposals" + "/" + id + "/proposer"
+        } else if (chain == ChainType.CERTIK_TEST) {
+            return CERTIK_TEST_URL + "gov/proposals" + "/" + id + "/proposer"
         }
-        return result
+        return ""
     }
     
-<<<<<<< HEAD
-    static func proposals(_ chain: ChainType) -> String {
-        var result = ""
-        if (chain == ChainType.COSMOS_MAIN) {
-            result = COSMOS_MAIN_PROPOSALS
-        } else if (chain == ChainType.IRIS_MAIN) {
-            result = IRIS_MAIN_PROPOSALS
-        } else if (chain == ChainType.AKASH_MAIN) {
-            result = AKASH_MAIN_PROPOSALS
-=======
     static func votesUrl(_ chain: ChainType?, _ id: String) -> String {
         if (chain == ChainType.KAVA_MAIN) {
             return KAVA_URL + "gov/proposals" + "/" + id + "/votes"
@@ -833,27 +706,18 @@ class BaseNetWork {
             return SIF_URL + "gov/proposals" + "/" + id + "/votes"
         } else if (chain == ChainType.KI_MAIN) {
             return KI_URL + "gov/proposals" + "/" + id + "/votes"
->>>>>>> b2dab5419736fcb45af41a45373728510dc2b5ca
         }
         
-        else if (chain == ChainType.COSMOS_TEST) {
-            result = COSMOS_TEST_PROPOSALS
-        } else if (chain == ChainType.IRIS_TEST) {
-            result = IRIS_TEST_PROPOSALS
+        else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "gov/proposals" + "/" + id + "/votes"
+        } else if (chain == ChainType.IOV_TEST) {
+            return IOV_TEST_URL + "gov/proposals" + "/" + id + "/votes"
+        } else if (chain == ChainType.CERTIK_TEST) {
+            return CERTIK_TEST_URL + "gov/proposals" + "/" + id + "/votes"
         }
-        return result
+        return ""
     }
     
-<<<<<<< HEAD
-    static func proposalDetail(_ chain: ChainType, _ proposal_id: String) -> String {
-        var result = ""
-        if (chain == ChainType.COSMOS_MAIN) {
-            result = COSMOS_MAIN_PROPOSAL + proposal_id
-        } else if (chain == ChainType.IRIS_MAIN) {
-            result = IRIS_MAIN_PROPOSAL + proposal_id
-        } else if (chain == ChainType.AKASH_MAIN) {
-            result = AKASH_MAIN_PROPOSAL + proposal_id
-=======
     
     static func txUrl(_ chain: ChainType?, _ txhash: String) -> String {
         if (chain == ChainType.BINANCE_MAIN) {
@@ -878,27 +742,22 @@ class BaseNetWork {
             return SIF_URL + "txs/" + txhash
         } else if (chain == ChainType.KI_MAIN) {
             return KI_URL + "txs/" + txhash
->>>>>>> b2dab5419736fcb45af41a45373728510dc2b5ca
         }
         
-        else if (chain == ChainType.COSMOS_TEST) {
-            result = COSMOS_TEST_PROPOSAL + proposal_id
-        } else if (chain == ChainType.IRIS_TEST) {
-            result = IRIS_TEST_PROPOSAL + proposal_id
+        else if (chain == ChainType.BINANCE_TEST) {
+            return BNB_TEST_URL + "api/v1/tx/" + txhash
+        } else if (chain == ChainType.OKEX_TEST) {
+            return OKEX_TEST_URL + "txs/" + txhash
+        } else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "txs/" + txhash
+        } else if (chain == ChainType.IOV_TEST) {
+            return IOV_TEST_URL + "txs/" + txhash
+        } else if (chain == ChainType.CERTIK_TEST) {
+            return CERTIK_TEST_URL + "txs/" + txhash
         }
-        return result
+        return ""
     }
     
-<<<<<<< HEAD
-    static func proposalTally(_ chain: ChainType, _ proposal_id: String) -> String {
-        var result = ""
-        if (chain == ChainType.COSMOS_MAIN) {
-            result = COSMOS_MAIN_PROPOSAL + proposal_id + "/tally"
-        } else if (chain == ChainType.IRIS_MAIN) {
-            result = IRIS_MAIN_PROPOSAL + proposal_id + "/tally"
-        } else if (chain == ChainType.AKASH_MAIN) {
-            result = AKASH_MAIN_PROPOSAL + proposal_id + "/tally"
-=======
     static func broadcastUrl(_ chain: ChainType?) -> String {
         if (chain == ChainType.OKEX_MAIN) {
             return OKEX_URL + "txs"
@@ -920,88 +779,359 @@ class BaseNetWork {
             return SIF_URL + "txs"
         } else if (chain == ChainType.KI_MAIN) {
             return KI_URL + "txs"
->>>>>>> b2dab5419736fcb45af41a45373728510dc2b5ca
         }
         
-        else if (chain == ChainType.COSMOS_TEST) {
-            result = COSMOS_TEST_PROPOSAL + proposal_id + "/tally"
-        } else if (chain == ChainType.IRIS_TEST) {
-            result = IRIS_TEST_PROPOSAL + proposal_id + "/tally"
+        if (chain == ChainType.OKEX_TEST) {
+            return OKEX_TEST_URL + "txs"
+        } else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "txs"
+        } else if (chain == ChainType.IOV_TEST) {
+            return IOV_TEST_URL + "txs"
+        } else if (chain == ChainType.CERTIK_TEST) {
+            return CERTIK_TEST_URL + "txs"
         }
-        return result
-    }
-    
-    static func proposalVoterList(_ chain: ChainType, _ proposal_id: String) -> String {
-        var result = ""
-        if (chain == ChainType.COSMOS_MAIN) {
-            result = COSMOS_MAIN_PROPOSAL + proposal_id + "/votes"
-        } else if (chain == ChainType.IRIS_MAIN) {
-            result = IRIS_MAIN_PROPOSAL + proposal_id + "/votes"
-        } else if (chain == ChainType.AKASH_MAIN) {
-            result = AKASH_MAIN_PROPOSAL + proposal_id + "/votes"
-        }
-        
-        else if (chain == ChainType.COSMOS_TEST) {
-            result = COSMOS_TEST_PROPOSAL + proposal_id + "/votes"
-        } else if (chain == ChainType.IRIS_TEST) {
-            result = IRIS_TEST_PROPOSAL + proposal_id + "/votes"
-        }
-        return result
-    }
-    
-    static func proposalMyVote(_ chain: ChainType, _ proposal_id: String, _ address: String) -> String {
-        var result = ""
-        if (chain == ChainType.COSMOS_MAIN) {
-            result = COSMOS_MAIN_PROPOSAL + proposal_id + "/votes/" + address
-        } else if (chain == ChainType.IRIS_MAIN) {
-            result = IRIS_MAIN_PROPOSAL + proposal_id + "/votes/" + address
-        } else if (chain == ChainType.AKASH_MAIN) {
-            result = AKASH_MAIN_PROPOSAL + proposal_id + "/votes/" + address
-        }
-        
-        else if (chain == ChainType.COSMOS_TEST) {
-            result = COSMOS_TEST_PROPOSAL + proposal_id + "/votes/" + address
-        } else if (chain == ChainType.IRIS_TEST) {
-            result = IRIS_TEST_PROPOSAL + proposal_id + "/votes/" + address
-        }
-        return result
+        return ""
     }
     
     
-    static func postTxUrl(_ chain: ChainType) -> String {
-        var result = ""
-        if (chain == ChainType.COSMOS_MAIN) {
-            result = COSMOS_MAIN_BORAD_TX
-        } else if (chain == ChainType.IRIS_MAIN) {
-            result = IRIS_MAIN_BORAD_TX
-        } else if (chain == ChainType.AKASH_MAIN) {
-            result = AKASH_MAIN_BORAD_TX
+    //for Binance
+    static func bnbTokenUrl(_ chain: ChainType) -> String {
+        if (chain == ChainType.BINANCE_MAIN ) {
+            return BNB_URL + "api/v1/tokens"
+        } else if (chain == ChainType.BINANCE_TEST) {
+            return BNB_TEST_URL + "api/v1/tokens"
         }
-        
-        else if (chain == ChainType.COSMOS_TEST) {
-            result = COSMOS_TEST_BORAD_TX
-        } else if (chain == ChainType.IRIS_TEST) {
-            result = IRIS_TEST_BORAD_TX
-        }
-        return result
+        return ""
     }
-     */
+    
+    static func bnbMiniTokenUrl(_ chain: ChainType) -> String {
+        if (chain == ChainType.BINANCE_MAIN ) {
+            return BNB_URL + "api/v1/mini/tokens"
+        } else if (chain == ChainType.BINANCE_TEST) {
+            return BNB_TEST_URL + "api/v1/mini/tokens"
+        }
+        return ""
+    }
+    
+    static func bnbTicUrl(_ chain: ChainType?) -> String {
+        if (chain == ChainType.BINANCE_MAIN ) {
+            return BNB_URL + "api/v1/ticker/24hr"
+        } else if (chain == ChainType.BINANCE_TEST) {
+            return BNB_TEST_URL + "api/v1/ticker/24hr"
+        }
+        return ""
+    }
+    
+    static func bnbHistoryUrl(_ chain: ChainType?) -> String {
+        if (chain == ChainType.BINANCE_MAIN ) {
+            return BNB_URL + "api/v1/transactions"
+        } else if (chain == ChainType.BINANCE_TEST) {
+            return BNB_TEST_URL + "api/v1/transactions"
+        }
+        return ""
+    }
+    
+    
+    //for Kava
+    static func paramPriceFeedUrl(_ chain: ChainType?) -> String {
+        if (chain == ChainType.KAVA_MAIN ) {
+            return KAVA_URL + "pricefeed/parameters"
+        } else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "pricefeed/parameters"
+        }
+        return ""
+    }
+    
+    static func priceFeedUrl(_ chain: ChainType?, _ market: String) -> String {
+        if (chain == ChainType.KAVA_MAIN ) {
+            return KAVA_URL + "pricefeed/price/" + market
+        } else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "pricefeed/price/" + market
+        }
+        return ""
+    }
+    
+    static func paramIncentiveUrl(_ chain: ChainType) -> String {
+        if (chain == ChainType.KAVA_MAIN ) {
+            return KAVA_URL + "incentive/parameters"
+        } else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "incentive/parameters"
+        }
+        return ""
+    }
+    
+    static func paramCdpUrl(_ chain: ChainType?) -> String {
+        if (chain == ChainType.KAVA_MAIN ) {
+            return KAVA_URL + "cdp/parameters"
+        } else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "cdp/parameters"
+        }
+        return ""
+    }
+    
+    static func owenCdpUrl(_ chain: ChainType?) -> String {
+        if (chain == ChainType.KAVA_MAIN ) {
+            return KAVA_URL + "cdp/cdps"
+        } else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "cdp/cdps"
+        }
+        return ""
+    }
+    
+    static func depositCdpUrl(_ chain: ChainType?, _ address: String, _ collateralType: String) -> String {
+        if (chain == ChainType.KAVA_MAIN ) {
+            return KAVA_URL + "cdp/cdps/cdp/deposits/" + address + "/" + collateralType
+        } else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "cdp/cdps/cdp/deposits/" + address + "/" + collateralType
+        }
+        return ""
+    }
+    
+    static func paramHardPoolUrl(_ chain: ChainType?) -> String {
+        if (chain == ChainType.KAVA_MAIN ) {
+            return KAVA_URL + "hard/parameters"
+        } else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "hard/parameters"
+        }
+        return ""
+    }
+    
+    static func interestRateHardPoolUrl(_ chain: ChainType?) -> String {
+        if (chain == ChainType.KAVA_MAIN ) {
+            return KAVA_URL + "hard/interest-rate"
+        } else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "hard/interest-rate"
+        }
+        return ""
+    }
+    
+    static func totalDepositHardPoolUrl(_ chain: ChainType?) -> String {
+        if (chain == ChainType.KAVA_MAIN ) {
+            return KAVA_URL + "hard/total-deposited"
+        } else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "hard/total-deposited"
+        }
+        return ""
+    }
+    
+    static func totalBorrowHardPoolUrl(_ chain: ChainType?) -> String {
+        if (chain == ChainType.KAVA_MAIN ) {
+            return KAVA_URL + "hard/total-borrowed"
+        } else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "hard/total-borrowed"
+        }
+        return ""
+    }
+    
+    static func depositHardPoolUrl(_ chain: ChainType?) -> String {
+        if (chain == ChainType.KAVA_MAIN ) {
+            return KAVA_URL + "hard/deposits"
+        } else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "hard/deposits"
+        }
+        return ""
+    }
+    
+    static func borrowHardPoolUrl(_ chain: ChainType?) -> String {
+        if (chain == ChainType.KAVA_MAIN ) {
+            return KAVA_URL + "hard/borrows"
+        } else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "hard/borrows"
+        }
+        return ""
+    }
+    
+    static func reservesHardPoolUrl(_ chain: ChainType?) -> String {
+        if (chain == ChainType.KAVA_MAIN ) {
+            return KAVA_URL + "hard/reserves"
+        } else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "hard/reserves"
+        }
+        return ""
+    }
+    
+    static func managerHardPoolUrl(_ chain: ChainType?) -> String {
+        if (chain == ChainType.KAVA_MAIN ) {
+            return KAVA_URL + "hard/accounts"
+        } else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "hard/accounts"
+        }
+        return ""
+    }
+    
+    static func incentiveUrl(_ chain: ChainType?) -> String {
+        if (chain == ChainType.KAVA_MAIN ) {
+            return KAVA_URL + "incentive/rewards"
+        } else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "incentive/rewards"
+        }
+        return ""
+    }
+    
+    static func paramBep3Url(_ chain: ChainType?) -> String {
+        if (chain == ChainType.KAVA_MAIN ) {
+            return KAVA_URL + "bep3/parameters"
+        } else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "bep3/parameters"
+        }
+        return ""
+    }
+    
+    static func supplyBep3Url(_ chain: ChainType?) -> String {
+        if (chain == ChainType.KAVA_MAIN || chain == ChainType.BINANCE_MAIN) {
+            return KAVA_URL + "bep3/supplies"
+        } else if (chain == ChainType.KAVA_TEST || chain == ChainType.BINANCE_TEST) {
+            return KAVA_TEST_URL + "bep3/supplies"
+        }
+        return ""
+    }
+    
+    static func swapIdBep3Url(_ chain: ChainType?, _ id: String) -> String {
+        if (chain == ChainType.KAVA_MAIN) {
+            return KAVA_URL + "bep3/swap/" + id
+        } else if (chain == ChainType.KAVA_TEST) {
+            return KAVA_TEST_URL + "bep3/swap/" + id
+        } else if (chain == ChainType.BINANCE_MAIN) {
+            return BNB_URL + "api/v1/atomic-swaps/" + id
+        } else if (chain == ChainType.BINANCE_TEST) {
+            return BNB_TEST_URL + "api/v1/atomic-swaps/" + id
+        }
+        return ""
+    }
+    
+    
+    //for Okex
+    static func balanceOkUrl(_ chain: ChainType?, _ address: String) -> String {
+        if (chain == ChainType.OKEX_MAIN ) {
+            return OKEX_URL + "accounts/" + address
+        } else if (chain == ChainType.OKEX_TEST) {
+            return OKEX_TEST_URL + "accounts/" + address
+        }
+        return ""
+    }
+    
+    static func stakingOkUrl(_ chain: ChainType, _ address: String) -> String {
+        if (chain == ChainType.OKEX_MAIN ) {
+            return OKEX_URL + "staking/delegators/" + address
+        } else if (chain == ChainType.OKEX_TEST) {
+            return OKEX_TEST_URL + "staking/delegators/" + address
+        }
+        return ""
+    }
+    
+    static func unbondingOkUrl(_ chain: ChainType, _ address: String) -> String {
+        if (chain == ChainType.OKEX_MAIN ) {
+            return OKEX_URL + "staking/delegators/" + address + "/unbonding_delegations"
+        } else if (chain == ChainType.OKEX_TEST) {
+            return OKEX_TEST_URL + "staking/delegators/" + address + "/unbonding_delegations"
+        }
+        return ""
+    }
+    
+    static func historyOkUrl(_ chain: ChainType?) -> String {
+        if (chain == ChainType.OKEX_MAIN ) {
+            return OKEX_URL + "transactions"
+        } else if (chain == ChainType.OKEX_TEST) {
+            return OKEX_TEST_URL + "transactions"
+        }
+        return ""
+    }
+    
+    static func tokenListOkUrl(_ chain: ChainType) -> String {
+        if (chain == ChainType.OKEX_MAIN ) {
+            return OKEX_URL + "tokens"
+        } else if (chain == ChainType.OKEX_TEST) {
+            return OKEX_TEST_URL + "tokens"
+        }
+        return ""
+    }
+    
+    static func tickerListOkUrl(_ chain: ChainType) -> String {
+        if (chain == ChainType.OKEX_MAIN ) {
+            return OKEX_URL + "tickers"
+        } else if (chain == ChainType.OKEX_TEST) {
+            return OKEX_TEST_URL + "tickers"
+        }
+        return ""
+    }
+    
+    
+    //starname
+    static func feesStarnameUrl(_ chain: ChainType) -> String {
+        if (chain == ChainType.IOV_MAIN ) {
+            return IOV_URL + "configuration/query/fees"
+        } else if (chain == ChainType.IOV_TEST) {
+            return IOV_TEST_URL + "configuration/query/fees"
+        }
+        return ""
+    }
+    
+    static func configStarnameUrl(_ chain: ChainType) -> String {
+        if (chain == ChainType.IOV_MAIN ) {
+            return IOV_URL + "configuration/query/configuration"
+        } else if (chain == ChainType.IOV_TEST) {
+            return IOV_TEST_URL + "configuration/query/configuration"
+        }
+        return ""
+    }
+    
+    static func resolveStarnameUrl(_ chain: ChainType?) -> String {
+        if (chain == ChainType.IOV_MAIN ) {
+            return IOV_URL + "starname/query/resolve"
+        } else if (chain == ChainType.IOV_TEST) {
+            return IOV_TEST_URL + "starname/query/resolve"
+        }
+        return ""
+    }
+    
+    static func checkDomainStarnameUrl(_ chain: ChainType?) -> String {
+        if (chain == ChainType.IOV_MAIN ) {
+            return IOV_URL + "starname/query/domainsWithOwner"
+        } else if (chain == ChainType.IOV_TEST) {
+            return IOV_TEST_URL + "starname/query/domainsWithOwner"
+        }
+        return ""
+    }
+    
+    static func checkAccountStarnameUrl(_ chain: ChainType?) -> String {
+        if (chain == ChainType.IOV_MAIN ) {
+            return IOV_URL + "starname/query/accountsWithOwner"
+        } else if (chain == ChainType.IOV_TEST) {
+            return IOV_TEST_URL + "starname/query/accountsWithOwner"
+        }
+        return ""
+    }
+    
+    static func domainInfoStarnameUrl(_ chain: ChainType?) -> String {
+        if (chain == ChainType.IOV_MAIN ) {
+            return IOV_URL + "starname/query/domainInfo"
+        } else if (chain == ChainType.IOV_TEST) {
+            return IOV_TEST_URL + "starname/query/domainInfo"
+        }
+        return ""
+    }
+    
+    
+    //band
+    static func oracleBandUrl() -> String {
+        return BAND_URL + "oracle/active_validators"
+    }
+
+    
+    
     
     
     static func accountHistory(_ chain: ChainType, _ address: String) -> String {
         var result = ""
         if (chain == ChainType.COSMOS_MAIN) {
-            result = COSMOS_MAIN_HISTORY + address
+            result = COSMOS_API + "v1/account/txs/" + address
         } else if (chain == ChainType.IRIS_MAIN) {
-            result = IRIS_MAIN_HISTORY + address
+            result = IRIS_API + "v1/account/txs/" + address
         } else if (chain == ChainType.AKASH_MAIN) {
-            result = AKASH_MAIN_HISTORY + address
+            result = AKASH_API + "v1/account/txs/" + address
         } else if (chain == ChainType.PERSIS_MAIN) {
-            result = PERSIS_MAIN_HISTORY + address
+            result = PERSIS_API + "v1/account/txs/" + address
         } else if (chain == ChainType.CRYPTO_MAIN) {
-<<<<<<< HEAD
-            result = CRYTO_MAIN_HISTORY + address
-=======
             result = CRYTO_API + "v1/account/txs/" + address
         }
         else if (chain == ChainType.KAVA_MAIN) {
@@ -1020,13 +1150,18 @@ class BaseNetWork {
             result = SIF_API + "v1/account/txs/" + address
         } else if (chain == ChainType.KI_MAIN) {
             result = KI_API + "v1/account/txs/" + address
->>>>>>> b2dab5419736fcb45af41a45373728510dc2b5ca
         }
         
+        
         else if (chain == ChainType.COSMOS_TEST) {
-            result = COSMOS_TEST_HISTORY + address
+            result = COSMOS_TEST_API + "v1/account/txs/" + address
         } else if (chain == ChainType.IRIS_TEST) {
-            result = IRIS_TEST_HISTORY + address
+            result = IRIS_TEST_API + "v1/account/txs/" + address
+        }
+        else if (chain == ChainType.KAVA_TEST) {
+            result = KAVA_TEST_API + "v1/account/txs/" + address
+        } else if (chain == ChainType.CERTIK_TEST) {
+            result = CERTIK_TEST_API + "v1/account/txs/" + address
         }
         return result
     }
@@ -1034,17 +1169,14 @@ class BaseNetWork {
     static func accountStakingHistory(_ chain: ChainType, _ address: String, _ valAddress: String) -> String {
         var result = ""
         if (chain == ChainType.COSMOS_MAIN) {
-            result = COSMOS_MAIN_HISTORY + address + "/" + valAddress
+            result = COSMOS_API + "v1/account/txs/" + address + "/" + valAddress
         } else if (chain == ChainType.IRIS_MAIN) {
-            result = IRIS_MAIN_HISTORY + address + "/" + valAddress
+            result = IRIS_API + "v1/account/txs/" + address + "/" + valAddress
         } else if (chain == ChainType.AKASH_MAIN) {
-            result = AKASH_MAIN_HISTORY + address + "/" + valAddress
+            result = AKASH_API + "v1/account/txs/" + address + "/" + valAddress
         } else if (chain == ChainType.PERSIS_MAIN) {
-            result = PERSIS_MAIN_HISTORY + address + "/" + valAddress
+            result = PERSIS_API + "v1/account/txs/" + address + "/" + valAddress
         } else if (chain == ChainType.CRYPTO_MAIN) {
-<<<<<<< HEAD
-            result = CRYTO_MAIN_HISTORY + address + "/" + valAddress
-=======
             result = CRYTO_API + "v1/account/txs/" + address + "/" + valAddress
         }
         else if (chain == ChainType.KAVA_MAIN) {
@@ -1063,13 +1195,17 @@ class BaseNetWork {
             result = SIF_API + "v1/account/txs/" + address + "/" + valAddress
         } else if (chain == ChainType.KI_MAIN) {
             result = KI_API + "v1/account/txs/" + address + "/" + valAddress
->>>>>>> b2dab5419736fcb45af41a45373728510dc2b5ca
         }
         
         else if (chain == ChainType.COSMOS_TEST) {
-            result = COSMOS_TEST_HISTORY + address + "/" + valAddress
+            result = COSMOS_TEST_API + "v1/account/txs/" + address + "/" + valAddress
         } else if (chain == ChainType.IRIS_TEST) {
-            result = IRIS_TEST_HISTORY + address + "/" + valAddress
+            result = IRIS_TEST_API + "v1/account/txs/" + address + "/" + valAddress
+        }
+        else if (chain == ChainType.KAVA_TEST) {
+            result = KAVA_TEST_API + "v1/account/txs/" + address + "/" + valAddress
+        } else if (chain == ChainType.CERTIK_TEST) {
+            result = CERTIK_TEST_API + "v1/account/txs/" + address + "/" + valAddress
         }
         return result
     }
@@ -1114,4 +1250,3 @@ class BaseNetWork {
     }
     
 }
-
