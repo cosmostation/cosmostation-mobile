@@ -176,6 +176,12 @@ class MainTabTokenViewController: BaseViewController, UITableViewDelegate, UITab
             titleAlarmBtn.isHidden = true
             kavaOracle.isHidden = true
             totalCard.backgroundColor = TRANS_BG_COLOR_SIF
+        } else if (chainType! == ChainType.KI_MAIN) {
+            titleChainImg.image = UIImage(named: "chainKifoundation")
+            titleChainName.text = "(Ki Mainnet)"
+            titleAlarmBtn.isHidden = true
+            kavaOracle.isHidden = true
+            totalCard.backgroundColor = TRANS_BG_COLOR_KI
         }
         
         else if (chainType! == ChainType.COSMOS_TEST) {
@@ -397,6 +403,12 @@ class MainTabTokenViewController: BaseViewController, UITableViewDelegate, UITab
             totalAmount.attributedText = WUtils.displayAmount2(allRowan.stringValue, totalAmount.font, 18, 6)
             totalValue.attributedText = WUtils.dpTokenValue(allRowan, BaseData.instance.getLastPrice(), 18, totalValue.font)
             
+        } else if (chainType! == ChainType.KI_MAIN) {
+            self.tokenCnt.text = String(mainTabVC.mBalances.count)
+            let allKi = WUtils.getAllMainAssetOld(KI_MAIN_DENOM)
+            totalAmount.attributedText = WUtils.displayAmount2(allKi.stringValue, totalAmount.font, 6, 6)
+            totalValue.attributedText = WUtils.dpTokenValue(allKi, BaseData.instance.getLastPrice(), 6, totalValue.font)
+            
         }
         
         else if (chainType! == ChainType.COSMOS_MAIN) {
@@ -487,6 +499,8 @@ class MainTabTokenViewController: BaseViewController, UITableViewDelegate, UITab
             return onSetCrytoItems(tableView, indexPath)
         } else if (chainType! == ChainType.SIF_MAIN) {
             return onSetSifItems(tableView, indexPath)
+        } else if (chainType! == ChainType.KI_MAIN) {
+            return onSetKiItems(tableView, indexPath)
         } else if (chainType! == ChainType.COSMOS_TEST) {
             return onSetCosmosTestItems(tableView, indexPath)
         } else if (chainType! == ChainType.IRIS_TEST) {
@@ -977,6 +991,24 @@ class MainTabTokenViewController: BaseViewController, UITableViewDelegate, UITab
             // TODO no this case yet!
             cell?.tokenImg.image = UIImage(named: "tokenIc")
             cell?.tokenSymbol.textColor = UIColor.white
+        }
+        return cell!
+    }
+    
+    func onSetKiItems(_ tableView: UITableView, _ indexPath: IndexPath) -> UITableViewCell {
+        let cell:TokenCell? = tableView.dequeueReusableCell(withIdentifier:"TokenCell") as? TokenCell
+        let balance = mainTabVC.mBalances[indexPath.row]
+        if (balance.balance_denom == KI_MAIN_DENOM) {
+            cell?.tokenImg.image = UIImage(named: "tokenKifoundation")
+            cell?.tokenSymbol.text = "XKI"
+            cell?.tokenSymbol.textColor = COLOR_KI
+            cell?.tokenTitle.text = "(" + balance.balance_denom + ")"
+            cell?.tokenDescription.text = "KiChain Staking Token"
+            
+            let allKi = WUtils.getAllMainAssetOld(KI_MAIN_DENOM)
+            cell?.tokenAmount.attributedText = WUtils.displayAmount2(allKi.stringValue, cell!.tokenAmount.font, 6, 6)
+            cell?.tokenValue.attributedText = WUtils.dpTokenValue(allKi, BaseData.instance.getLastPrice(), 6, cell!.tokenValue.font)
+            
         }
         return cell!
     }
