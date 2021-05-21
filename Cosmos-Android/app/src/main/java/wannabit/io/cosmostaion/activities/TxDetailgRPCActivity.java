@@ -191,6 +191,7 @@ public class TxDetailgRPCActivity extends BaseActivity implements View.OnClickLi
         private static final int TYPE_TX_WITHDRAW_LEASE = 12;
         private static final int TYPE_TX_CREATE_DEPLOYMENT = 13;
         private static final int TYPE_TX_CLOSE_DEPLOYMENT = 14;
+        private static final int TYPE_TX_IBC_TRANSFER = 15;
         private static final int TYPE_TX_UNKNOWN = 999;
 
         @NonNull
@@ -239,6 +240,9 @@ public class TxDetailgRPCActivity extends BaseActivity implements View.OnClickLi
                 return new TxCreateDeploymentHolder(getLayoutInflater().inflate(R.layout.item_tx_create_deployment, viewGroup, false));
 
             } else if (viewType == TYPE_TX_CLOSE_DEPLOYMENT) {
+                return new TxCloseDeploymentHolder(getLayoutInflater().inflate(R.layout.item_tx_close_deployment, viewGroup, false));
+
+            } else if (viewType == TYPE_TX_IBC_TRANSFER) {
                 return new TxCloseDeploymentHolder(getLayoutInflater().inflate(R.layout.item_tx_close_deployment, viewGroup, false));
 
             }

@@ -32,7 +32,7 @@
     <string name="str_no">No</string>
     <string name="str_yes">Yes</string>
     <string name="str_next">다음</string>
-    <string name="str_refresh">새로고</string>
+    <string name="str_refresh">새로고침</string>
     <string name="str_settings">Settings</string>
     <string name="str_sorting">정열</string>
     <string name="str_qr">QR 코드</string>
@@ -813,6 +813,14 @@
     <string name="str_deposit">예금 하기</string>
     <string name="str_withdraw">출금 하기</string>
     <string name="str_withdrawing">출금중 수량</string>
+    <string name="str_dseq">dseq</string>
+    <string name="str_gseq">gseq</string>
+    <string name="str_oseq">oseq</string>
+    <string name="str_deployment_id">배포 ID</string>
+    <string name="str_version_hash">Version 해쉬</string>
+    <string name="str_deployment_deposit">보상금</string>
+    <string name="str_ibc_sender">발송인</string>
+    <string name="str_ibc_receiver">수신인</string>
     <string name="str_vote_for_validator">검증인 투표</string>
     <string name="str_name_service">스타네임 서비스</string>
     <string name="str_starname_service">Starname 서비스</string>
@@ -1188,18 +1196,14 @@
     <string name="tx_create_deployment">배포 열기</string>
     <string name="tx_close_deployment">배포 닫기</string>
     <string name="tx_update_deployment">배포 업데이트</string>
-    <string name="tx_create_Certificate">인증서 생성</string>
-    <string name="tx_revoke_Certificate">인증서 해지</string>
+    <string name="tx_create_certificate">인증서 생성</string>
+    <string name="tx_revoke_certificate">인증서 해지</string>
+    <string name="tx_ibc_update_client">IBC 클라이언트\n업데이트</string>
+    <string name="tx_ibc_transfer">IBC 전송</string>
     <string name="tx_reinvest">이자 즉시 위임</string>
     <string name="tx_new_order">새 주문</string>
     <string name="tx_Cancel_order">주문 취소</string>
     <string name="tx_issue_token">토큰 발행</string>
-    <string name="tx_dseq">dseq</string>
-    <string name="tx_gseq">gseq</string>
-    <string name="tx_oseq">oseq</string>
-    <string name="tx_deployment_id">배포 ID</string>
-    <string name="tx_version_hash">Version 해쉬</string>
-    <string name="tx_deployment_deposit">보상금</string>
     <string name="tx_known">알수없음</string>
 
     <string name="tx_kava_post_price">가격 정보 갱신</string>
