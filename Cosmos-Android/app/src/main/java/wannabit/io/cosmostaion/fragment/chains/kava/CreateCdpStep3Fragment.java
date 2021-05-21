@@ -82,7 +82,7 @@ public class CreateCdpStep3Fragment extends BaseFragment implements View.OnClick
     public void onRefreshTab() {
         final String cDenom = getCParam().denom;
         final String pDenom = getCParam().debt_limit.denom;
-        BigDecimal feeAmount = new BigDecimal(getSActivity().mFee.amount.get(0).amount);
+        BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
 
 //        mCollateralAmountTitle.setText(WDp.DpCollateralTitle(getContext(), cDenom.toUpperCase()));
         WDp.showCoinDp(getContext(), cDenom, getSActivity().toCollateralAmount.toPlainString(), mCollateralDenom, mCollateralAmount, getSActivity().mBaseChain);
@@ -95,7 +95,7 @@ public class CreateCdpStep3Fragment extends BaseFragment implements View.OnClick
         mPrincipalValue.setText(WDp.getDpRawDollor(getContext(), principalValue, 2));
 
         WDp.showCoinDp(getContext(), TOKEN_KAVA, feeAmount.toPlainString(), mFeesDenom, mFeesAmount, getSActivity().mBaseChain);
-        BigDecimal kavaValue = feeAmount.movePointLeft(WUtil.getKavaCoinDecimal(TOKEN_KAVA)).multiply(getBaseDao().getLastKavaDollorTic()).setScale(2, RoundingMode.DOWN);
+        BigDecimal kavaValue = WDp.usdValue(getBaseDao(), TOKEN_KAVA, feeAmount, 6);
         mFeeValue.setText(WDp.getDpRawDollor(getContext(), kavaValue, 2));
 
 
@@ -108,7 +108,7 @@ public class CreateCdpStep3Fragment extends BaseFragment implements View.OnClick
         mLiquidationPriceTitle.setText(String.format(getString(R.string.str_liquidation_title3), cDenom.toUpperCase()));
         mLiquidationPrice.setText(WDp.getDpRawDollor(getContext(), getSActivity().mLiquidationPrice.toPlainString(),  4));
 
-        mMemo.setText(getSActivity().mMemo);
+        mMemo.setText(getSActivity().mTxMemo);
     }
 
     @Override
