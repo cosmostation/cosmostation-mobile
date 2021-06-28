@@ -126,7 +126,7 @@ public class BaseConstant {
     public final static int TASK_FETCH_MY_STARNAME_DOMAIN               = 2091;
 //    public final static int TASK_FETCH_STARNAME_FEE                     = 2092;
 //    public final static int TASK_FETCH_STARNAME_CONFIG                  = 2093;
-    public final static int TASK_GEN_TX_REGISTER_DOMAIN                 = 2094;
+//    public final static int TASK_GEN_TX_REGISTER_DOMAIN                 = 2094;
     public final static int TASK_GEN_TX_REGISTER_ACCOUNT                = 2095;
     public final static int TASK_FETCH_STARNAME_RESOLVE                 = 2096;
 //    public final static int TASK_FETCH_STARNAME_DOMAIN_INFO             = 2097;
@@ -216,6 +216,8 @@ public class BaseConstant {
     public final static int TASK_GRPC_BROAD_REINVEST                    = 4305;
     public final static int TASK_GRPC_BROAD_REWARD_ADDRESS_CHANGE       = 4306;
     public final static int TASK_GRPC_BROAD_VOTE                        = 4307;
+
+    public final static int TASK_GRPC_GEN_TX_REGISTER_DOMAIN            = 4308;
 
     public final static int TASK_GRPC_SIMULATE_DELEGATE                 = 4500;
     public final static int TASK_GRPC_SIMULATE_UNDELEGATE               = 4501;
@@ -539,7 +541,7 @@ public class BaseConstant {
     public final static String BAND_GAS_AMOUNT_ADDRESS_CHANGE           = "100000";
     public final static String BAND_GAS_AMOUNT_VOTE                     = "100000";
 
-    public final static String IOV_GAS_RATE_AVERAGE                     = "1.00";
+//    public final static String IOV_GAS_RATE_AVERAGE                     = "1.00";
     public final static String IOV_GAS_AMOUNT_SEND                      = "100000";
     public final static String IOV_GAS_AMOUNT_STAKE                     = "200000";
     public final static String IOV_GAS_AMOUNT_REDELEGATE                = "300000";
@@ -640,6 +642,10 @@ public class BaseConstant {
     public final static String BAND_GAS_RATE_TINY                       = "0.000";
     public final static String BAND_GAS_RATE_LOW                        = "0.0025";
     public final static String BAND_GAS_RATE_AVERAGE                    = "0.025";
+
+    public final static String STARNAME_GAS_RATE_TINY                   = "1.00";
+    public final static String STARNAME_GAS_RATE_LOW                    = "1.00";
+    public final static String STARNAME_GAS_RATE_AVERAGE                = "1.00";
 
     public final static String V1_GAS_AMOUNT_LOW                        = "100000";
     public final static String V1_GAS_AMOUNT_MID                        = "200000";
