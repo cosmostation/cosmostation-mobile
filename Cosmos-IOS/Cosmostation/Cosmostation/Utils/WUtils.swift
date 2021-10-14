@@ -3369,6 +3369,12 @@ public class WUtils {
                 result = NSDecimalNumber.init(string: String(SIF_GAS_AMOUNT_VOTE))
             } else if (type == TASK_IBC_TRANSFER) {
                 result = NSDecimalNumber.init(string: String(SIF_GAS_AMOUNT_IBC_SEND))
+            } else if (type == SIF_MSG_TYPE_CLAIM_INCENTIVE) {
+                result = NSDecimalNumber.init(string: String(SIF_GAS_AMOUNT_INCENTIVE))
+            } else if (type == SIF_MSG_TYPE_ADD_LP || type == SIF_MSG_TYPE_REMOVE_LP) {
+                result = NSDecimalNumber.init(string: String(SIF_GAS_AMOUNT_LP))
+            } else if (type == SIF_MSG_TYPE_SWAP_CION) {
+                result = NSDecimalNumber.init(string: String(SIF_GAS_AMOUNT_SWAP))
             }
             
         } else if (chain == ChainType.KI_MAIN) {

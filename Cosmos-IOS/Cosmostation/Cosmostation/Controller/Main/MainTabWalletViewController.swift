@@ -705,6 +705,7 @@ class MainTabWalletViewController: BaseViewController, UITableViewDelegate, UITa
         } else if (indexPath.row == 1) {
             let cell = tableView.dequeueReusableCell(withIdentifier:"WalletSifIncentiveCell") as? WalletSifIncentiveCell
             cell?.updateView(account, chainType)
+            cell?.actionGetIncentive = { self.onClickSifIncentive() }
             return cell!
             
         } else if (indexPath.row == 2) {
@@ -1342,12 +1343,34 @@ class MainTabWalletViewController: BaseViewController, UITableViewDelegate, UITa
     }
     
     func onClickGravityDex() {
-        print("onClickGravityDex")
-//        self.onShowToast(NSLocalizedString("prepare", comment: ""))
         let gravityDappVC = UIStoryboard(name: "Gravity", bundle: nil).instantiateViewController(withIdentifier: "GravityDAppViewController") as! GravityDAppViewController
         gravityDappVC.hidesBottomBarWhenPushed = true
         self.navigationItem.title = ""
         self.navigationController?.pushViewController(gravityDappVC, animated: true)
+    }
+    
+    func onClickSifIncentive() {
+        print("onClickSifIncentive")
+        if (account?.account_has_private == false) {
+            self.onShowAddMenomicDialog()
+            return
+        }
+        if let lmCurrentAmount = BaseData.instance.mSifLmIncentive?.user?.totalClaimableCommissionsAndClaimableRewards {
+            if (lmCurrentAmount <= 0) {
+                self.onShowToast(NSLocalizedString("error_no_incentive_to_claim", comment: ""))
+                return
+            }
+            let mainDenom = WUtils.getMainDenom(chainType)
+            let feeAmount = WUtils.getEstimateGasFeeAmount(chainType!, SIF_MSG_TYPE_CLAIM_INCENTIVE, 0)
+            if (BaseData.instance.getAvailableAmount_gRPC(mainDenom).compare(feeAmount).rawValue <= 0) {
+                self.onShowToast(NSLocalizedString("error_not_enough_fee", comment: ""))
+                return
+            }
+            //TODO Start claim
+            
+        } else {
+            self.onShowToast(NSLocalizedString("error_no_incentive_to_claim", comment: ""))
+        }
     }
     
     func onClickAprHelp() {
