@@ -700,6 +700,7 @@ class MainTabWalletViewController: BaseViewController, UITableViewDelegate, UITa
             cell?.updateView(account, chainType)
             cell?.actionDelegate = { self.onClickValidatorList() }
             cell?.actionVote = { self.onClickVoteList() }
+            cell?.actionDex = { self.onClickSifDex() }
             return cell!
             
         } else if (indexPath.row == 1) {
@@ -1371,6 +1372,10 @@ class MainTabWalletViewController: BaseViewController, UITableViewDelegate, UITa
         } else {
             self.onShowToast(NSLocalizedString("error_no_incentive_to_claim", comment: ""))
         }
+    }
+    
+    func onClickSifDex() {
+        print("onClickSifDex")
     }
     
     func onClickAprHelp() {
