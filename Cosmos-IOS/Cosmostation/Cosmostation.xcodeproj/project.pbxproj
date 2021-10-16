@@ -961,6 +961,11 @@
 		28E746B825AD76ED004B2C64 /* OkPromotionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28E746B625AD76ED004B2C64 /* OkPromotionCell.xib */; };
 		28E8FAEB2716F190005EAA9B /* SelectTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E8FAE92716F190005EAA9B /* SelectTextCell.swift */; };
 		28E8FAEC2716F190005EAA9B /* SelectTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28E8FAEA2716F190005EAA9B /* SelectTextCell.xib */; };
+		28E8FAEF2719C227005EAA9B /* SifChainDex.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28E8FAEE2719C226005EAA9B /* SifChainDex.storyboard */; };
+		28E8FAF12719C265005EAA9B /* SifDexDAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E8FAF02719C265005EAA9B /* SifDexDAppViewController.swift */; };
+		28E8FAF32719C279005EAA9B /* SifDexSwapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E8FAF22719C279005EAA9B /* SifDexSwapViewController.swift */; };
+		28E8FAF52719C28F005EAA9B /* SifDexEthPoolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E8FAF42719C28F005EAA9B /* SifDexEthPoolViewController.swift */; };
+		28E8FAF72719C29F005EAA9B /* SifDexIbcPoolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E8FAF62719C29F005EAA9B /* SifDexIbcPoolViewController.swift */; };
 		28EEEC8926DA548C002DDC4A /* KavaSwapPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EEEC8826DA548C002DDC4A /* KavaSwapPool.swift */; };
 		28EEEC8B26DA55E7002DDC4A /* KavaSwapParam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EEEC8A26DA55E7002DDC4A /* KavaSwapParam.swift */; };
 		28EEEC8D26DA5747002DDC4A /* KavaSwapDeposit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EEEC8C26DA5747002DDC4A /* KavaSwapDeposit.swift */; };
@@ -2132,6 +2137,11 @@
 		28E746B625AD76ED004B2C64 /* OkPromotionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OkPromotionCell.xib; sourceTree = "<group>"; };
 		28E8FAE92716F190005EAA9B /* SelectTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTextCell.swift; sourceTree = "<group>"; };
 		28E8FAEA2716F190005EAA9B /* SelectTextCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectTextCell.xib; sourceTree = "<group>"; };
+		28E8FAEE2719C226005EAA9B /* SifChainDex.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SifChainDex.storyboard; sourceTree = "<group>"; };
+		28E8FAF02719C265005EAA9B /* SifDexDAppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SifDexDAppViewController.swift; sourceTree = "<group>"; };
+		28E8FAF22719C279005EAA9B /* SifDexSwapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SifDexSwapViewController.swift; sourceTree = "<group>"; };
+		28E8FAF42719C28F005EAA9B /* SifDexEthPoolViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SifDexEthPoolViewController.swift; sourceTree = "<group>"; };
+		28E8FAF62719C29F005EAA9B /* SifDexIbcPoolViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SifDexIbcPoolViewController.swift; sourceTree = "<group>"; };
 		28EEEC8826DA548C002DDC4A /* KavaSwapPool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KavaSwapPool.swift; sourceTree = "<group>"; };
 		28EEEC8A26DA55E7002DDC4A /* KavaSwapParam.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KavaSwapParam.swift; sourceTree = "<group>"; };
 		28EEEC8C26DA5747002DDC4A /* KavaSwapDeposit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KavaSwapDeposit.swift; sourceTree = "<group>"; };
@@ -3521,6 +3531,18 @@
 			path = osmosis;
 			sourceTree = "<group>";
 		};
+		28E8FAED2719C20D005EAA9B /* sif */ = {
+			isa = PBXGroup;
+			children = (
+				28E8FAEE2719C226005EAA9B /* SifChainDex.storyboard */,
+				28E8FAF02719C265005EAA9B /* SifDexDAppViewController.swift */,
+				28E8FAF22719C279005EAA9B /* SifDexSwapViewController.swift */,
+				28E8FAF42719C28F005EAA9B /* SifDexEthPoolViewController.swift */,
+				28E8FAF62719C29F005EAA9B /* SifDexIbcPoolViewController.swift */,
+			);
+			path = sif;
+			sourceTree = "<group>";
+		};
 		51090F06A9DC4E886F628890 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -3731,6 +3753,7 @@
 		E1945E40222E7FB000A1436F /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				28E8FAED2719C20D005EAA9B /* sif */,
 				28A97CAA26DE452F0085FD0E /* gravity */,
 				284291A6264BC2FF00130651 /* token */,
 				28B785AE26B79B16009F755F /* rizon */,
@@ -4278,6 +4301,7 @@
 				287D746A26A52BB800532E01 /* ExitPool0ViewController.xib in Resources */,
 				E103DAB9228127D8006C2146 /* ValidatorDetailMyActionCell.xib in Resources */,
 				28D372B1254C07470071B136 /* RegistAccountCheckCell.xib in Resources */,
+				28E8FAEF2719C227005EAA9B /* SifChainDex.storyboard in Resources */,
 				2889FD6E2603378900CA9896 /* TxHardWithdrawCell.xib in Resources */,
 				282BDFE724A5BCCB00D3A5D4 /* WcCancelPopup.xib in Resources */,
 				28D372A6254BFCD70071B136 /* RegisterAccount1ViewController.xib in Resources */,
@@ -4427,6 +4451,7 @@
 				28EEECAC26DAE9B4002DDC4A /* KavaSwapExit0ViewController.swift in Sources */,
 				E1406FC02260643200D9440C /* BlockInfo.swift in Sources */,
 				284FBC7426DB961A00403FE2 /* DenomsToClaim.swift in Sources */,
+				28E8FAF32719C279005EAA9B /* SifDexSwapViewController.swift in Sources */,
 				2887BA5326DE278700CDA415 /* shentu_oracle_v1alpha1_query.pb.swift in Sources */,
 				0497586C2685AA0E0039872C /* cosmwasm_wasm_v1beta1_proposal.pb.swift in Sources */,
 				283F3AE6265E283800DF1D93 /* tokenswap_genesis.pb.swift in Sources */,
@@ -4581,6 +4606,7 @@
 				287AC59F25FDF7250070837E /* akash_audit_v1beta1_query.pb.swift in Sources */,
 				287AC66125FDF7260070837E /* cosmos_distribution_v1beta1_tx.pb.swift in Sources */,
 				E16D9B24224A083E0019B7BB /* KeyboardViewController.swift in Sources */,
+				28E8FAF52719C28F005EAA9B /* SifDexEthPoolViewController.swift in Sources */,
 				289EF83326824E4700F90AC1 /* osmosis_mint_v1beta1_query.grpc.swift in Sources */,
 				2887BA4026DE278700CDA415 /* shentu_cert_v1alpha1_cert.pb.swift in Sources */,
 				284D17DC2535573100C364F9 /* CdpListViewController.swift in Sources */,
@@ -4611,6 +4637,7 @@
 				28B37D2A26D8EAFE008AACD2 /* PoolListViewController.swift in Sources */,
 				28D372A0254BFCCA0071B136 /* RegisterAccount0ViewController.swift in Sources */,
 				28A37021269DA20600990696 /* gravity_v1_types.pb.swift in Sources */,
+				28E8FAF72719C29F005EAA9B /* SifDexIbcPoolViewController.swift in Sources */,
 				E1945E4A222E81B300A1436F /* MainTabHistoryViewController.swift in Sources */,
 				0497586E2685AA0E0039872C /* cosmwasm_wasm_v1beta1_ibc.pb.swift in Sources */,
 				28D14E6E2418B7F0002CD42E /* ApiHistory.swift in Sources */,
@@ -4777,6 +4804,7 @@
 				28474ECE241E06AF00AF5A81 /* TxCdpBorrowCell.swift in Sources */,
 				287AC5DE25FDF7260070837E /* htlc_tx.pb.swift in Sources */,
 				287AC5C125FDF7250070837E /* coinswap_tx.pb.swift in Sources */,
+				28E8FAF12719C265005EAA9B /* SifDexDAppViewController.swift in Sources */,
 				2887BA3E26DE278700CDA415 /* shentu_bank_v1alpha1_tx.pb.swift in Sources */,
 				E151B658224873640026B8C0 /* SettingTableViewController.swift in Sources */,
 				28105894262EE638009244B8 /* WalletSifCell.swift in Sources */,

@@ -1376,6 +1376,10 @@ class MainTabWalletViewController: BaseViewController, UITableViewDelegate, UITa
     
     func onClickSifDex() {
         print("onClickSifDex")
+        let sifDexDappVC = UIStoryboard(name: "SifChainDex", bundle: nil).instantiateViewController(withIdentifier: "SifDexDAppViewController") as! SifDexDAppViewController
+        sifDexDappVC.hidesBottomBarWhenPushed = true
+        self.navigationItem.title = ""
+        self.navigationController?.pushViewController(sifDexDappVC, animated: true)
     }
     
     func onClickAprHelp() {

@@ -556,6 +556,7 @@ support@cosmostation.io";
 "title_rizon_swap" = "이벤트 호라이즌";
 "title_dapp_gravity" = "그래비티 덱스";
 "title_ibc_transfer" = "IBC 전송";
+"title_sif_dex" = "시프 Dex";
 
 
 "proposal_type_basic" = "기본";

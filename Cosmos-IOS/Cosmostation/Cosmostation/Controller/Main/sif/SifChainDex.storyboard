@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Sif DexD App View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController storyboardIdentifier="SifDexDAppViewController" id="Y6W-OH-hqX" customClass="SifDexDAppViewController" customModule="Cosmostation" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_cosmos" translatesAutoresizingMaskIntoConstraints="NO" id="rLl-h0-xIe">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </imageView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="yFz-bh-Y6a">
+                                <rect key="frame" x="99.5" y="52" width="215" height="32"/>
+                                <segments>
+                                    <segment title="Swap"/>
+                                    <segment title="Eth Pool"/>
+                                    <segment title="IBC Pool"/>
+                                </segments>
+                                <color key="tintColor" red="0.61176470589999998" green="0.42352941179999998" blue="1" alpha="1" colorSpace="deviceRGB"/>
+                                <connections>
+                                    <action selector="switchView:" destination="Y6W-OH-hqX" eventType="valueChanged" id="Uj9-eZ-qKu"/>
+                                </connections>
+                            </segmentedControl>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1HE-V7-2EK">
+                                <rect key="frame" x="0.0" y="91" width="414" height="805"/>
+                                <connections>
+                                    <segue destination="hzU-Uk-DJN" kind="embed" id="Iyc-go-Zfd"/>
+                                </connections>
+                            </containerView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rth-uz-nrn">
+                                <rect key="frame" x="0.0" y="91" width="414" height="805"/>
+                                <connections>
+                                    <segue destination="1PR-JT-CHN" kind="embed" id="9zc-A8-V4U"/>
+                                </connections>
+                            </containerView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gQ6-NN-npJ">
+                                <rect key="frame" x="0.0" y="91" width="414" height="805"/>
+                                <connections>
+                                    <segue destination="ake-Cl-M6a" kind="embed" id="lh6-PB-uKA"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Rth-uz-nrn" firstAttribute="leading" secondItem="1HE-V7-2EK" secondAttribute="leading" id="3lJ-19-laH"/>
+                            <constraint firstItem="Rth-uz-nrn" firstAttribute="top" secondItem="1HE-V7-2EK" secondAttribute="top" id="8Ov-5m-Gc8"/>
+                            <constraint firstAttribute="bottom" secondItem="rLl-h0-xIe" secondAttribute="bottom" id="95K-kF-yst"/>
+                            <constraint firstItem="yFz-bh-Y6a" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="EwM-Sa-747"/>
+                            <constraint firstItem="gQ6-NN-npJ" firstAttribute="leading" secondItem="1HE-V7-2EK" secondAttribute="leading" id="J8Q-5D-ulf"/>
+                            <constraint firstItem="Rth-uz-nrn" firstAttribute="bottom" secondItem="1HE-V7-2EK" secondAttribute="bottom" id="K33-o5-BDs"/>
+                            <constraint firstItem="gQ6-NN-npJ" firstAttribute="bottom" secondItem="1HE-V7-2EK" secondAttribute="bottom" id="MbS-0v-4aE"/>
+                            <constraint firstItem="gQ6-NN-npJ" firstAttribute="trailing" secondItem="1HE-V7-2EK" secondAttribute="trailing" id="PVt-GA-L19"/>
+                            <constraint firstItem="yFz-bh-Y6a" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="8" id="Qfi-Yz-jBM"/>
+                            <constraint firstItem="1HE-V7-2EK" firstAttribute="bottom" secondItem="5EZ-qb-Rvc" secondAttribute="bottom" id="azQ-ve-ojv"/>
+                            <constraint firstItem="rLl-h0-xIe" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="dg4-XV-qak"/>
+                            <constraint firstItem="1HE-V7-2EK" firstAttribute="top" secondItem="yFz-bh-Y6a" secondAttribute="bottom" constant="8" id="elw-68-P6b"/>
+                            <constraint firstItem="gQ6-NN-npJ" firstAttribute="top" secondItem="1HE-V7-2EK" secondAttribute="top" id="kIU-Mr-cgn"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="1HE-V7-2EK" secondAttribute="trailing" id="l5c-6L-Qsi"/>
+                            <constraint firstItem="Rth-uz-nrn" firstAttribute="trailing" secondItem="1HE-V7-2EK" secondAttribute="trailing" id="lDs-we-AGd"/>
+                            <constraint firstAttribute="top" secondItem="rLl-h0-xIe" secondAttribute="top" id="mRb-hp-Kz9"/>
+                            <constraint firstItem="1HE-V7-2EK" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="p2J-Ee-St5"/>
+                            <constraint firstItem="rLl-h0-xIe" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="pnc-bn-shb"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="dAppsSegment" destination="yFz-bh-Y6a" id="JVS-dd-CJQ"/>
+                        <outlet property="ethPoolView" destination="Rth-uz-nrn" id="uoi-Cl-MBE"/>
+                        <outlet property="ibcPoolView" destination="gQ6-NN-npJ" id="1lz-ed-gGt"/>
+                        <outlet property="swapView" destination="1HE-V7-2EK" id="Azn-S0-Kgu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="131.8840579710145" y="116.51785714285714"/>
+        </scene>
+        <!--Sif Dex Swap View Controller-->
+        <scene sceneID="AtY-Xv-Efe">
+            <objects>
+                <viewController id="hzU-Uk-DJN" customClass="SifDexSwapViewController" customModule="Cosmostation" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="id4-3J-8a3">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="805"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="83u-8A-PVx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1425" y="965"/>
+        </scene>
+        <!--Sif Dex Eth Pool View Controller-->
+        <scene sceneID="htA-bm-1Hz">
+            <objects>
+                <viewController id="1PR-JT-CHN" customClass="SifDexEthPoolViewController" customModule="Cosmostation" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="DbB-0D-kPn">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="805"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="L5O-73-cfE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-283" y="955"/>
+        </scene>
+        <!--Sif Dex Ibc Pool View Controller-->
+        <scene sceneID="YHf-zt-edx">
+            <objects>
+                <viewController id="ake-Cl-M6a" customClass="SifDexIbcPoolViewController" customModule="Cosmostation" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="bTv-Ai-3Rs">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="805"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SxW-6y-lPQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="691" y="955"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="bg_cosmos" width="360" height="740"/>
+    </resources>
+</document>
