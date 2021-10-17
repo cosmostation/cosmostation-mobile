@@ -455,6 +455,17 @@ class StepGenTxViewController: UIPageViewController, UIPageViewControllerDelegat
                     StepEventHorizon1ViewController(nibName: "StepEventHorizon1ViewController", bundle: nil)]
         }
         
+        else if (mType == SIF_MSG_TYPE_CLAIM_INCENTIVE) {
+            return [SifIncentive0ViewController(nibName: "SifIncentive0ViewController", bundle: nil),
+                    self.newVc(viewController: "StepMemoViewController"),
+                    StepFeeGrpcViewController(nibName: "StepFeeGrpcViewController", bundle: nil),
+                    SifIncentive3ViewController(nibName: "SifIncentive3ViewController", bundle: nil)]
+        }
+//        else if (mType == SIF_MSG_TYPE_ADD_LP) {
+//        } else if (mType == SIF_MSG_TYPE_REMOVE_LP) {
+//        } else if (mType == SIF_MSG_TYPE_SWAP_CION) {
+//        }
+        
         
         else {
             if (WUtils.isGRPC(chainType!)) {

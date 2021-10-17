@@ -270,12 +270,31 @@ class TransactionViewController: UIViewController {
             stepDescription.text = NSLocalizedString("str_ibc_transfer_step_0", comment: "")
             stepImg.image = UIImage.init(named: "step1Img")
             self.titleLabel.text =  NSLocalizedString("title_ibc_transfer", comment: "")
-        }
-        
-        else if (mType == TASK_RIZON_EVENT_HORIZON) {
+            
+        } else if (mType == TASK_RIZON_EVENT_HORIZON) {
             stepDescription.text = NSLocalizedString("str_rizon_swap_step_0", comment: "")
             stepImg.image = UIImage.init(named: "2step1")
             self.titleLabel.text =  NSLocalizedString("title_rizon_swap", comment: "")
+            
+        } else if (mType == SIF_MSG_TYPE_CLAIM_INCENTIVE) {
+            stepDescription.text = NSLocalizedString("str_sif_incentive_step_0", comment: "")
+            stepImg.image = UIImage.init(named: "4StepImg1")
+            self.titleLabel.text =  NSLocalizedString("title_sif_incentive", comment: "")
+            
+        } else if (mType == SIF_MSG_TYPE_ADD_LP) {
+            stepDescription.text = NSLocalizedString("str_sif_add_lp_step_0", comment: "")
+            stepImg.image = UIImage.init(named: "4StepImg1")
+            self.titleLabel.text =  NSLocalizedString("title_pool_join", comment: "")
+            
+        } else if (mType == SIF_MSG_TYPE_REMOVE_LP) {
+            stepDescription.text = NSLocalizedString("str_sif_remove_lp_step_0", comment: "")
+            stepImg.image = UIImage.init(named: "4StepImg1")
+            self.titleLabel.text =  NSLocalizedString("title_pool_exit", comment: "")
+            
+        } else if (mType == SIF_MSG_TYPE_SWAP_CION) {
+            stepDescription.text = NSLocalizedString("str_sif_swap_step_0", comment: "")
+            stepImg.image = UIImage.init(named: "4StepImg1")
+            self.titleLabel.text =  NSLocalizedString("title_swap_token", comment: "")
             
         }
         
@@ -507,11 +526,26 @@ class TransactionViewController: UIViewController {
                 } else if (mType == TASK_IBC_TRANSFER) {
                     stepDescription.text = NSLocalizedString("str_ibc_transfer_step_0", comment: "")
                     stepImg.image = UIImage.init(named: "step1Img")
-                }
-                
-                else if (mType == TASK_RIZON_EVENT_HORIZON) {
+                    
+                } else if (mType == TASK_RIZON_EVENT_HORIZON) {
                     stepDescription.text = NSLocalizedString("str_rizon_swap_step_0", comment: "")
                     stepImg.image = UIImage.init(named: "2step1")
+                    
+                } else if (mType == SIF_MSG_TYPE_CLAIM_INCENTIVE) {
+                    stepDescription.text = NSLocalizedString("str_sif_incentive_step_0", comment: "")
+                    stepImg.image = UIImage.init(named: "4StepImg1")
+                    
+                } else if (mType == SIF_MSG_TYPE_ADD_LP) {
+                    stepDescription.text = NSLocalizedString("str_sif_add_lp_step_0", comment: "")
+                    stepImg.image = UIImage.init(named: "4StepImg1")
+                    
+                } else if (mType == SIF_MSG_TYPE_REMOVE_LP) {
+                    stepDescription.text = NSLocalizedString("str_sif_remove_lp_step_0", comment: "")
+                    stepImg.image = UIImage.init(named: "4StepImg1")
+                    
+                } else if (mType == SIF_MSG_TYPE_SWAP_CION) {
+                    stepDescription.text = NSLocalizedString("str_sif_swap_step_0", comment: "")
+                    stepImg.image = UIImage.init(named: "4StepImg1")
                     
                 }
                 
@@ -676,11 +710,26 @@ class TransactionViewController: UIViewController {
                 } else if (mType == TASK_IBC_TRANSFER) {
                     stepDescription.text = NSLocalizedString("str_ibc_transfer_step_1", comment: "")
                     stepImg.image = UIImage.init(named: "step2Img")
-                }
-                
-                else if (mType == TASK_RIZON_EVENT_HORIZON) {
+                    
+                } else if (mType == TASK_RIZON_EVENT_HORIZON) {
                     stepDescription.text = NSLocalizedString("str_rizon_swap_step_1", comment: "")
                     stepImg.image = UIImage.init(named: "2step2")
+                    
+                } else if (mType == SIF_MSG_TYPE_CLAIM_INCENTIVE) {
+                    stepDescription.text = NSLocalizedString("str_sif_incentive_step_1", comment: "")
+                    stepImg.image = UIImage.init(named: "4StepImg2")
+                    
+                } else if (mType == SIF_MSG_TYPE_ADD_LP) {
+                    stepDescription.text = NSLocalizedString("str_sif_add_lp_step_1", comment: "")
+                    stepImg.image = UIImage.init(named: "4StepImg2")
+                    
+                } else if (mType == SIF_MSG_TYPE_REMOVE_LP) {
+                    stepDescription.text = NSLocalizedString("str_sif_remove_lp_step_1", comment: "")
+                    stepImg.image = UIImage.init(named: "4StepImg2")
+                    
+                } else if (mType == SIF_MSG_TYPE_SWAP_CION) {
+                    stepDescription.text = NSLocalizedString("str_sif_swap_step_1", comment: "")
+                    stepImg.image = UIImage.init(named: "4StepImg2")
                     
                 }
                 
@@ -845,6 +894,23 @@ class TransactionViewController: UIViewController {
                 } else if (mType == TASK_IBC_TRANSFER) {
                     stepDescription.text = NSLocalizedString("str_ibc_transfer_step_2", comment: "")
                     stepImg.image = UIImage.init(named: "step3Img")
+                    
+                } else if (mType == SIF_MSG_TYPE_CLAIM_INCENTIVE) {
+                    stepDescription.text = NSLocalizedString("str_sif_incentive_step_2", comment: "")
+                    stepImg.image = UIImage.init(named: "4StepImg3")
+                    
+                } else if (mType == SIF_MSG_TYPE_ADD_LP) {
+                    stepDescription.text = NSLocalizedString("str_sif_add_lp_step_2", comment: "")
+                    stepImg.image = UIImage.init(named: "4StepImg3")
+                    
+                } else if (mType == SIF_MSG_TYPE_REMOVE_LP) {
+                    stepDescription.text = NSLocalizedString("str_sif_remove_lp_step_2", comment: "")
+                    stepImg.image = UIImage.init(named: "4StepImg3")
+                    
+                } else if (mType == SIF_MSG_TYPE_SWAP_CION) {
+                    stepDescription.text = NSLocalizedString("str_sif_swap_step_2", comment: "")
+                    stepImg.image = UIImage.init(named: "4StepImg3")
+                    
                 }
                 
                 
@@ -1008,6 +1074,23 @@ class TransactionViewController: UIViewController {
                 } else if (mType == TASK_IBC_TRANSFER) {
                     stepDescription.text = NSLocalizedString("str_ibc_transfer_step_3", comment: "")
                     stepImg.image = UIImage.init(named: "step4Img")
+                    
+                } else if (mType == SIF_MSG_TYPE_CLAIM_INCENTIVE) {
+                    stepDescription.text = NSLocalizedString("str_sif_incentive_step_3", comment: "")
+                    stepImg.image = UIImage.init(named: "4StepImg4")
+                    
+                } else if (mType == SIF_MSG_TYPE_ADD_LP) {
+                    stepDescription.text = NSLocalizedString("str_sif_add_lp_step_3", comment: "")
+                    stepImg.image = UIImage.init(named: "4StepImg4")
+                    
+                } else if (mType == SIF_MSG_TYPE_REMOVE_LP) {
+                    stepDescription.text = NSLocalizedString("str_sif_remove_lp_step_3", comment: "")
+                    stepImg.image = UIImage.init(named: "4StepImg4")
+                    
+                } else if (mType == SIF_MSG_TYPE_SWAP_CION) {
+                    stepDescription.text = NSLocalizedString("str_sif_swap_step_3", comment: "")
+                    stepImg.image = UIImage.init(named: "4StepImg4")
+                    
                 }
                 
             } else if (step == 4) {

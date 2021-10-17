@@ -1367,7 +1367,12 @@ class MainTabWalletViewController: BaseViewController, UITableViewDelegate, UITa
                 self.onShowToast(NSLocalizedString("error_not_enough_fee", comment: ""))
                 return
             }
-            //TODO Start claim
+            
+            let txVC = UIStoryboard(name: "GenTx", bundle: nil).instantiateViewController(withIdentifier: "TransactionViewController") as! TransactionViewController
+            txVC.mType = SIF_MSG_TYPE_CLAIM_INCENTIVE
+            txVC.hidesBottomBarWhenPushed = true
+            self.navigationItem.title = ""
+            self.navigationController?.pushViewController(txVC, animated: true)
             
         } else {
             self.onShowToast(NSLocalizedString("error_no_incentive_to_claim", comment: ""))

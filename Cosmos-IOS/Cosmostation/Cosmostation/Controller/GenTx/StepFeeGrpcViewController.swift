@@ -411,6 +411,19 @@ class StepFeeGrpcViewController: BaseViewController, PasswordViewDelegate {
                                                           BaseData.instance.getChainId(self.chainType))
         }
         
+        else if (pageHolderVC.mType == SIF_MSG_TYPE_CLAIM_INCENTIVE) {
+            return Signer.genSimulateSifIncentiveMsgTxgRPC(auth,
+                                                           self.account!.account_address,
+                                                           self.pageHolderVC.mFee!,
+                                                           self.pageHolderVC.mMemo!,
+                                                           privateKey, publicKey,
+                                                           BaseData.instance.getChainId(self.chainType))
+        }
+//        else if (pageHolderVC.mType == SIF_MSG_TYPE_ADD_LP) {
+//        } else if (pageHolderVC.mType == SIF_MSG_TYPE_REMOVE_LP) {
+//        } else if (pageHolderVC.mType == SIF_MSG_TYPE_SWAP_CION) {
+//        }
+        
         return nil
     }
 }

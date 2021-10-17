@@ -1313,6 +1313,46 @@ class Signer {
     }
     
     
+    static func genSignedSifIncentiveMsgTxgRPC(_ auth: Cosmos_Auth_V1beta1_QueryAccountResponse, _ userClaimAddress: String,
+                                               _ fee: Fee, _ memo: String, _ privateKey: Data, _ publicKey: Data, _ chainId: String) -> Cosmos_Tx_V1beta1_BroadcastTxRequest {
+        let claimIncentiveMsg = Sifnode_Dispensation_V1_MsgCreateUserClaim.with {
+            $0.userClaimAddress = userClaimAddress
+            $0.userClaimType = Sifnode_Dispensation_V1_DistributionType.liquidityMining
+        }
+        let anyMsg = Google_Protobuf2_Any.with {
+            $0.typeURL = "/sifnode.dispensation.v1.MsgCreateUserClaim"
+            $0.value = try! claimIncentiveMsg.serializedData()
+        }
+        let txBody = getGrpcTxBody([anyMsg], memo);
+        let signerInfo = getGrpcSignerInfo(auth, publicKey);
+        let authInfo = getGrpcAuthInfo(signerInfo, fee);
+        let rawTx = getGrpcRawTx(auth, txBody, authInfo, privateKey, chainId);
+        return Cosmos_Tx_V1beta1_BroadcastTxRequest.with {
+            $0.mode = Cosmos_Tx_V1beta1_BroadcastMode.async
+            $0.txBytes = try! rawTx.serializedData()
+        }
+    }
+    
+    static func genSimulateSifIncentiveMsgTxgRPC(_ auth: Cosmos_Auth_V1beta1_QueryAccountResponse, _ userClaimAddress: String,
+                                               _ fee: Fee, _ memo: String, _ privateKey: Data, _ publicKey: Data, _ chainId: String) -> Cosmos_Tx_V1beta1_SimulateRequest {
+        let claimIncentiveMsg = Sifnode_Dispensation_V1_MsgCreateUserClaim.with {
+            $0.userClaimAddress = userClaimAddress
+            $0.userClaimType = Sifnode_Dispensation_V1_DistributionType.liquidityMining
+        }
+        let anyMsg = Google_Protobuf2_Any.with {
+            $0.typeURL = "/sifnode.dispensation.v1.MsgCreateUserClaim"
+            $0.value = try! claimIncentiveMsg.serializedData()
+        }
+        let txBody = getGrpcTxBody([anyMsg], memo);
+        let signerInfo = getGrpcSignerInfo(auth, publicKey);
+        let authInfo = getGrpcAuthInfo(signerInfo, fee);
+        let simulateTx = getGrpcSimulTx(auth, txBody, authInfo, privateKey, chainId);
+        return Cosmos_Tx_V1beta1_SimulateRequest.with {
+            $0.tx = simulateTx
+        }
+    }
+    
+    
     static func getGrpcTxBody(_ msgAnys: Array<Google_Protobuf2_Any>, _ memo: String) -> Cosmos_Tx_V1beta1_TxBody {
         return Cosmos_Tx_V1beta1_TxBody.with {
             $0.memo = memo

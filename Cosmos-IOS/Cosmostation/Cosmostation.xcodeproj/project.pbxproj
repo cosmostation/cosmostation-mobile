@@ -272,6 +272,10 @@
 		2845AE49271C243A005AA537 /* sifnode_tokenregistry_v1_query.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2845AE44271C243A005AA537 /* sifnode_tokenregistry_v1_query.pb.swift */; };
 		2845AE4A271C243A005AA537 /* sifnode_tokenregistry_v1_query.grpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2845AE45271C243A005AA537 /* sifnode_tokenregistry_v1_query.grpc.swift */; };
 		2845AE4B271C243A005AA537 /* sifnode_tokenregistry_v1_types.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2845AE46271C243A005AA537 /* sifnode_tokenregistry_v1_types.pb.swift */; };
+		2845AE4F271C7116005AA537 /* SifIncentive0ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2845AE4D271C7116005AA537 /* SifIncentive0ViewController.swift */; };
+		2845AE50271C7116005AA537 /* SifIncentive0ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2845AE4E271C7116005AA537 /* SifIncentive0ViewController.xib */; };
+		2845AE53271C7127005AA537 /* SifIncentive3ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2845AE51271C7127005AA537 /* SifIncentive3ViewController.swift */; };
+		2845AE54271C7127005AA537 /* SifIncentive3ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2845AE52271C7127005AA537 /* SifIncentive3ViewController.xib */; };
 		2845D87D246FAE16007CD497 /* VoteDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2845D87C246FAE16007CD497 /* VoteDetailsViewController.swift */; };
 		2845D880246FAED7007CD497 /* VoteInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2845D87E246FAED7007CD497 /* VoteInfoTableViewCell.swift */; };
 		2845D881246FAED7007CD497 /* VoteInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2845D87F246FAED7007CD497 /* VoteInfoTableViewCell.xib */; };
@@ -1448,6 +1452,10 @@
 		2845AE44271C243A005AA537 /* sifnode_tokenregistry_v1_query.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sifnode_tokenregistry_v1_query.pb.swift; sourceTree = "<group>"; };
 		2845AE45271C243A005AA537 /* sifnode_tokenregistry_v1_query.grpc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sifnode_tokenregistry_v1_query.grpc.swift; sourceTree = "<group>"; };
 		2845AE46271C243A005AA537 /* sifnode_tokenregistry_v1_types.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sifnode_tokenregistry_v1_types.pb.swift; sourceTree = "<group>"; };
+		2845AE4D271C7116005AA537 /* SifIncentive0ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SifIncentive0ViewController.swift; sourceTree = "<group>"; };
+		2845AE4E271C7116005AA537 /* SifIncentive0ViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SifIncentive0ViewController.xib; sourceTree = "<group>"; };
+		2845AE51271C7127005AA537 /* SifIncentive3ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SifIncentive3ViewController.swift; sourceTree = "<group>"; };
+		2845AE52271C7127005AA537 /* SifIncentive3ViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SifIncentive3ViewController.xib; sourceTree = "<group>"; };
 		2845D87C246FAE16007CD497 /* VoteDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteDetailsViewController.swift; sourceTree = "<group>"; };
 		2845D87E246FAED7007CD497 /* VoteInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteInfoTableViewCell.swift; sourceTree = "<group>"; };
 		2845D87F246FAED7007CD497 /* VoteInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VoteInfoTableViewCell.xib; sourceTree = "<group>"; };
@@ -3052,6 +3060,17 @@
 			path = token;
 			sourceTree = "<group>";
 		};
+		2845AE4C271C70EB005AA537 /* sif */ = {
+			isa = PBXGroup;
+			children = (
+				2845AE4D271C7116005AA537 /* SifIncentive0ViewController.swift */,
+				2845AE4E271C7116005AA537 /* SifIncentive0ViewController.xib */,
+				2845AE51271C7127005AA537 /* SifIncentive3ViewController.swift */,
+				2845AE52271C7127005AA537 /* SifIncentive3ViewController.xib */,
+			);
+			path = sif;
+			sourceTree = "<group>";
+		};
 		284D179D2535556800C364F9 /* kava */ = {
 			isa = PBXGroup;
 			children = (
@@ -3627,6 +3646,7 @@
 		E171A067225AF71800C5756C /* GenTx */ = {
 			isa = PBXGroup;
 			children = (
+				2845AE4C271C70EB005AA537 /* sif */,
 				2894104E26FDB30A005BCBE4 /* ibc */,
 				28584B3F26E8696B00EE5719 /* gravity */,
 				28B785B826B8089A009F755F /* rizon */,
@@ -4108,6 +4128,7 @@
 				2827F4CB255B93240029AE1C /* WalletAkashCell.xib in Resources */,
 				2808FEE626BBFC6400DE5E9A /* TxMediCreateDidCell.xib in Resources */,
 				284FBC7E26DBE97200403FE2 /* TxSwapDepositCell.xib in Resources */,
+				2845AE54271C7127005AA537 /* SifIncentive3ViewController.xib in Resources */,
 				280524B5255CDA7D004D6172 /* StarnameWalletConnectViewController.xib in Resources */,
 				283EB77626C8148D00B9D28D /* TxUnlockTokenCell.xib in Resources */,
 				289E4DAC26E59263007C7C35 /* WalletUmeeCell.xib in Resources */,
@@ -4125,6 +4146,7 @@
 				282FF34E23F50E010028CC66 /* TxRedelegateCell.xib in Resources */,
 				28474ED1241E06AF00AF5A81 /* TxPostPriceCell.xib in Resources */,
 				2876AD5C240CE4A6005B33F4 /* TokenDetailUnbondingDetailCell.xib in Resources */,
+				2845AE50271C7116005AA537 /* SifIncentive0ViewController.xib in Resources */,
 				28E746B825AD76ED004B2C64 /* OkPromotionCell.xib in Resources */,
 				280E1F21254AC6340007BA7D /* ReplaceSelectChainViewController.xib in Resources */,
 				2889FD732603379A00CA9896 /* TxHardBorrowCell.xib in Resources */,
@@ -4496,6 +4518,7 @@
 				28156E7F25360B70006FF06C /* HardListCell.swift in Sources */,
 				28B7858326B3A7E4009F755F /* panacea_aol_v2_owner.pb.swift in Sources */,
 				28AABEC825F8CBBA0019091F /* HardModuleAccount.swift in Sources */,
+				2845AE4F271C7116005AA537 /* SifIncentive0ViewController.swift in Sources */,
 				283D2EAC24F56AFF00247424 /* OkUnbonding.swift in Sources */,
 				0428ACFE268AD31700EB438F /* BandOracleStatus.swift in Sources */,
 				287AC58F25FDF7250070837E /* akash_provider_v1beta1_genesis.pb.swift in Sources */,
@@ -4594,6 +4617,7 @@
 				E171A075225B091300C5756C /* StepGenTxViewController.swift in Sources */,
 				283439A12531D1CF00CCFADE /* MyDomainViewController.swift in Sources */,
 				28B7857026B3A7E4009F755F /* panacea_did_v2_tx.grpc.swift in Sources */,
+				2845AE53271C7127005AA537 /* SifIncentive3ViewController.swift in Sources */,
 				0497587E2685AA270039872C /* iov_starname_v1beta1_types.pb.swift in Sources */,
 				287AC5A925FDF7250070837E /* htlc_query.grpc.swift in Sources */,
 				287AC61025FDF7260070837E /* nft_genesis.pb.swift in Sources */,

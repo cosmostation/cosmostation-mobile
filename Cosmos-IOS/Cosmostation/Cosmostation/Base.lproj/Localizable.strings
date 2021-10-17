@@ -437,10 +437,22 @@
 "str_ibc_transfer_step_2" = "Enter to send amount";
 "str_ibc_transfer_step_3" = "Select transaction fee";
 "str_ibc_transfer_step_4" = "Check transaction detail";
-
-
-
-
+"str_sif_incentive_step_0" = "Check your incentive";
+"str_sif_incentive_step_1" = "Insert memo (optional)";
+"str_sif_incentive_step_2" = "Select transaction fee";
+"str_sif_incentive_step_3" = "Check transaction detail";
+"str_sif_add_lp_step_0" = "Insert amount to deposit";
+"str_sif_add_lp_step_1" = "Insert memo (optional)";
+"str_sif_add_lp_step_2" = "Select transaction fee";
+"str_sif_add_lp_step_3" = "Check transaction detail";
+"str_sif_remove_lp_step_0" = "Insert amount to withdraw";
+"str_sif_remove_lp_step_1" = "Insert memo (optional)";
+"str_sif_remove_lp_step_2" = "Select transaction fee";
+"str_sif_remove_lp_step_3" = "Check transaction detail";
+"str_sif_swap_step_0" = "Insert amount to swap";
+"str_sif_swap_step_1" = "Insert memo (optional)";
+"str_sif_swap_step_2" = "Select transaction fee";
+"str_sif_swap_step_3" = "Check transaction detail";
 "str_rizon_swap_step_0" = "Insert mnemonic for Hdac";
 "str_rizon_swap_step_1" = "Check transaction detail";
 
@@ -556,6 +568,7 @@ support@cosmostation.io";
 "title_dapp_gravity" = "Gravity Dex";
 "title_ibc_transfer" = "IBC Send";
 "title_sif_dex" = "SifChain Dex";
+"title_sif_incentive" = "Incentive Claim";
 
 
 "proposal_type_basic" = "Basic";
