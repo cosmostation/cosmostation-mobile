@@ -267,6 +267,11 @@
 		2842AB6E242C5C7200248EEB /* CdpLisyMyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2842AB6C242C5C7200248EEB /* CdpLisyMyCell.swift */; };
 		2842AB6F242C5C7200248EEB /* CdpLisyMyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2842AB6D242C5C7200248EEB /* CdpLisyMyCell.xib */; };
 		2842AB72242C7C8A00248EEB /* CdpListAllCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2842AB70242C7C8A00248EEB /* CdpListAllCell.swift */; };
+		2845AE47271C243A005AA537 /* sifnode_tokenregistry_v1_tx.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2845AE42271C2439005AA537 /* sifnode_tokenregistry_v1_tx.pb.swift */; };
+		2845AE48271C243A005AA537 /* sifnode_tokenregistry_v1_tx.grpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2845AE43271C2439005AA537 /* sifnode_tokenregistry_v1_tx.grpc.swift */; };
+		2845AE49271C243A005AA537 /* sifnode_tokenregistry_v1_query.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2845AE44271C243A005AA537 /* sifnode_tokenregistry_v1_query.pb.swift */; };
+		2845AE4A271C243A005AA537 /* sifnode_tokenregistry_v1_query.grpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2845AE45271C243A005AA537 /* sifnode_tokenregistry_v1_query.grpc.swift */; };
+		2845AE4B271C243A005AA537 /* sifnode_tokenregistry_v1_types.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2845AE46271C243A005AA537 /* sifnode_tokenregistry_v1_types.pb.swift */; };
 		2845D87D246FAE16007CD497 /* VoteDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2845D87C246FAE16007CD497 /* VoteDetailsViewController.swift */; };
 		2845D880246FAED7007CD497 /* VoteInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2845D87E246FAED7007CD497 /* VoteInfoTableViewCell.swift */; };
 		2845D881246FAED7007CD497 /* VoteInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2845D87F246FAED7007CD497 /* VoteInfoTableViewCell.xib */; };
@@ -1438,6 +1443,11 @@
 		2842AB6C242C5C7200248EEB /* CdpLisyMyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CdpLisyMyCell.swift; sourceTree = "<group>"; };
 		2842AB6D242C5C7200248EEB /* CdpLisyMyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CdpLisyMyCell.xib; sourceTree = "<group>"; };
 		2842AB70242C7C8A00248EEB /* CdpListAllCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CdpListAllCell.swift; sourceTree = "<group>"; };
+		2845AE42271C2439005AA537 /* sifnode_tokenregistry_v1_tx.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sifnode_tokenregistry_v1_tx.pb.swift; sourceTree = "<group>"; };
+		2845AE43271C2439005AA537 /* sifnode_tokenregistry_v1_tx.grpc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sifnode_tokenregistry_v1_tx.grpc.swift; sourceTree = "<group>"; };
+		2845AE44271C243A005AA537 /* sifnode_tokenregistry_v1_query.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sifnode_tokenregistry_v1_query.pb.swift; sourceTree = "<group>"; };
+		2845AE45271C243A005AA537 /* sifnode_tokenregistry_v1_query.grpc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sifnode_tokenregistry_v1_query.grpc.swift; sourceTree = "<group>"; };
+		2845AE46271C243A005AA537 /* sifnode_tokenregistry_v1_types.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sifnode_tokenregistry_v1_types.pb.swift; sourceTree = "<group>"; };
 		2845D87C246FAE16007CD497 /* VoteDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteDetailsViewController.swift; sourceTree = "<group>"; };
 		2845D87E246FAED7007CD497 /* VoteInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteInfoTableViewCell.swift; sourceTree = "<group>"; };
 		2845D87F246FAED7007CD497 /* VoteInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VoteInfoTableViewCell.xib; sourceTree = "<group>"; };
@@ -2535,6 +2545,11 @@
 				28B7859326B3A7EE009F755F /* sifnode_ethbridge_v1_tx.pb.swift */,
 				28B7858C26B3A7EC009F755F /* sifnode_ethbridge_v1_types.pb.swift */,
 				28B7858826B3A7EB009F755F /* sifnode_oracle_v1_types.pb.swift */,
+				2845AE45271C243A005AA537 /* sifnode_tokenregistry_v1_query.grpc.swift */,
+				2845AE44271C243A005AA537 /* sifnode_tokenregistry_v1_query.pb.swift */,
+				2845AE43271C2439005AA537 /* sifnode_tokenregistry_v1_tx.grpc.swift */,
+				2845AE42271C2439005AA537 /* sifnode_tokenregistry_v1_tx.pb.swift */,
+				2845AE46271C243A005AA537 /* sifnode_tokenregistry_v1_types.pb.swift */,
 				28B7856326B3A7E1009F755F /* panacea_aol_v2_genesis.pb.swift */,
 				28B7856B26B3A7E3009F755F /* panacea_aol_v2_owner.pb.swift */,
 				28B7855C26B3A7DF009F755F /* panacea_aol_v2_query.grpc.swift */,
@@ -4476,6 +4491,7 @@
 				287AC63325FDF7260070837E /* ibc_core_channel_v1_channel.pb.swift in Sources */,
 				E1945E42222E7FC800A1436F /* MainTabViewController.swift in Sources */,
 				28B785BB26B808CE009F755F /* StepEventHorizon0ViewController.swift in Sources */,
+				2845AE48271C243A005AA537 /* sifnode_tokenregistry_v1_tx.grpc.swift in Sources */,
 				287AC62725FDF7260070837E /* cosmos_tx_v1beta1_service.grpc.swift in Sources */,
 				28156E7F25360B70006FF06C /* HardListCell.swift in Sources */,
 				28B7858326B3A7E4009F755F /* panacea_aol_v2_owner.pb.swift in Sources */,
@@ -4689,6 +4705,7 @@
 				2842AB72242C7C8A00248EEB /* CdpListAllCell.swift in Sources */,
 				2887BA3726DE278700CDA415 /* shentu_gov_v1alpha1_query.pb.swift in Sources */,
 				28D28AD526CB6C070074964C /* StartUnbonding3ViewController.swift in Sources */,
+				2845AE4B271C243A005AA537 /* sifnode_tokenregistry_v1_types.pb.swift in Sources */,
 				283D2EA824F5388C00247424 /* OkAccountToken.swift in Sources */,
 				287AC59725FDF7250070837E /* cosmos_bank_v1beta1_bank.pb.swift in Sources */,
 				287AC58B25FDF7250070837E /* cosmos_tx_v1beta1_tx.pb.swift in Sources */,
@@ -4924,6 +4941,7 @@
 				04CFBD552692278C0013150B /* TxIbcUpdateClientCell.swift in Sources */,
 				28A97CB026DE46FD0085FD0E /* GravityPoolViewController.swift in Sources */,
 				E1F1CF08239F5737004EF8A2 /* Vote.swift in Sources */,
+				2845AE49271C243A005AA537 /* sifnode_tokenregistry_v1_query.pb.swift in Sources */,
 				289EF81C26824E4700F90AC1 /* osmosis_incentives_tx.pb.swift in Sources */,
 				2889FD822603484000CA9896 /* TxIncentiveHardCell.swift in Sources */,
 				28AABECB25F8CBDB0019091F /* HardAccountValue.swift in Sources */,
@@ -4990,6 +5008,7 @@
 				E1827E18225620D000BC0350 /* VaildatorDetailViewController.swift in Sources */,
 				E1069B0C22968DCA007517DC /* StepRedelegateAmountViewController.swift in Sources */,
 				2887BA4826DE278700CDA415 /* shentu_cvm_v1alpha1_tx.grpc.swift in Sources */,
+				2845AE47271C243A005AA537 /* sifnode_tokenregistry_v1_tx.pb.swift in Sources */,
 				28584B4A26E87CE600EE5719 /* GdexDeposit0ViewController.swift in Sources */,
 				28D372AA254BFCE70071B136 /* RegisterAccount4ViewController.swift in Sources */,
 				28D28AD926CB6C1E0074964C /* StartUnlock0ViewController.swift in Sources */,
@@ -5091,6 +5110,7 @@
 				E14F7FB6227ADAA300FDDC75 /* QRScanViewController.swift in Sources */,
 				28F553492641790100590056 /* WalletKiCell.swift in Sources */,
 				287AC60625FDF7260070837E /* ibc_core_channel_v1_tx.pb.swift in Sources */,
+				2845AE4A271C243A005AA537 /* sifnode_tokenregistry_v1_query.grpc.swift in Sources */,
 				2838501C2448A69D00E5DEF2 /* TxHtlcCreateCell.swift in Sources */,
 				287AC5FD25FDF7260070837E /* ibc_lightclients_tendermint_v1_tendermint.pb.swift in Sources */,
 				28B7859B26B3A7F1009F755F /* sifnode_clp_v1_tx.pb.swift in Sources */,

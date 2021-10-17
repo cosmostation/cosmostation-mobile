@@ -2825,17 +2825,6 @@ public class WUtils {
         }
     }
     
-    static func getSifCoinDecimal(_ denom:String?) -> Int16 {
-        if (denom?.caseInsensitiveCompare(SIF_MAIN_DENOM) == .orderedSame) { return 18; }
-        else if (denom?.caseInsensitiveCompare("cusdt") == .orderedSame) { return 6; }
-        else if (denom?.caseInsensitiveCompare("cusdc") == .orderedSame) { return 6; }
-        else if (denom?.caseInsensitiveCompare("csrm") == .orderedSame) { return 6; }
-        else if (denom?.caseInsensitiveCompare("cwscrt") == .orderedSame) { return 6; }
-        else if (denom?.caseInsensitiveCompare("ccro") == .orderedSame) { return 8; }
-        else if (denom?.caseInsensitiveCompare("cwbtc") == .orderedSame) { return 8; }
-        return 18;
-    }
-    
     static func setDenomTitle(_ chain: ChainType?, _ label: UILabel) {
         if (chain == ChainType.COSMOS_MAIN) {
             label.text = "ATOM"
