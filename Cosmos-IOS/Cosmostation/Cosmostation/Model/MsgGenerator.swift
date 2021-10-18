@@ -578,7 +578,6 @@ class MsgGenerator {
         var msg = Msg.init()
         var value = Msg.Value.init()
         value.sender = sender
-//        value.multiplier_name = multiplier_name;
         value.denoms_to_claim = denoms_to_claims;
         msg.type = KAVA_MSG_TYPE_CLAIM_HARD_INCENTIVE;
         msg.value = value;
@@ -589,7 +588,6 @@ class MsgGenerator {
         var msg = Msg.init()
         var value = Msg.Value.init()
         value.sender = sender
-//        value.multiplier_name = multiplier_name;
         value.denoms_to_claim = denoms_to_claims;
         msg.type = KAVA_MSG_TYPE_DELEGATOR_INCENTIVE;
         msg.value = value;
@@ -600,7 +598,6 @@ class MsgGenerator {
         var msg = Msg.init()
         var value = Msg.Value.init()
         value.sender = sender
-//        value.multiplier_name = multiplier_name;
         value.denoms_to_claim = denoms_to_claims;
         msg.type = KAVA_MSG_TYPE_SWAP_INCENTIVE;
         msg.value = value;

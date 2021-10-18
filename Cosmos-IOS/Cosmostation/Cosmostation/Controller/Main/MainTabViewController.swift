@@ -422,7 +422,7 @@ class MainTabViewController: UITabBarController, UITabBarControllerDelegate, SBC
                     }
                 }
             }
-            self.onFetchPriceInfo(WUtils.marketPrice(self.mChainType))
+            self.onFetchPriceInfo()
             NotificationCenter.default.post(name: Notification.Name("onFetchDone"), object: nil, userInfo: nil)
             self.hideWaittingAlert()
             return
@@ -431,7 +431,7 @@ class MainTabViewController: UITabBarController, UITabBarControllerDelegate, SBC
             mAccount    = BaseData.instance.selectAccountById(id: mAccount!.account_id)
             mBalances   = BaseData.instance.selectBalanceById(accountId: mAccount!.account_id)
             BaseData.instance.mBalances = mBalances
-            self.onFetchPriceInfo(WUtils.marketPrice(self.mChainType))
+            self.onFetchPriceInfo()
             NotificationCenter.default.post(name: Notification.Name("onFetchDone"), object: nil, userInfo: nil)
             self.hideWaittingAlert()
             return
@@ -455,7 +455,7 @@ class MainTabViewController: UITabBarController, UITabBarControllerDelegate, SBC
                 }
             }
             BaseData.instance.mBalances = mBalances
-            self.onFetchPriceInfo(WUtils.marketPrice(self.mChainType))
+            self.onFetchPriceInfo()
             
         } else {
             mAccount    = BaseData.instance.selectAccountById(id: mAccount!.account_id)
@@ -483,7 +483,7 @@ class MainTabViewController: UITabBarController, UITabBarControllerDelegate, SBC
                 }
             }
             BaseData.instance.mBalances = mBalances
-            self.onFetchPriceInfo(WUtils.marketPrice(self.mChainType))
+            self.onFetchPriceInfo()
             
             print("BaseData.instance.mMyDelegations ", BaseData.instance.mMyDelegations.count)
             print("BaseData.instance.mMyUnbondings ", BaseData.instance.mMyUnbondings.count)
@@ -1273,9 +1273,8 @@ class MainTabViewController: UITabBarController, UITabBarControllerDelegate, SBC
         }
     }
     
-    func onFetchPriceInfo(_ denoms: String) {
-        print("onFetchPriceInfo ", denoms, "   ", BaseNetWork.getPrice(denoms))
-        let request = Alamofire.request(BaseNetWork.getPrice(denoms), method: .get, parameters: [:], encoding: URLEncoding.default, headers: [:])
+    func onFetchPriceInfo() {
+        let request = Alamofire.request(BaseNetWork.getPrices(), method: .get, parameters: [:], encoding: URLEncoding.default, headers: [:])
         request.responseJSON { (response) in
             switch response.result {
             case .success(let res):

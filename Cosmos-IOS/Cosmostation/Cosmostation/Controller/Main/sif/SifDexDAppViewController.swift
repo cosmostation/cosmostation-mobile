@@ -122,25 +122,132 @@ class SifDexDAppViewController: BaseViewController {
 }
 
 extension WUtils {
-    
-    
-    
-    static func getSifCoinDecimal(_ denom:String?) -> Int16 {
-        if (denom?.caseInsensitiveCompare(SIF_MAIN_DENOM) == .orderedSame) { return 18; }
-        else if (denom?.caseInsensitiveCompare("cusdt") == .orderedSame) { return 6; }
-        else if (denom?.caseInsensitiveCompare("cusdc") == .orderedSame) { return 6; }
-        else if (denom?.caseInsensitiveCompare("csrm") == .orderedSame) { return 6; }
-        else if (denom?.caseInsensitiveCompare("cwscrt") == .orderedSame) { return 6; }
-        else if (denom?.caseInsensitiveCompare("ccro") == .orderedSame) { return 8; }
-        else if (denom?.caseInsensitiveCompare("cwbtc") == .orderedSame) { return 8; }
-        else if (denom?.caseInsensitiveCompare("xrowan") == .orderedSame) { return 10; }
-        else if (denom?.starts(with: "ibc/") == true) {
-            if let ibcToken = BaseData.instance.getIbcToken(denom?.replacingOccurrences(of: "ibc/", with: "")), let decimal = ibcToken.decimal  {
-                return decimal
+    static func getSifCoinName(_ denom: String) -> String {
+        if (denom == SIF_MAIN_DENOM) {
+            return "ROWAN"
+            
+        } else if (denom.starts(with: "ibc/")) {
+            if let ibcToken = BaseData.instance.getIbcToken(denom.replacingOccurrences(of: "ibc/", with: "")), let dpDenom = ibcToken.display_denom {
+                return dpDenom.uppercased()
             } else {
-                return 6
+                return"UnKnown"
+            }
+            
+        } else if (denom.starts(with: "c")) {
+            return denom.substring(from: 1).uppercased()
+            
+        }
+        return denom
+    }
+    
+    static func getSifCoinImg(_ denom: String) -> UIImage? {
+        if (denom == SIF_MAIN_DENOM) {
+            return UIImage(named: "tokensifchain")
+            
+        } else if (denom.starts(with: "ibc/")) {
+            if let ibcToken = BaseData.instance.getIbcToken(denom.replacingOccurrences(of: "ibc/", with: "")), let url = URL(string: ibcToken.moniker ?? ""), let data = try? Data(contentsOf: url) {
+                return UIImage(data: data)?.resized(to: CGSize(width: 20, height: 20))
+            } else {
+                return UIImage(named: "tokenDefaultIbc")
+            }
+            
+        } else if (denom.starts(with: "c")) {
+            if let url = URL(string: SIF_COIN_IMG_URL + denom + ".png"), let data = try? Data(contentsOf: url) {
+                return UIImage(data: data)?.resized(to: CGSize(width: 20, height: 20))
+            } else {
+                return UIImage(named: "tokenIc")
             }
         }
-        return 18;
+        return UIImage(named: "tokenIc")
+    }
+    
+    static func getSifCoinDecimal(_ denom:String?) -> Int16 {
+        let sifTokens = BaseData.instance.mParam?.getSifTokens()
+        if (sifTokens != nil) {
+            return sifTokens?.filter({ $0.denom == denom }).first?.decimals ?? 18
+        }
+        return 18
+    }
+    
+    static func DpSifCoinName(_ label: UILabel, _ denom: String) {
+        if (denom == SIF_MAIN_DENOM) {
+            label.textColor = COLOR_SIF
+            label.text = "ROWAN"
+            
+        } else if (denom.starts(with: "ibc/")) {
+            label.textColor = .white
+            if let ibcToken = BaseData.instance.getIbcToken(denom.replacingOccurrences(of: "ibc/", with: "")), let dpDenom = ibcToken.display_denom {
+                label.text = dpDenom.uppercased()
+            } else {
+                label.text = "UnKnown"
+            }
+            
+        } else if (denom.starts(with: "c")) {
+            label.textColor = .white
+            label.text = denom.substring(from: 1).uppercased()
+            
+        } else {
+            label.textColor = .white
+            label.text = "UnKnown"
+        }
+    }
+    
+    static func DpSifCoinImg(_ imgView: UIImageView, _ denom: String) {
+        if (denom == SIF_MAIN_DENOM) {
+            imgView.image = UIImage(named: "tokensifchain")
+            
+        } else if (denom.starts(with: "ibc/")) {
+            if let ibcToken = BaseData.instance.getIbcToken(denom.replacingOccurrences(of: "ibc/", with: "")), let url = URL(string: ibcToken.moniker ?? "") {
+                imgView.af_setImage(withURL: url)
+            } else {
+                imgView.image = UIImage(named: "tokenDefaultIbc")
+            }
+            
+        } else if (denom.starts(with: "c")) {
+            if let url = URL(string: SIF_COIN_IMG_URL + denom + ".png") {
+                imgView.af_setImage(withURL: url)
+            } else {
+                imgView.image = UIImage(named: "tokenIc")
+            }
+            
+        } else {
+            imgView.image = UIImage(named: "tokenIc")
+        }
+    }
+    
+    static func getPoolLpAmount(_ pool: Sifnode_Clp_V1_Pool, _ denom: String) -> NSDecimalNumber {
+        if (denom == SIF_MAIN_DENOM) {
+            return getNativeLpAmount(pool)
+        } else {
+            return getExternalLpAmount(pool)
+        }
+    }
+    
+    static func getNativeLpAmount(_ pool: Sifnode_Clp_V1_Pool) -> NSDecimalNumber {
+        return NSDecimalNumber.init(string: pool.nativeAssetBalance)
+    }
+    
+    static func getExternalLpAmount(_ pool: Sifnode_Clp_V1_Pool) -> NSDecimalNumber {
+        return NSDecimalNumber.init(string: pool.externalAssetBalance)
+    }
+    
+    static func getBaseDenom(_ denom: String)  -> String {
+        if (denom == SIF_MAIN_DENOM) {
+            return SIF_MAIN_DENOM
+            
+        } else if (denom.starts(with: "ibc/")) {
+            guard let ibcToken = BaseData.instance.getIbcToken(denom.replacingOccurrences(of: "ibc/", with: "")) else {
+                return denom
+            }
+            if (ibcToken.auth == true) {
+                return ibcToken.base_denom!
+            }
+            
+        } else if (denom.starts(with: "c") || denom.starts(with: "x")) {
+            return denom.substring(from: 1).uppercased()
+            
+        }
+        return denom
+        
     }
 }
