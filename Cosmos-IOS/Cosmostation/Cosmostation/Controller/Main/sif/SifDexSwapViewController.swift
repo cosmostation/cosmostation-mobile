@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SifDexSwapViewController: BaseViewController {
+class SifDexSwapViewController: BaseViewController, SBCardPopupDelegate {
     
     @IBOutlet weak var loadingImg: LoadingImageView!
     
@@ -34,7 +34,8 @@ class SifDexSwapViewController: BaseViewController {
     @IBOutlet weak var outputCoinExRateAmount: UILabel!
     @IBOutlet weak var outputCoinExRateDenom: UILabel!
     
-//    var mAllDenoms: Array<String> = Array<String>()
+    var mAllDenoms: Array<String> = Array<String>()
+    var mSwapableDenoms: Array<String> = Array<String>()
     var mSelectedPool: Sifnode_Clp_V1_Pool?
     var mInputCoinDenom: String?
     var mOutputCoinDenom: String?
@@ -47,6 +48,9 @@ class SifDexSwapViewController: BaseViewController {
         self.account = BaseData.instance.selectAccountById(id: BaseData.instance.getRecentAccountId())
         self.chainType = WUtils.getChainType(account!.account_base_chain)
         self.loadingImg.onStartAnimation()
+        
+        self.inputCoinLayer.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.onClickInput (_:))))
+        self.outputCoinLayer.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.onClickOutput (_:))))
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -82,7 +86,7 @@ class SifDexSwapViewController: BaseViewController {
         //display swap rate with this pool
         let lpInputAmount = WUtils.getPoolLpAmount(mSelectedPool!, mInputCoinDenom!)
         let lpOutputAmount = WUtils.getPoolLpAmount(mSelectedPool!, mOutputCoinDenom!)
-        let poolSwapRate = lpOutputAmount.dividing(by: lpInputAmount, withBehavior: WUtils.handler6).multiplying(byPowerOf10: (mInPutDecimal - mOutPutDecimal))
+        let poolSwapRate = lpOutputAmount.dividing(by: lpInputAmount, withBehavior: WUtils.handler24Down).multiplying(byPowerOf10: (mInPutDecimal - mOutPutDecimal))
         self.outputCoinRateAmount.attributedText = WUtils.displayAmount2(poolSwapRate.stringValue, outputCoinRateAmount.font, 0, 6)
         
         //display swap rate with market price
@@ -105,6 +109,10 @@ class SifDexSwapViewController: BaseViewController {
             self.navigationController?.popViewController(animated: true)
             return
         }
+        mAllDenoms.append(SIF_MAIN_DENOM)
+        BaseData.instance.mSifDexPools_gRPC.forEach { pool in
+            mAllDenoms.append(pool.externalAsset.symbol)
+        }
         if (mSelectedPool == nil || mInputCoinDenom == nil || mOutputCoinDenom == nil) {
             mSelectedPool = BaseData.instance.mSifDexPools_gRPC[0]
             mInputCoinDenom = WUtils.getMainDenom(chainType)
@@ -115,8 +123,86 @@ class SifDexSwapViewController: BaseViewController {
 
     
     @IBAction func onClickToggle(_ sender: UIButton) {
+        let temp = mInputCoinDenom
+        mInputCoinDenom = mOutputCoinDenom
+        mOutputCoinDenom = temp
+        self.updateView()
+    }
+    
+    @objc func onClickInput (_ sender: UITapGestureRecognizer) {
+        let popupVC = SelectPopupViewController(nibName: "SelectPopupViewController", bundle: nil)
+        popupVC.type = SELECT_POPUP_SIF_SWAP_IN
+        popupVC.toCoinList = mAllDenoms
+        let cardPopup = SBCardPopupViewController(contentViewController: popupVC)
+        cardPopup.resultDelegate = self
+        cardPopup.show(onViewController: self)
+    }
+    
+    @objc func onClickOutput(_ sender: UIButton) {
+        mSwapableDenoms.removeAll()
+        if (mInputCoinDenom == SIF_MAIN_DENOM) {
+            mSwapableDenoms = mAllDenoms
+        } else {
+            mSwapableDenoms.append(SIF_MAIN_DENOM)
+        }
+        
+        let popupVC = SelectPopupViewController(nibName: "SelectPopupViewController", bundle: nil)
+        popupVC.type = SELECT_POPUP_SIF_SWAP_OUT
+        popupVC.toCoinList = mSwapableDenoms
+        let cardPopup = SBCardPopupViewController(contentViewController: popupVC)
+        cardPopup.resultDelegate = self
+        cardPopup.show(onViewController: self)
+    }
+    
+    func SBCardPopupResponse(type: Int, result: Int) {
+        if (type == SELECT_POPUP_SIF_SWAP_IN) {
+            self.mInputCoinDenom = self.mAllDenoms[result]
+            if (mInputCoinDenom == SIF_MAIN_DENOM) {
+                mSelectedPool = BaseData.instance.mSifDexPools_gRPC[0]
+                mOutputCoinDenom = mSelectedPool?.externalAsset.symbol
+            } else {
+                mSelectedPool = BaseData.instance.mSifDexPools_gRPC.filter { $0.externalAsset.symbol == mInputCoinDenom }.first
+                mOutputCoinDenom = SIF_MAIN_DENOM
+            }
+            self.updateView()
+            
+        } else if (type == SELECT_POPUP_SIF_SWAP_OUT) {
+            mOutputCoinDenom = self.mSwapableDenoms[result]
+            if (mInputCoinDenom == SIF_MAIN_DENOM) {
+                mSelectedPool = BaseData.instance.mSifDexPools_gRPC.filter { $0.externalAsset.symbol == mOutputCoinDenom }.first
+            } else {
+                mSelectedPool = BaseData.instance.mSifDexPools_gRPC.filter { $0.externalAsset.symbol == mInputCoinDenom }.first
+            }
+            self.updateView()
+        }
     }
     
     @IBAction func onClickStarSwap(_ sender: UIButton) {
+        if (!account!.account_has_private) {
+            self.onShowAddMenomicDialog()
+            return
+        }
+        
+        let txFeeAmount = WUtils.getEstimateGasFeeAmount(chainType!, SIF_GAS_AMOUNT_SWAP, 0)
+        let mainBalance = BaseData.instance.getAvailableAmount_gRPC(SIF_MAIN_DENOM)
+        if (mainBalance.compare(txFeeAmount).rawValue < 0) {
+            self.onShowToast(NSLocalizedString("error_not_enough_available", comment: ""))
+            return
+        }
+        
+        let inputBalance = BaseData.instance.getAvailableAmount_gRPC(mInputCoinDenom!)
+        if (inputBalance.compare(NSDecimalNumber.zero).rawValue <= 0) {
+            self.onShowToast(NSLocalizedString("error_not_enough_available", comment: ""))
+            return
+        }
+        
+        //TODO
+        let txVC = UIStoryboard(name: "GenTx", bundle: nil).instantiateViewController(withIdentifier: "TransactionViewController") as! TransactionViewController
+        txVC.mType = SIF_MSG_TYPE_SWAP_CION
+//        txVC.mPoolId = String(mSelectedPool!.id)
+//        txVC.mSwapInDenom = mInputCoinDenom
+//        txVC.mSwapOutDenom = mOutputCoinDenom
+        self.navigationItem.title = ""
+        self.navigationController?.pushViewController(txVC, animated: true)
     }
 }
