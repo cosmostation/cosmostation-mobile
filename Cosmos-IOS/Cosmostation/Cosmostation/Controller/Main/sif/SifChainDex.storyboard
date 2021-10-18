@@ -564,17 +564,27 @@
                                 <rect key="frame" x="0.0" y="54" width="414" height="751"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loading_1" translatesAutoresizingMaskIntoConstraints="NO" id="gAs-Zl-IdT" customClass="LoadingImageView" customModule="Cosmostation" customModuleProvider="target">
+                                <rect key="frame" x="177" y="394.5" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="KwY-zq-MWS"/>
+                                    <constraint firstAttribute="height" constant="60" id="vOg-kl-zZF"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="RbK-2G-IMK"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="gAs-Zl-IdT" firstAttribute="centerX" secondItem="RbK-2G-IMK" secondAttribute="centerX" id="7d6-Pj-zEy"/>
                             <constraint firstItem="snW-Eg-M1f" firstAttribute="top" secondItem="RbK-2G-IMK" secondAttribute="top" constant="10" id="BB6-IR-Vq5"/>
+                            <constraint firstItem="gAs-Zl-IdT" firstAttribute="centerY" secondItem="RbK-2G-IMK" secondAttribute="centerY" id="UGO-6H-qQZ"/>
                             <constraint firstItem="RbK-2G-IMK" firstAttribute="trailing" secondItem="snW-Eg-M1f" secondAttribute="trailing" id="ZGW-3i-94t"/>
                             <constraint firstItem="snW-Eg-M1f" firstAttribute="leading" secondItem="RbK-2G-IMK" secondAttribute="leading" id="lUm-Bh-CtL"/>
                             <constraint firstItem="RbK-2G-IMK" firstAttribute="bottom" secondItem="snW-Eg-M1f" secondAttribute="bottom" id="nHy-7V-JVr"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="loadingImg" destination="gAs-Zl-IdT" id="bEr-6L-zZx"/>
                         <outlet property="poolListTableView" destination="snW-Eg-M1f" id="sfT-mL-neO"/>
                     </connections>
                 </viewController>
@@ -594,17 +604,27 @@
                                 <rect key="frame" x="0.0" y="54" width="414" height="751"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loading_1" translatesAutoresizingMaskIntoConstraints="NO" id="Afx-dJ-UJm" customClass="LoadingImageView" customModule="Cosmostation" customModuleProvider="target">
+                                <rect key="frame" x="177" y="394.5" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="GtA-19-ETR"/>
+                                    <constraint firstAttribute="height" constant="60" id="HiJ-OD-Sa6"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="j45-x4-uxk"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="Afx-dJ-UJm" firstAttribute="centerY" secondItem="j45-x4-uxk" secondAttribute="centerY" id="9or-Aq-jmn"/>
                             <constraint firstItem="u10-te-0FC" firstAttribute="top" secondItem="j45-x4-uxk" secondAttribute="top" constant="10" id="CpS-pf-3AE"/>
                             <constraint firstItem="j45-x4-uxk" firstAttribute="trailing" secondItem="u10-te-0FC" secondAttribute="trailing" id="Iqs-xT-LrF"/>
                             <constraint firstItem="u10-te-0FC" firstAttribute="leading" secondItem="j45-x4-uxk" secondAttribute="leading" id="WPL-oj-NEO"/>
+                            <constraint firstItem="Afx-dJ-UJm" firstAttribute="centerX" secondItem="j45-x4-uxk" secondAttribute="centerX" id="WaR-Da-q1i"/>
                             <constraint firstItem="j45-x4-uxk" firstAttribute="bottom" secondItem="u10-te-0FC" secondAttribute="bottom" id="idB-9p-Hv6"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="loadingImg" destination="Afx-dJ-UJm" id="aBK-aT-S13"/>
                         <outlet property="poolListTableView" destination="u10-te-0FC" id="6hd-hR-XJJ"/>
                     </connections>
                 </viewController>

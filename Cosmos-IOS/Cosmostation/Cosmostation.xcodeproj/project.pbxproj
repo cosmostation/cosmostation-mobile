@@ -859,6 +859,10 @@
 		28B785BC26B808CE009F755F /* StepEventHorizon0ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28B785BA26B808CE009F755F /* StepEventHorizon0ViewController.xib */; };
 		28B785BF26B808DB009F755F /* StepEventHorizon1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B785BD26B808DB009F755F /* StepEventHorizon1ViewController.swift */; };
 		28B785C026B808DC009F755F /* StepEventHorizon1ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28B785BE26B808DB009F755F /* StepEventHorizon1ViewController.xib */; };
+		28B9B688271DC5DD0067C6AE /* SifPoolCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B9B686271DC5DD0067C6AE /* SifPoolCell.swift */; };
+		28B9B689271DC5DD0067C6AE /* SifPoolCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28B9B687271DC5DD0067C6AE /* SifPoolCell.xib */; };
+		28B9B68C271DC5F60067C6AE /* SifMyPoolCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B9B68A271DC5F60067C6AE /* SifMyPoolCell.swift */; };
+		28B9B68D271DC5F60067C6AE /* SifMyPoolCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28B9B68B271DC5F60067C6AE /* SifMyPoolCell.xib */; };
 		28BB2A812533D9FB00CFF097 /* DomainPromotionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BB2A7F2533D9FB00CFF097 /* DomainPromotionCell.swift */; };
 		28BB2A822533D9FB00CFF097 /* DomainPromotionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28BB2A802533D9FB00CFF097 /* DomainPromotionCell.xib */; };
 		28BB2A872533DA0B00CFF097 /* AccountPromotionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BB2A852533DA0B00CFF097 /* AccountPromotionCell.swift */; };
@@ -2044,6 +2048,10 @@
 		28B785BA26B808CE009F755F /* StepEventHorizon0ViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StepEventHorizon0ViewController.xib; sourceTree = "<group>"; };
 		28B785BD26B808DB009F755F /* StepEventHorizon1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepEventHorizon1ViewController.swift; sourceTree = "<group>"; };
 		28B785BE26B808DB009F755F /* StepEventHorizon1ViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StepEventHorizon1ViewController.xib; sourceTree = "<group>"; };
+		28B9B686271DC5DD0067C6AE /* SifPoolCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SifPoolCell.swift; sourceTree = "<group>"; };
+		28B9B687271DC5DD0067C6AE /* SifPoolCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SifPoolCell.xib; sourceTree = "<group>"; };
+		28B9B68A271DC5F60067C6AE /* SifMyPoolCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SifMyPoolCell.swift; sourceTree = "<group>"; };
+		28B9B68B271DC5F60067C6AE /* SifMyPoolCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SifMyPoolCell.xib; sourceTree = "<group>"; };
 		28BB2A7F2533D9FB00CFF097 /* DomainPromotionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainPromotionCell.swift; sourceTree = "<group>"; };
 		28BB2A802533D9FB00CFF097 /* DomainPromotionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DomainPromotionCell.xib; sourceTree = "<group>"; };
 		28BB2A852533DA0B00CFF097 /* AccountPromotionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountPromotionCell.swift; sourceTree = "<group>"; };
@@ -4028,6 +4036,10 @@
 				289E4DAE26E5D765007C7C35 /* CommonPoolCell.xib */,
 				289E4DB126E5D777007C7C35 /* CommonMyPoolCell.swift */,
 				289E4DB226E5D777007C7C35 /* CommonMyPoolCell.xib */,
+				28B9B686271DC5DD0067C6AE /* SifPoolCell.swift */,
+				28B9B687271DC5DD0067C6AE /* SifPoolCell.xib */,
+				28B9B68A271DC5F60067C6AE /* SifMyPoolCell.swift */,
+				28B9B68B271DC5F60067C6AE /* SifMyPoolCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -4232,6 +4244,7 @@
 				288F807B270DDEFA009825B5 /* TxSifAddLpCell.xib in Resources */,
 				28474ECB241E06AF00AF5A81 /* TxCdpWithdrawCell.xib in Resources */,
 				2842AB6F242C5C7200248EEB /* CdpLisyMyCell.xib in Resources */,
+				28B9B68D271DC5F60067C6AE /* SifMyPoolCell.xib in Resources */,
 				E15DA48122F1738C000557FC /* PromotionCell.xib in Resources */,
 				E103DACE22813248006C2146 /* WalletDetailViewController.xib in Resources */,
 				2889FD882603485200CA9896 /* TxIncentiveMintingCell.xib in Resources */,
@@ -4325,6 +4338,7 @@
 				28B2E4D026CFEF8C00ECF960 /* BridgeTokenGrpcViewController.xib in Resources */,
 				E1FD233D233E1C44009327FE /* WalletGuideCell.xib in Resources */,
 				2845D885246FAEED007CD497 /* VoteTallyTableViewCell.xib in Resources */,
+				28B9B689271DC5DD0067C6AE /* SifPoolCell.xib in Resources */,
 				283E94782549030C007A9291 /* TxReplaceResourceCell.xib in Resources */,
 				2894105A26FDBEA3005BCBE4 /* IBCSend2ViewController.xib in Resources */,
 				280E1F1C254ABB1D0007BA7D /* ResourceEditCell.xib in Resources */,
@@ -4848,6 +4862,7 @@
 				28E8FAF12719C265005EAA9B /* SifDexDAppViewController.swift in Sources */,
 				2887BA3E26DE278700CDA415 /* shentu_bank_v1alpha1_tx.pb.swift in Sources */,
 				E151B658224873640026B8C0 /* SettingTableViewController.swift in Sources */,
+				28B9B688271DC5DD0067C6AE /* SifPoolCell.swift in Sources */,
 				28105894262EE638009244B8 /* WalletSifCell.swift in Sources */,
 				2868558F24989A8F0099D18F /* Bep3SupplyPopup.swift in Sources */,
 				287AC63225FDF7260070837E /* cosmos_base_reflection_v1beta1_reflection.grpc.swift in Sources */,
@@ -5073,6 +5088,7 @@
 				287AC61B25FDF7260070837E /* cosmos_crypto_secp256k1_keys.pb.swift in Sources */,
 				28C41FEC24A1FF60007C5072 /* TxRewardAllCell.swift in Sources */,
 				282FF36123F532360028CC66 /* TxVoteCell.swift in Sources */,
+				28B9B68C271DC5F60067C6AE /* SifMyPoolCell.swift in Sources */,
 				287AC62625FDF7260070837E /* oracle_genesis.pb.swift in Sources */,
 				28156E9F2536DE29006FF06C /* HarvestDetailMyActionCell.swift in Sources */,
 				287AC5E625FDF7260070837E /* service_query.grpc.swift in Sources */,

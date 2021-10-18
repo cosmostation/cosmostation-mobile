@@ -10,6 +10,7 @@ import UIKit
 
 class SifDexIbcPoolViewController: BaseViewController {
     
+    @IBOutlet weak var loadingImg: LoadingImageView!
     @IBOutlet weak var poolListTableView: UITableView!
 
     override func viewDidLoad() {
