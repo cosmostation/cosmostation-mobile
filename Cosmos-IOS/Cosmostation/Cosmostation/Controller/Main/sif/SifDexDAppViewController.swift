@@ -248,6 +248,27 @@ extension WUtils {
             
         }
         return denom
+    }
+    
+    static func getSifPoolValue(_ pool: Sifnode_Clp_V1_Pool) -> NSDecimalNumber {
+        let rowanDecimal = getSifCoinDecimal(SIF_MAIN_DENOM)
+        let rowanAmount = NSDecimalNumber.init(string: pool.nativeAssetBalance)
+        let rowanPrice = perUsdValue(SIF_MAIN_DENOM) ?? NSDecimalNumber.zero
         
+        let externalDecimal = getSifCoinDecimal(pool.externalAsset.symbol)
+        let externalAmount = NSDecimalNumber.init(string: pool.externalAssetBalance)
+        let exteranlBaseDenom = getBaseDenom(pool.externalAsset.symbol)
+        let exteranlPrice = perUsdValue(exteranlBaseDenom) ?? NSDecimalNumber.zero
+        
+        let rowanValue = rowanAmount.multiplying(by: rowanPrice).multiplying(byPowerOf10: -rowanDecimal, withBehavior: WUtils.handler2)
+        let exteranlValue = externalAmount.multiplying(by: exteranlPrice).multiplying(byPowerOf10: -externalDecimal, withBehavior: WUtils.handler2)
+        return rowanValue.adding(exteranlValue)
+    }
+    
+    static func getSifMyShareValue(_ pool: Sifnode_Clp_V1_Pool, _ myLp: Sifnode_Clp_V1_LiquidityProviderRes) -> NSDecimalNumber {
+        let poolValue = getSifPoolValue(pool)
+        let totalUnit = NSDecimalNumber.init(string: pool.poolUnits)
+        let myUnit = NSDecimalNumber.init(string: myLp.liquidityProvider.liquidityProviderUnits)
+        return poolValue.multiplying(by: myUnit).dividing(by: totalUnit, withBehavior: WUtils.handler2)
     }
 }
