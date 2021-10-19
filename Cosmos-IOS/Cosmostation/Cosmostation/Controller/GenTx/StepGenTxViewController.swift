@@ -460,12 +460,26 @@ class StepGenTxViewController: UIPageViewController, UIPageViewControllerDelegat
                     self.newVc(viewController: "StepMemoViewController"),
                     StepFeeGrpcViewController(nibName: "StepFeeGrpcViewController", bundle: nil),
                     SifIncentive3ViewController(nibName: "SifIncentive3ViewController", bundle: nil)]
+            
+        } else if (mType == SIF_MSG_TYPE_ADD_LP) {
+            return [SifJoinPool0ViewController(nibName: "SifJoinPool0ViewController", bundle: nil),
+                    self.newVc(viewController: "StepMemoViewController"),
+                    StepFeeGrpcViewController(nibName: "StepFeeGrpcViewController", bundle: nil),
+                    SifJoinPool3ViewController(nibName: "SifJoinPool3ViewController", bundle: nil)]
+            
+        } else if (mType == SIF_MSG_TYPE_REMOVE_LP) {
+            return [SifExitPool0ViewController(nibName: "SifExitPool0ViewController", bundle: nil),
+                    self.newVc(viewController: "StepMemoViewController"),
+                    StepFeeGrpcViewController(nibName: "StepFeeGrpcViewController", bundle: nil),
+                    SifExitPool3ViewController(nibName: "SifExitPool3ViewController", bundle: nil)]
+            
+        } else if (mType == SIF_MSG_TYPE_SWAP_CION) {
+            return [SifSwap0ViewController(nibName: "SifSwap0ViewController", bundle: nil),
+                    self.newVc(viewController: "StepMemoViewController"),
+                    StepFeeGrpcViewController(nibName: "StepFeeGrpcViewController", bundle: nil),
+                    SifSwap3ViewController(nibName: "SifSwap3ViewController", bundle: nil)]
+            
         }
-//        else if (mType == SIF_MSG_TYPE_ADD_LP) {
-//        } else if (mType == SIF_MSG_TYPE_REMOVE_LP) {
-//        } else if (mType == SIF_MSG_TYPE_SWAP_CION) {
-//        }
-        
         
         else {
             if (WUtils.isGRPC(chainType!)) {

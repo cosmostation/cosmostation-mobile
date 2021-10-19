@@ -131,6 +131,9 @@ class SifDexEthPoolViewController: BaseViewController, UITableViewDataSource, UI
             mMyEthAssets.forEach { symbol in
                 onFetchMyProviderInfo(account!.account_address, symbol)
             }
+            
+        } else {
+            self.updateView()
         }
     }
     

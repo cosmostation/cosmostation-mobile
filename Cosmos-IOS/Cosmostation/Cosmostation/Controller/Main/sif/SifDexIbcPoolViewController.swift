@@ -131,6 +131,9 @@ class SifDexIbcPoolViewController: BaseViewController, UITableViewDataSource, UI
             mMyIbcAssets.forEach { symbol in
                 onFetchMyProviderInfo(account!.account_address, symbol)
             }
+            
+        } else {
+            self.updateView()
         }
     }
     
