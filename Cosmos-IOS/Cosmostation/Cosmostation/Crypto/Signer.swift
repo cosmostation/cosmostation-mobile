@@ -1464,6 +1464,57 @@ class Signer {
         }
     }
     
+    static func genSignedSifRemoveLpMsgTxgRPC(_ auth: Cosmos_Auth_V1beta1_QueryAccountResponse,
+                                              _ signer: String, _ externalDenom: String, _ w_basis_points: String,
+                                              _ fee: Fee, _ memo: String, _ privateKey: Data, _ publicKey: Data, _ chainId: String) -> Cosmos_Tx_V1beta1_BroadcastTxRequest {
+        let eAsset = Sifnode_Clp_V1_Asset.with {
+            $0.symbol = externalDenom
+        }
+        let removeLpMsg = Sifnode_Clp_V1_MsgRemoveLiquidity.with {
+            $0.signer = signer
+            $0.externalAsset = eAsset
+            $0.asymmetry = "0"
+            $0.wBasisPoints = w_basis_points
+        }
+        let anyMsg = Google_Protobuf2_Any.with {
+            $0.typeURL = "/sifnode.clp.v1.MsgRemoveLiquidity"
+            $0.value = try! removeLpMsg.serializedData()
+        }
+        let txBody = getGrpcTxBody([anyMsg], memo);
+        let signerInfo = getGrpcSignerInfo(auth, publicKey);
+        let authInfo = getGrpcAuthInfo(signerInfo, fee);
+        let rawTx = getGrpcRawTx(auth, txBody, authInfo, privateKey, chainId);
+        return Cosmos_Tx_V1beta1_BroadcastTxRequest.with {
+            $0.mode = Cosmos_Tx_V1beta1_BroadcastMode.async
+            $0.txBytes = try! rawTx.serializedData()
+        }
+    }
+    
+    static func genSimulateSifRemoveLpMsgTxgRPC(_ auth: Cosmos_Auth_V1beta1_QueryAccountResponse,
+                                                _ signer: String, _ externalDenom: String, _ w_basis_points: String,
+                                                _ fee: Fee, _ memo: String, _ privateKey: Data, _ publicKey: Data, _ chainId: String) -> Cosmos_Tx_V1beta1_SimulateRequest {
+        let eAsset = Sifnode_Clp_V1_Asset.with {
+            $0.symbol = externalDenom
+        }
+        let removeLpMsg = Sifnode_Clp_V1_MsgRemoveLiquidity.with {
+            $0.signer = signer
+            $0.externalAsset = eAsset
+            $0.asymmetry = "0"
+            $0.wBasisPoints = w_basis_points
+        }
+        let anyMsg = Google_Protobuf2_Any.with {
+            $0.typeURL = "/sifnode.clp.v1.MsgRemoveLiquidity"
+            $0.value = try! removeLpMsg.serializedData()
+        }
+        let txBody = getGrpcTxBody([anyMsg], memo);
+        let signerInfo = getGrpcSignerInfo(auth, publicKey);
+        let authInfo = getGrpcAuthInfo(signerInfo, fee);
+        let simulateTx = getGrpcSimulTx(auth, txBody, authInfo, privateKey, chainId);
+        return Cosmos_Tx_V1beta1_SimulateRequest.with {
+            $0.tx = simulateTx
+        }
+    }
+    
     
     static func getGrpcTxBody(_ msgAnys: Array<Google_Protobuf2_Any>, _ memo: String) -> Cosmos_Tx_V1beta1_TxBody {
         return Cosmos_Tx_V1beta1_TxBody.with {

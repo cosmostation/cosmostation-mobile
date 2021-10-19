@@ -136,7 +136,8 @@ class StepGenTxViewController: UIPageViewController, UIPageViewControllerDelegat
     
     
     var mSifPool: Sifnode_Clp_V1_Pool?
-    
+    var mSifMyAllUnitAmount: String?
+    var mSifMyWithdrawUnitAmount: String?
     
     var mHdacKey: HDWalletKit.PrivateKey?
     var mHdacAddress: String?

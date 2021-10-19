@@ -231,6 +231,10 @@ extension WUtils {
         return NSDecimalNumber.init(string: pool.externalAssetBalance)
     }
     
+    static func getUnitAmount(_ pool: Sifnode_Clp_V1_Pool) -> NSDecimalNumber {
+        return NSDecimalNumber.init(string: pool.poolUnits)
+    }
+    
     static func getBaseDenom(_ denom: String)  -> String {
         if (denom == SIF_MAIN_DENOM) {
             return SIF_MAIN_DENOM
