@@ -168,10 +168,11 @@ class SifDexSwapViewController: BaseViewController, SBCardPopupDelegate {
             
         } else if (type == SELECT_POPUP_SIF_SWAP_OUT) {
             mOutputCoinDenom = self.mSwapableDenoms[result]
-            if (mInputCoinDenom == SIF_MAIN_DENOM) {
-                mSelectedPool = BaseData.instance.mSifDexPools_gRPC.filter { $0.externalAsset.symbol == mOutputCoinDenom }.first
+            if (mOutputCoinDenom == SIF_MAIN_DENOM) {
+                mSelectedPool = BaseData.instance.mSifDexPools_gRPC[0]
+                mInputCoinDenom = mSelectedPool?.externalAsset.symbol
             } else {
-                mSelectedPool = BaseData.instance.mSifDexPools_gRPC.filter { $0.externalAsset.symbol == mInputCoinDenom }.first
+                mSelectedPool = BaseData.instance.mSifDexPools_gRPC.filter { $0.externalAsset.symbol == mOutputCoinDenom }.first
             }
             self.updateView()
         }
