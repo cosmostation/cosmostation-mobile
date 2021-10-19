@@ -59,8 +59,6 @@ class SifSwap3ViewController: BaseViewController, PasswordViewDelegate {
         WUtils.showCoinDp(pageHolderVC.mSwapOutDenom!, lpFee.stringValue, swapFeeDenomLabel, swapFeeLabel, chainType!)
     }
     
-    
-    
     @IBAction func onClickBack(_ sender: UIButton) {
         self.btnBack.isUserInteractionEnabled = false
         self.btnConfirm.isUserInteractionEnabled = false
@@ -81,7 +79,6 @@ class SifSwap3ViewController: BaseViewController, PasswordViewDelegate {
             self.onFetchgRPCAuth(self.account!)
         }
     }
-    
     
     func onFetchgRPCAuth(_ account: Account) {
         self.showWaittingAlert()
