@@ -126,7 +126,7 @@ class SifSwap0ViewController: BaseViewController, UITextFieldDelegate {
         
         //slippage
         let padding = NSDecimalNumber(string: "0.98")
-        let outputAmount = userInput.multiplying(byPowerOf10: dpInPutDecimal - dpOutPutDecimal).multiplying(by: padding, withBehavior: WUtils.handler24Down).multiplying(by: swapRate, withBehavior: WUtils.handler24Down)
+        let outputAmount = userInput.multiplying(by: padding, withBehavior: WUtils.handler24Down).multiplying(by: swapRate, withBehavior: WUtils.handler24Down)
         print("outputAmount ", outputAmount)
         
         //lp Fee
