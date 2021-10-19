@@ -232,6 +232,11 @@ public struct Params {
             self.band_active_validators = BandOrcleActiveValidators.init(rawActiveValidators)
         }
         
+        if let rawStarnameDomains = dictionary?["starname_domains"] as? Array<String> {
+            for rawStarnameDomain in rawStarnameDomains {
+                self.starname_domains.append(rawStarnameDomain)
+            }
+        }
         
         if let rawGovTallying = dictionary?["gov_tallying"] as? NSDictionary {
             self.gov_tallying = GovTallying.init(rawGovTallying)

@@ -55,13 +55,13 @@ class StarNameListViewController: BaseViewController {
 
 extension WUtils {
     static func isStarnameValidStarName(_ starname: String) -> Bool {
-        let starNameRegEx = "[0-9a-z.-]{0,64}+\\*[a-z0-9.-]{3,16}"
+        let starNameRegEx = "[0-9a-z.-]{0,64}+\\*[a-z0-9.-]{2,16}"
         let starNamePred = NSPredicate(format:"SELF MATCHES %@", starNameRegEx)
         return starNamePred.evaluate(with: starname)
     }
     
     static func isStarnameValidDomain(_ starname: String) -> Bool {
-        let starNameRegEx = "[a-z0-9]{4,32}"
+        let starNameRegEx = "[a-z0-9]{2,32}"
         let starNamePred = NSPredicate(format:"SELF MATCHES %@", starNameRegEx)
         return starNamePred.evaluate(with: starname)
     }
