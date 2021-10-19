@@ -13,6 +13,7 @@
                 <outlet property="btnBack" destination="gSe-BE-cVo" id="gNd-ty-bjY"/>
                 <outlet property="btnConfirm" destination="oDl-8j-b3A" id="aNl-yW-nJi"/>
                 <outlet property="mMemoLabel" destination="ZKX-Fb-Vnf" id="cJc-ay-UhG"/>
+                <outlet property="swapFeeDenomLabel" destination="YlN-2n-UQJ" id="ert-sV-4hx"/>
                 <outlet property="swapFeeLabel" destination="LM1-Vp-mcC" id="495-lN-5TI"/>
                 <outlet property="swapInAmountLabel" destination="Hwp-U6-V8t" id="ead-cB-XrP"/>
                 <outlet property="swapInDenomLabel" destination="BeB-ey-VdE" id="LwA-Dh-dRF"/>
@@ -90,12 +91,6 @@
                             <color key="textColor" red="0.47843137250000001" green="0.49803921569999998" blue="0.53333333329999999" alpha="1" colorSpace="deviceRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LM1-Vp-mcC">
-                            <rect key="frame" x="369" y="48.5" width="5" height="16.5"/>
-                            <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="14"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tx Fee" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CDL-o4-2Cv">
                             <rect key="frame" x="16" y="16" width="44" height="16.5"/>
                             <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
@@ -169,16 +164,31 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="COIN" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YlN-2n-UQJ">
+                            <rect key="frame" x="344" y="50" width="30" height="14"/>
+                            <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LM1-Vp-mcC">
+                            <rect key="frame" x="335" y="48.5" width="5" height="16.5"/>
+                            <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="14"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" red="0.18039215689999999" green="0.18039215689999999" blue="0.18039215689999999" alpha="0.39509310790000002" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="ZKX-Fb-Vnf" firstAttribute="leading" secondItem="817-3m-pEF" secondAttribute="leading" constant="16" id="1WA-5c-z8x"/>
+                        <constraint firstItem="YlN-2n-UQJ" firstAttribute="trailing" secondItem="bCt-Tg-v4Q" secondAttribute="trailing" id="2cL-0b-f6O"/>
                         <constraint firstItem="BeB-ey-VdE" firstAttribute="trailing" secondItem="bCt-Tg-v4Q" secondAttribute="trailing" id="2ul-d6-rKf"/>
                         <constraint firstItem="LM1-Vp-mcC" firstAttribute="bottom" secondItem="17i-QL-ctn" secondAttribute="bottom" id="5bo-wS-WMC"/>
                         <constraint firstItem="bCt-Tg-v4Q" firstAttribute="leading" secondItem="Qa8-XQ-UuJ" secondAttribute="trailing" constant="4" id="7HE-84-K2z"/>
                         <constraint firstItem="CDL-o4-2Cv" firstAttribute="leading" secondItem="817-3m-pEF" secondAttribute="leading" constant="16" id="AHC-7G-9z7"/>
+                        <constraint firstItem="YlN-2n-UQJ" firstAttribute="centerY" secondItem="17i-QL-ctn" secondAttribute="centerY" id="AmW-Pd-5yE"/>
                         <constraint firstAttribute="trailing" secondItem="UtD-i0-tSb" secondAttribute="trailing" constant="16" id="GfY-Nf-Wvj"/>
                         <constraint firstItem="bCt-Tg-v4Q" firstAttribute="firstBaseline" secondItem="CDL-o4-2Cv" secondAttribute="firstBaseline" id="Ivl-Db-Cr2"/>
+                        <constraint firstItem="YlN-2n-UQJ" firstAttribute="leading" secondItem="LM1-Vp-mcC" secondAttribute="trailing" constant="4" id="Lt9-u3-9f0"/>
                         <constraint firstItem="UtD-i0-tSb" firstAttribute="leading" secondItem="817-3m-pEF" secondAttribute="leading" constant="16" id="OYi-50-P5N"/>
                         <constraint firstItem="MnT-ZB-aYd" firstAttribute="leading" secondItem="CDL-o4-2Cv" secondAttribute="leading" id="P8y-YN-kw4"/>
                         <constraint firstItem="yIY-RQ-Yck" firstAttribute="firstBaseline" secondItem="BhB-44-bEK" secondAttribute="firstBaseline" id="Sxo-c4-iSa"/>
@@ -196,7 +206,6 @@
                         <constraint firstItem="0VB-dM-4Ir" firstAttribute="firstBaseline" secondItem="BhB-44-bEK" secondAttribute="firstBaseline" id="hEN-eH-nSu"/>
                         <constraint firstItem="yIY-RQ-Yck" firstAttribute="trailing" secondItem="BeB-ey-VdE" secondAttribute="trailing" id="iD4-EV-4UF"/>
                         <constraint firstItem="Hwp-U6-V8t" firstAttribute="firstBaseline" secondItem="MnT-ZB-aYd" secondAttribute="firstBaseline" id="ihH-cb-nfG"/>
-                        <constraint firstItem="LM1-Vp-mcC" firstAttribute="trailing" secondItem="bCt-Tg-v4Q" secondAttribute="trailing" id="lpU-jd-ZJA"/>
                         <constraint firstAttribute="trailing" secondItem="bCt-Tg-v4Q" secondAttribute="trailing" constant="16" id="mBs-Mp-dSX"/>
                         <constraint firstItem="BeB-ey-VdE" firstAttribute="leading" secondItem="Hwp-U6-V8t" secondAttribute="trailing" constant="4" id="mq5-4U-oWE"/>
                         <constraint firstItem="BhB-44-bEK" firstAttribute="leading" secondItem="CDL-o4-2Cv" secondAttribute="leading" id="nI6-hQ-OwX"/>

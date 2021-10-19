@@ -68,7 +68,7 @@ class SifDexSwapViewController: BaseViewController, SBCardPopupDelegate {
         mOutPutDecimal = WUtils.getSifCoinDecimal(mOutputCoinDenom!)
         mAvailableMaxAmount = BaseData.instance.getAvailableAmount_gRPC(mInputCoinDenom!)
         
-        self.slippageLabel.attributedText = WUtils.displayPercent(NSDecimalNumber.init(string: "1"), swapFeeLabel.font)
+        self.slippageLabel.attributedText = WUtils.displayPercent(NSDecimalNumber.init(string: "2"), swapFeeLabel.font)
         self.inputCoinAvailableAmountLabel.attributedText = WUtils.displayAmount2(mAvailableMaxAmount.stringValue, inputCoinAvailableAmountLabel.font!, mInPutDecimal, mInPutDecimal)
         
         WUtils.DpSifCoinImg(inputCoinImg, mInputCoinDenom!)
@@ -196,12 +196,11 @@ class SifDexSwapViewController: BaseViewController, SBCardPopupDelegate {
             return
         }
         
-        //TODO
         let txVC = UIStoryboard(name: "GenTx", bundle: nil).instantiateViewController(withIdentifier: "TransactionViewController") as! TransactionViewController
         txVC.mType = SIF_MSG_TYPE_SWAP_CION
-//        txVC.mPoolId = String(mSelectedPool!.id)
-//        txVC.mSwapInDenom = mInputCoinDenom
-//        txVC.mSwapOutDenom = mOutputCoinDenom
+        txVC.mSifPool = mSelectedPool
+        txVC.mSwapInDenom = mInputCoinDenom
+        txVC.mSwapOutDenom = mOutputCoinDenom
         self.navigationItem.title = ""
         self.navigationController?.pushViewController(txVC, animated: true)
     }

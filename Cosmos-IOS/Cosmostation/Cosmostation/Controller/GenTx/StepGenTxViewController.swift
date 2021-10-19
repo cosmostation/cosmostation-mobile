@@ -135,6 +135,9 @@ class StepGenTxViewController: UIPageViewController, UIPageViewControllerDelegat
     var mGDexSwapOrderPrice: NSDecimalNumber?
     
     
+    var mSifPool: Sifnode_Clp_V1_Pool?
+    
+    
     var mHdacKey: HDWalletKit.PrivateKey?
     var mHdacAddress: String?
     var mHdacBalance: NSDecimalNumber?

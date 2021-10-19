@@ -54,6 +54,8 @@ class TransactionViewController: UIViewController {
     var mLockupDuration: Int64?
     var mLockups: Array<Osmosis_Lockup_PeriodLock>?
     
+    var mSifPool: Sifnode_Clp_V1_Pool?
+    
     var mIBCSendDenom: String?
     
     override func viewDidLoad() {
@@ -358,8 +360,9 @@ class TransactionViewController: UIViewController {
             StepVc.mLockupDuration = self.mLockupDuration
             StepVc.mLockups = self.mLockups
             
-            
             StepVc.mIBCSendDenom = self.mIBCSendDenom
+            
+            StepVc.mSifPool = self.mSifPool
         }
     }
     

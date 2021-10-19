@@ -1352,6 +1352,65 @@ class Signer {
         }
     }
     
+    static func genSignedSifSwapMsgTxgRPC(_ auth: Cosmos_Auth_V1beta1_QueryAccountResponse,
+                                          _ signer: String, _ inputDenom: String, _ inputAmount: String, _ outputDenom: String, _ outputAmount: String,
+                                          _ fee: Fee, _ memo: String, _ privateKey: Data, _ publicKey: Data, _ chainId: String) -> Cosmos_Tx_V1beta1_BroadcastTxRequest {
+        let inputAsset = Sifnode_Clp_V1_Asset.with {
+            $0.symbol = inputDenom
+        }
+        let outputAsset = Sifnode_Clp_V1_Asset.with {
+            $0.symbol = outputDenom
+        }
+        let swapMsg = Sifnode_Clp_V1_MsgSwap.with {
+            $0.signer = signer
+            $0.sentAsset = inputAsset
+            $0.sentAmount = inputAmount
+            $0.receivedAsset = outputAsset
+            $0.minReceivingAmount = outputAmount
+        }
+        let anyMsg = Google_Protobuf2_Any.with {
+            $0.typeURL = "/sifnode.clp.v1.MsgSwap"
+            $0.value = try! swapMsg.serializedData()
+        }
+        let txBody = getGrpcTxBody([anyMsg], memo);
+        let signerInfo = getGrpcSignerInfo(auth, publicKey);
+        let authInfo = getGrpcAuthInfo(signerInfo, fee);
+        let rawTx = getGrpcRawTx(auth, txBody, authInfo, privateKey, chainId);
+        return Cosmos_Tx_V1beta1_BroadcastTxRequest.with {
+            $0.mode = Cosmos_Tx_V1beta1_BroadcastMode.async
+            $0.txBytes = try! rawTx.serializedData()
+        }
+    }
+    
+    static func genSimulateSifSwapMsgTxgRPC(_ auth: Cosmos_Auth_V1beta1_QueryAccountResponse,
+                                            _ signer: String, _ inputDenom: String, _ inputAmount: String, _ outputDenom: String, _ outputAmount: String,
+                                            _ fee: Fee, _ memo: String, _ privateKey: Data, _ publicKey: Data, _ chainId: String) -> Cosmos_Tx_V1beta1_SimulateRequest {
+        let inputAsset = Sifnode_Clp_V1_Asset.with {
+            $0.symbol = inputDenom
+        }
+        let outputAsset = Sifnode_Clp_V1_Asset.with {
+            $0.symbol = outputDenom
+        }
+        let swapMsg = Sifnode_Clp_V1_MsgSwap.with {
+            $0.signer = signer
+            $0.sentAsset = inputAsset
+            $0.sentAmount = inputAmount
+            $0.receivedAsset = outputAsset
+            $0.minReceivingAmount = outputAmount
+        }
+        let anyMsg = Google_Protobuf2_Any.with {
+            $0.typeURL = "/sifnode.clp.v1.MsgSwap"
+            $0.value = try! swapMsg.serializedData()
+        }
+        let txBody = getGrpcTxBody([anyMsg], memo);
+        let signerInfo = getGrpcSignerInfo(auth, publicKey);
+        let authInfo = getGrpcAuthInfo(signerInfo, fee);
+        let simulateTx = getGrpcSimulTx(auth, txBody, authInfo, privateKey, chainId);
+        return Cosmos_Tx_V1beta1_SimulateRequest.with {
+            $0.tx = simulateTx
+        }
+    }
+    
     
     static func getGrpcTxBody(_ msgAnys: Array<Google_Protobuf2_Any>, _ memo: String) -> Cosmos_Tx_V1beta1_TxBody {
         return Cosmos_Tx_V1beta1_TxBody.with {
