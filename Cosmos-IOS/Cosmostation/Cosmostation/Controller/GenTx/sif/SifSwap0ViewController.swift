@@ -1,8 +1,8 @@
 //
-//  GdexSwap0ViewController.swift
+//  SifSwap0ViewController.swift
 //  Cosmostation
 //
-//  Created by 정용주 on 2021/09/08.
+//  Created by 정용주 on 2021/10/19.
 //  Copyright © 2021 wannabit. All rights reserved.
 //
 
@@ -11,7 +11,7 @@ import GRPC
 import NIO
 import SwiftProtobuf
 
-class GdexSwap0ViewController: BaseViewController, UITextFieldDelegate {
+class SifSwap0ViewController: BaseViewController, UITextFieldDelegate {
     
     @IBOutlet weak var btnCancel: UIButton!
     @IBOutlet weak var btnNext: UIButton!
@@ -25,63 +25,57 @@ class GdexSwap0ViewController: BaseViewController, UITextFieldDelegate {
     @IBOutlet weak var outputCoinName: UILabel!
     @IBOutlet weak var outputCoinAmountLabel: UILabel!
     
-    var channel: ClientConnection!
     var pageHolderVC: StepGenTxViewController!
-    
-    var selectedPool: Tendermint_Liquidity_V1beta1_Pool!
-    var selectedPoolManager: GDexManager!
-    var selectedPoolSupply: Coin!
-    var availableMaxAmount = NSDecimalNumber.zero
+    var selectedPool: Sifnode_Clp_V1_Pool!
     var swapInDenom = ""
     var swapOutDenom = ""
-    var dpInPutDecimal:Int16 = 6
-    var dpOutPutDecimal:Int16 = 6
+    var dpInPutDecimal:Int16 = 18
+    var dpOutPutDecimal:Int16 = 18
     var swapRate = NSDecimalNumber.one
-    
+    var availableMaxAmount = NSDecimalNumber.zero
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.account = BaseData.instance.selectAccountById(id: BaseData.instance.getRecentAccountId())
         self.chainType = WUtils.getChainType(account!.account_base_chain)
         self.pageHolderVC = self.parent as? StepGenTxViewController
-        self.selectedPool = BaseData.instance.getGravityPoolById(pageHolderVC.mPoolId!)
-        self.swapInDenom = pageHolderVC.mSwapInDenom!
-        self.swapOutDenom = pageHolderVC.mSwapOutDenom!
-        self.dpInPutDecimal = WUtils.getCosmosCoinDecimal(swapInDenom)
-        self.dpOutPutDecimal = WUtils.getCosmosCoinDecimal(swapOutDenom)
+        self.selectedPool = self.pageHolderVC.mSifPool
+        self.swapInDenom = self.pageHolderVC.mSwapInDenom!
+        self.swapOutDenom = self.pageHolderVC.mSwapOutDenom!
+        self.dpInPutDecimal = WUtils.getSifCoinDecimal(swapInDenom)
+        self.dpOutPutDecimal = WUtils.getSifCoinDecimal(swapOutDenom)
         
         inputTextFiled.delegate = self
         inputTextFiled.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         
         loadingImg.startAnimating()
-        onFetchDexData()
-    }
-    
-    func onInitView() {
-        availableMaxAmount = BaseData.instance.getAvailableAmount_gRPC(pageHolderVC.mSwapInDenom!)
-        let txFeeAmount = WUtils.getEstimateGasFeeAmount(pageHolderVC.chainType!, LIQUIDITY_MSG_TYPE_SWAP, 0)
-        if (swapInDenom == COSMOS_MAIN_DENOM) {
-            availableMaxAmount = availableMaxAmount.subtracting(txFeeAmount)
-        }
-        availableMaxAmount = availableMaxAmount.multiplying(by: NSDecimalNumber.init(string: "0.9985"), withBehavior: WUtils.handler6)
-        
-        WUtils.showCoinDp(swapInDenom, availableMaxAmount.stringValue, inputCoinAvailableDenomLabel, inputCoinAvailableLabel, chainType!)
-        WUtils.DpCosmosTokenImg(inputCoinImg, swapInDenom)
-        WUtils.DpCosmosTokenName(inputCoinName, swapInDenom)
-        WUtils.DpCosmosTokenImg(outputCoinImg, swapOutDenom)
-        WUtils.DpCosmosTokenName(outputCoinName, swapOutDenom)
-        
-        
-        let coin0TotalLpAmount = NSDecimalNumber.init(string: selectedPoolManager.reserve.filter {$0.denom == swapInDenom }.first?.amount)
-        let coin1TotalLpAmount = NSDecimalNumber.init(string: selectedPoolManager.reserve.filter {$0.denom == swapOutDenom }.first?.amount)
-        swapRate = coin1TotalLpAmount.dividing(by: coin0TotalLpAmount, withBehavior: WUtils.handler8).multiplying(byPowerOf10: (dpInPutDecimal - dpOutPutDecimal))
-        
-        self.loadingImg.stopAnimating()
-        self.loadingImg.isHidden = true
+        onFetchSifPool(selectedPool.externalAsset.symbol)
     }
     
     override func enableUserInteraction() {
         self.btnCancel.isUserInteractionEnabled = true
         self.btnNext.isUserInteractionEnabled = true
+    }
+    
+    func onInitView() {
+        availableMaxAmount = BaseData.instance.getAvailableAmount_gRPC(swapInDenom)
+        let txFeeAmount = WUtils.getEstimateGasFeeAmount(chainType!, SIF_MSG_TYPE_SWAP_CION, 0)
+        if (swapInDenom == SIF_MAIN_DENOM) {
+            availableMaxAmount = availableMaxAmount.subtracting(txFeeAmount)
+        }
+        WUtils.showCoinDp(swapInDenom, availableMaxAmount.stringValue, inputCoinAvailableDenomLabel, inputCoinAvailableLabel, chainType!)
+        WUtils.DpSifCoinImg(inputCoinImg, swapInDenom)
+        WUtils.DpSifCoinName(inputCoinName, swapInDenom)
+        WUtils.DpSifCoinImg(outputCoinImg, swapOutDenom)
+        WUtils.DpSifCoinName(outputCoinName, swapOutDenom)
+        
+        let lpInputAmount = WUtils.getPoolLpAmount(selectedPool, swapInDenom)
+        let lpOutputAmount = WUtils.getPoolLpAmount(selectedPool, swapOutDenom)
+        swapRate = lpOutputAmount.dividing(by: lpInputAmount, withBehavior: WUtils.handler24Down).multiplying(byPowerOf10: (dpInPutDecimal - dpOutPutDecimal))
+        print("swapRate ", swapRate)
+        
+        self.loadingImg.stopAnimating()
+        self.loadingImg.isHidden = true
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -120,15 +114,35 @@ class GdexSwap0ViewController: BaseViewController, UITextFieldDelegate {
             inputTextFiled.layer.borderColor = UIColor.init(hexString: "f31963").cgColor
             return
         }
+        if (userInput.compare(NSDecimalNumber.init(string: "0.01")).rawValue < 0) {
+            inputTextFiled.layer.borderColor = UIColor.init(hexString: "f31963").cgColor
+            return
+        }
         if (userInput.multiplying(byPowerOf10: dpInPutDecimal).compare(availableMaxAmount).rawValue > 0) {
             inputTextFiled.layer.borderColor = UIColor.init(hexString: "f31963").cgColor
             return
         }
         inputTextFiled.layer.borderColor = UIColor.white.cgColor
         
-        let padding = NSDecimalNumber(string: "0.97")
-        let outputAmount = userInput.multiplying(by: padding).multiplying(by: swapRate, withBehavior: WUtils.handler18)
-        outputCoinAmountLabel.text = WUtils.decimalNumberToLocaleString(outputAmount, dpOutPutDecimal)
+        //slippage
+        let padding = NSDecimalNumber(string: "0.98")
+        let outputAmount = userInput.multiplying(byPowerOf10: dpInPutDecimal - dpOutPutDecimal).multiplying(by: padding, withBehavior: WUtils.handler24Down).multiplying(by: swapRate, withBehavior: WUtils.handler24Down)
+        print("outputAmount ", outputAmount)
+        
+        //lp Fee
+        let lpInputAmount = WUtils.getPoolLpAmount(selectedPool, swapInDenom)
+        let lpOutputAmount = WUtils.getPoolLpAmount(selectedPool, swapOutDenom)
+        let input = userInput.multiplying(byPowerOf10: dpInPutDecimal)
+        let numerator = input.multiplying(by: input).multiplying(by: lpOutputAmount)
+        let divider = input.adding(lpInputAmount)
+        let denominator = divider.multiplying(by: divider)
+        let lpFee = numerator.dividing(by: denominator, withBehavior: WUtils.handler0).multiplying(byPowerOf10: -dpOutPutDecimal, withBehavior: WUtils.handler18)
+        print("lpFee ", lpFee)
+        
+        
+        outputCoinAmountLabel.text = WUtils.decimalNumberToLocaleString(outputAmount.subtracting(lpFee), dpOutPutDecimal)
+        
+        
     }
     
     @IBAction func onClickClear(_ sender: UIButton) {
@@ -172,20 +186,7 @@ class GdexSwap0ViewController: BaseViewController, UITextFieldDelegate {
             pageHolderVC.mSwapInAmount = userInput.multiplying(byPowerOf10: dpInPutDecimal)
             let userOutput = WUtils.localeStringToDecimal((outputCoinAmountLabel.text?.trimmingCharacters(in: .whitespaces))!)
             pageHolderVC.mSwapOutAmount = userOutput.multiplying(byPowerOf10: dpOutPutDecimal)
-            pageHolderVC.mGDexPool = selectedPool
-            pageHolderVC.mGDexPoolManager = selectedPoolManager
-            pageHolderVC.mGDexPoolSupply = selectedPoolSupply
-            let coin0Amount = NSDecimalNumber.init(string: selectedPoolManager.reserve[0].amount)
-            let coin1Amount = NSDecimalNumber.init(string: selectedPoolManager.reserve[1].amount)
-            var padding = NSDecimalNumber.one
-            if (swapInDenom == selectedPoolManager.reserve[0].denom) {
-                padding = NSDecimalNumber.init(string: "1.03")
-            } else if (swapInDenom == selectedPoolManager.reserve[1].denom) {
-                padding = NSDecimalNumber.init(string: "0.97")
-            }
-            let orderPrice = coin0Amount.multiplying(by: padding).dividing(by: coin1Amount, withBehavior: WUtils.handler18)
-            print("orderPrice ", orderPrice)
-            pageHolderVC.mGDexSwapOrderPrice = orderPrice.multiplying(byPowerOf10: 18)
+            pageHolderVC.mSifPool = selectedPool
             sender.isUserInteractionEnabled = false
             pageHolderVC.onNextPage()
         }
@@ -200,47 +201,20 @@ class GdexSwap0ViewController: BaseViewController, UITextFieldDelegate {
         return true
     }
     
-    
-    var mFetchCnt = 0
-    func onFetchDexData() {
-        self.mFetchCnt = 2
+    func onFetchSifPool(_ denom: String) {
         DispatchQueue.global().async {
-            let group = MultiThreadedEventLoopGroup(numberOfThreads: 5)
-            defer { try! group.syncShutdownGracefully() }
-            
-            self.channel = BaseNetWork.getConnection(self.chainType!, group)!
-            defer { try! self.channel.close().wait() }
-            
-            self.onFetchGdexPoolManager(self.selectedPool.reserveAccountAddress)
-            self.onFetchSupply(self.selectedPool.poolCoinDenom)
+            do {
+                let channel = BaseNetWork.getConnection(self.chainType!, MultiThreadedEventLoopGroup(numberOfThreads: 1))!
+                let req = Sifnode_Clp_V1_PoolReq.with { $0.symbol = denom }
+                if let response = try? Sifnode_Clp_V1_QueryClient(channel: channel).getPool(req, callOptions: BaseNetWork.getCallOptions()).response.wait() {
+                    self.selectedPool = response.pool
+                }
+                try channel.close().wait()
+                
+            } catch {
+                print("onFetchSifPool failed: \(error)")
+            }
+            DispatchQueue.main.async(execute: { self.onInitView() });
         }
-    }
-    
-    func onFetchFinished() {
-        self.mFetchCnt = self.mFetchCnt - 1
-        if (mFetchCnt > 0) { return }
-        
-        DispatchQueue.global().async {
-            try? self.channel.close().wait()
-            DispatchQueue.main.async(execute: {
-                self.onInitView()
-            });
-        }
-    }
-    
-    func onFetchGdexPoolManager(_ address: String) {
-        let req = Cosmos_Bank_V1beta1_QueryAllBalancesRequest.with { $0.address = address }
-        if let response = try? Cosmos_Bank_V1beta1_QueryClient(channel: self.channel).allBalances(req, callOptions: BaseNetWork.getCallOptions()).response.wait() {
-            self.selectedPoolManager = GDexManager.init(address, response.balances)
-        }
-        self.onFetchFinished()
-    }
-    
-    func onFetchSupply(_ denom: String) {
-        let req = Cosmos_Bank_V1beta1_QuerySupplyOfRequest.with { $0.denom = denom }
-        if let response = try? Cosmos_Bank_V1beta1_QueryClient(channel: self.channel).supplyOf(req, callOptions: BaseNetWork.getCallOptions()).response.wait() {
-            self.selectedPoolSupply = Coin.init(response.amount.denom, response.amount.amount)
-        }
-        self.onFetchFinished()
     }
 }

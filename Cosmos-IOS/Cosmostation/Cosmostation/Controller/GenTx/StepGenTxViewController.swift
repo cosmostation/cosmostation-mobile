@@ -135,6 +135,10 @@ class StepGenTxViewController: UIPageViewController, UIPageViewControllerDelegat
     var mGDexSwapOrderPrice: NSDecimalNumber?
     
     
+    var mSifPool: Sifnode_Clp_V1_Pool?
+    var mSifMyAllUnitAmount: String?
+    var mSifMyWithdrawUnitAmount: String?
+    
     var mHdacKey: HDWalletKit.PrivateKey?
     var mHdacAddress: String?
     var mHdacBalance: NSDecimalNumber?
@@ -455,6 +459,31 @@ class StepGenTxViewController: UIPageViewController, UIPageViewControllerDelegat
                     StepEventHorizon1ViewController(nibName: "StepEventHorizon1ViewController", bundle: nil)]
         }
         
+        else if (mType == SIF_MSG_TYPE_CLAIM_INCENTIVE) {
+            return [SifIncentive0ViewController(nibName: "SifIncentive0ViewController", bundle: nil),
+                    self.newVc(viewController: "StepMemoViewController"),
+                    StepFeeGrpcViewController(nibName: "StepFeeGrpcViewController", bundle: nil),
+                    SifIncentive3ViewController(nibName: "SifIncentive3ViewController", bundle: nil)]
+            
+        } else if (mType == SIF_MSG_TYPE_ADD_LP) {
+            return [SifJoinPool0ViewController(nibName: "SifJoinPool0ViewController", bundle: nil),
+                    self.newVc(viewController: "StepMemoViewController"),
+                    StepFeeGrpcViewController(nibName: "StepFeeGrpcViewController", bundle: nil),
+                    SifJoinPool3ViewController(nibName: "SifJoinPool3ViewController", bundle: nil)]
+            
+        } else if (mType == SIF_MSG_TYPE_REMOVE_LP) {
+            return [SifExitPool0ViewController(nibName: "SifExitPool0ViewController", bundle: nil),
+                    self.newVc(viewController: "StepMemoViewController"),
+                    StepFeeGrpcViewController(nibName: "StepFeeGrpcViewController", bundle: nil),
+                    SifExitPool3ViewController(nibName: "SifExitPool3ViewController", bundle: nil)]
+            
+        } else if (mType == SIF_MSG_TYPE_SWAP_CION) {
+            return [SifSwap0ViewController(nibName: "SifSwap0ViewController", bundle: nil),
+                    self.newVc(viewController: "StepMemoViewController"),
+                    StepFeeGrpcViewController(nibName: "StepFeeGrpcViewController", bundle: nil),
+                    SifSwap3ViewController(nibName: "SifSwap3ViewController", bundle: nil)]
+            
+        }
         
         else {
             if (WUtils.isGRPC(chainType!)) {

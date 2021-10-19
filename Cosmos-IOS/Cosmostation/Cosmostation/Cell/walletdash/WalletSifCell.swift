@@ -31,12 +31,17 @@ class WalletSifCell: UITableViewCell {
     
     var actionDelegate: (() -> Void)? = nil
     var actionVote: (() -> Void)? = nil
+    var actionDex: (() -> Void)? = nil
     
     @IBAction func onClickDelegate(_ sender: Any) {
         actionDelegate?()
     }
     @IBAction func onClickVote(_ sender: Any) {
         actionVote?()
+    }
+    
+    @IBAction func actionDex(_ sender: Any) {
+        actionDex?()
     }
     
     override func prepareForReuse() {

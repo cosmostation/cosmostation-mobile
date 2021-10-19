@@ -1593,46 +1593,46 @@ public class WUtils {
         return available.adding(lock).adding(delegated).adding(unbonding).adding(reward)
     }
     
-    static func marketPrice(_ chain: ChainType) -> String {
-        var result = "usdt"
-        if (isGRPC(chain)) {
-            result = result + "," + getMainDenom(chain)
-            BaseData.instance.mIbcTokens.forEach { ibcToken in
-                if (ibcToken.auth == true) {
-                    result = result + "," + ibcToken.base_denom!
-                }
-            }
-            if (chain == ChainType.OSMOSIS_MAIN) {
-                result = result + ",uion"
-            } else if (chain == ChainType.SIF_MAIN) {
-                result = result + ",rowan"
-                for balance in BaseData.instance.mMyBalances_gRPC {
-                    if (balance.denom != getMainDenom(chain) && balance.denom.starts(with: "c")) {
-                        result = result + "," + balance.denom.substring(from: 1)
-                    }
-                }
-                
-            }
-        }
-        
-        else if (chain == ChainType.BINANCE_MAIN || chain == ChainType.BINANCE_TEST) {
-            result = result + ",bnb"
-            
-        } else if (chain == ChainType.OKEX_MAIN || chain == ChainType.OKEX_TEST) {
-            result = result + ",okb,okt"
-            
-        } else if (chain == ChainType.KAVA_MAIN || chain == ChainType.KAVA_TEST) {
-            result = result + ",ukava,hard,swp,usdx,btc,bnb,xrp,busd"
-            
-        } else if (chain == ChainType.KI_MAIN) {
-            result = result + ",uxki"
-            
-        } else if (chain == ChainType.SECRET_MAIN) {
-            result = result + ",uscrt"
-            
-        }
-        return result
-    }
+//    static func marketPrice(_ chain: ChainType) -> String {
+//        var result = "usdt"
+//        if (isGRPC(chain)) {
+//            result = result + "," + getMainDenom(chain)
+//            BaseData.instance.mIbcTokens.forEach { ibcToken in
+//                if (ibcToken.auth == true) {
+//                    result = result + "," + ibcToken.base_denom!
+//                }
+//            }
+//            if (chain == ChainType.OSMOSIS_MAIN) {
+//                result = result + ",uion"
+//            } else if (chain == ChainType.SIF_MAIN) {
+//                result = result + ",rowan"
+//                for balance in BaseData.instance.mMyBalances_gRPC {
+//                    if (balance.denom != getMainDenom(chain) && balance.denom.starts(with: "c")) {
+//                        result = result + "," + balance.denom.substring(from: 1)
+//                    }
+//                }
+//
+//            }
+//        }
+//
+//        else if (chain == ChainType.BINANCE_MAIN || chain == ChainType.BINANCE_TEST) {
+//            result = result + ",bnb"
+//
+//        } else if (chain == ChainType.OKEX_MAIN || chain == ChainType.OKEX_TEST) {
+//            result = result + ",okb,okt"
+//
+//        } else if (chain == ChainType.KAVA_MAIN || chain == ChainType.KAVA_TEST) {
+//            result = result + ",ukava,hard,swp,usdx,btc,bnb,xrp,busd"
+//
+//        } else if (chain == ChainType.KI_MAIN) {
+//            result = result + ",uxki"
+//
+//        } else if (chain == ChainType.SECRET_MAIN) {
+//            result = result + ",uscrt"
+//
+//        }
+//        return result
+//    }
     
     static func getAllExToken(_ symbol: String) -> NSDecimalNumber {
         let dataBase = BaseData.instance
@@ -2825,17 +2825,6 @@ public class WUtils {
         }
     }
     
-    static func getSifCoinDecimal(_ denom:String?) -> Int16 {
-        if (denom?.caseInsensitiveCompare(SIF_MAIN_DENOM) == .orderedSame) { return 18; }
-        else if (denom?.caseInsensitiveCompare("cusdt") == .orderedSame) { return 6; }
-        else if (denom?.caseInsensitiveCompare("cusdc") == .orderedSame) { return 6; }
-        else if (denom?.caseInsensitiveCompare("csrm") == .orderedSame) { return 6; }
-        else if (denom?.caseInsensitiveCompare("cwscrt") == .orderedSame) { return 6; }
-        else if (denom?.caseInsensitiveCompare("ccro") == .orderedSame) { return 8; }
-        else if (denom?.caseInsensitiveCompare("cwbtc") == .orderedSame) { return 8; }
-        return 18;
-    }
-    
     static func setDenomTitle(_ chain: ChainType?, _ label: UILabel) {
         if (chain == ChainType.COSMOS_MAIN) {
             label.text = "ATOM"
@@ -3369,6 +3358,12 @@ public class WUtils {
                 result = NSDecimalNumber.init(string: String(SIF_GAS_AMOUNT_VOTE))
             } else if (type == TASK_IBC_TRANSFER) {
                 result = NSDecimalNumber.init(string: String(SIF_GAS_AMOUNT_IBC_SEND))
+            } else if (type == SIF_MSG_TYPE_CLAIM_INCENTIVE) {
+                result = NSDecimalNumber.init(string: String(SIF_GAS_AMOUNT_INCENTIVE))
+            } else if (type == SIF_MSG_TYPE_ADD_LP || type == SIF_MSG_TYPE_REMOVE_LP) {
+                result = NSDecimalNumber.init(string: String(SIF_GAS_AMOUNT_LP))
+            } else if (type == SIF_MSG_TYPE_SWAP_CION) {
+                result = NSDecimalNumber.init(string: String(SIF_GAS_AMOUNT_SWAP))
             }
             
         } else if (chain == ChainType.KI_MAIN) {

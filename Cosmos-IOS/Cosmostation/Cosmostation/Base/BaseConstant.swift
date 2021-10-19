@@ -372,6 +372,12 @@ let OSMOSIS_MSG_TYPE_BEGIN_UNLCOK           = "osmosis/MsgBeginUnlocking";
 let OSMOSIS_MSG_TYPE_PERIOD_UNLOCK          = "osmosis/MsgUnlockPeriodLock";
 
 
+let SIF_MSG_TYPE_CLAIM_INCENTIVE            = "sif/MsgCreateUserClaim";
+let SIF_MSG_TYPE_ADD_LP                     = "sif/MsgAddLiquidity";
+let SIF_MSG_TYPE_REMOVE_LP                  = "sif/MsgRemoveLiquidity";
+let SIF_MSG_TYPE_SWAP_CION                  = "sif/MsgSwap";
+
+
 let TASK_RIZON_EVENT_HORIZON                = "rizon_swap";
 
 let TASK_IBC_TRANSFER                       = "ibc_MsgTransfer";
@@ -604,6 +610,9 @@ let SIF_GAS_AMOUNT_REINVEST                     = "350000";
 let SIF_GAS_AMOUNT_REWARD_ADDRESS_CHANGE        = "100000";
 let SIF_GAS_AMOUNT_VOTE                         = "100000";
 let SIF_GAS_AMOUNT_IBC_SEND                     = "500000";
+let SIF_GAS_AMOUNT_INCENTIVE                    = "250000";
+let SIF_GAS_AMOUNT_LP                           = "250000";
+let SIF_GAS_AMOUNT_SWAP                         = "250000";
 
 let KI_GAS_FEE_RATE_AVERAGE                     = "0.025";
 let KI_GAS_AMOUNT_SEND                          = "100000";
@@ -1072,6 +1081,8 @@ let SELECT_POPUP_IBC_CHAIN = 10
 let SELECT_POPUP_IBC_RELAYER = 11
 let SELECT_POPUP_IBC_RECIPIENT = 12
 let SELECT_POPUP_STARNAME_DOMAIN = 13
+let SELECT_POPUP_SIF_SWAP_IN = 14
+let SELECT_POPUP_SIF_SWAP_OUT = 15
 
 
 let EXPLORER_COSMOS_MAIN    = "https://www.mintscan.io/cosmos/";

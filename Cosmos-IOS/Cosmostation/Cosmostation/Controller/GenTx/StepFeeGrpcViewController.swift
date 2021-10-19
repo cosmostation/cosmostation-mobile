@@ -411,6 +411,53 @@ class StepFeeGrpcViewController: BaseViewController, PasswordViewDelegate {
                                                           BaseData.instance.getChainId(self.chainType))
         }
         
+        else if (pageHolderVC.mType == SIF_MSG_TYPE_CLAIM_INCENTIVE) {
+            return Signer.genSimulateSifIncentiveMsgTxgRPC(auth,
+                                                           self.account!.account_address,
+                                                           self.pageHolderVC.mFee!,
+                                                           self.pageHolderVC.mMemo!,
+                                                           privateKey, publicKey,
+                                                           BaseData.instance.getChainId(self.chainType))
+            
+        } else if (pageHolderVC.mType == SIF_MSG_TYPE_ADD_LP) {
+            return Signer.genSimulateSifAddLpMsgTxgRPC(auth,
+                                                       self.account!.account_address,
+                                                       self.pageHolderVC.mPoolCoin0!.amount,
+                                                       self.pageHolderVC.mPoolCoin1!.denom,
+                                                       self.pageHolderVC.mPoolCoin1!.amount,
+                                                       self.pageHolderVC.mFee!,
+                                                       self.pageHolderVC.mMemo!,
+                                                       privateKey, publicKey,
+                                                       BaseData.instance.getChainId(self.chainType))
+            
+        } else if (pageHolderVC.mType == SIF_MSG_TYPE_REMOVE_LP) {
+            var basisPoints = ""
+            let myShareAllAmount = NSDecimalNumber.init(string: self.pageHolderVC.mSifMyAllUnitAmount)
+            let myShareWithdrawAmount = NSDecimalNumber.init(string: self.pageHolderVC.mSifMyWithdrawUnitAmount)
+            basisPoints = myShareWithdrawAmount.multiplying(byPowerOf10: 4).dividing(by: myShareAllAmount, withBehavior: WUtils.handler0).stringValue
+            
+            return Signer.genSimulateSifRemoveLpMsgTxgRPC(auth,
+                                                          self.account!.account_address,
+                                                          self.pageHolderVC.mSifPool!.externalAsset.symbol,
+                                                          basisPoints,
+                                                          self.pageHolderVC.mFee!,
+                                                          self.pageHolderVC.mMemo!,
+                                                          privateKey, publicKey,
+                                                          BaseData.instance.getChainId(self.chainType))
+            
+        } else if (pageHolderVC.mType == SIF_MSG_TYPE_SWAP_CION) {
+            return Signer.genSimulateSifSwapMsgTxgRPC(auth,
+                                                      self.account!.account_address,
+                                                      self.pageHolderVC.mSwapInDenom!,
+                                                      self.pageHolderVC.mSwapInAmount!.stringValue,
+                                                      self.pageHolderVC.mSwapOutDenom!,
+                                                      self.pageHolderVC.mSwapOutAmount!.stringValue,
+                                                      self.pageHolderVC.mFee!,
+                                                      self.pageHolderVC.mMemo!,
+                                                      privateKey, publicKey,
+                                                      BaseData.instance.getChainId(self.chainType))
+        }
+        
         return nil
     }
 }

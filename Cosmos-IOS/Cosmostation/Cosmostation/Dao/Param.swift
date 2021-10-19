@@ -130,6 +130,10 @@ public struct Param {
         return params?.enabled_pools?.contains(id)
     }
     
+    func getSifTokens() -> Array<SifTokenEntry>? {
+        return params?.sifchain_token_registry?.registry?.entries
+    }
+    
 }
 
 public struct Params {
@@ -154,6 +158,8 @@ public struct Params {
     var band_active_validators: BandOrcleActiveValidators?
     
     var starname_domains = Array<String>()
+    
+    var sifchain_token_registry: SifChainTokens?
     
     init(_ dictionary: NSDictionary?) {
         if let rawIbcParams = dictionary?["ibc_params"] as? NSDictionary {
@@ -227,10 +233,13 @@ public struct Params {
         }
         
         
-        if let rawStarnameDomains = dictionary?["starname_domains"] as? Array<String> {
-            for rawStarnameDomain in rawStarnameDomains {
-                self.starname_domains.append(rawStarnameDomain)
-            }
+        if let rawGovTallying = dictionary?["gov_tallying"] as? NSDictionary {
+            self.gov_tallying = GovTallying.init(rawGovTallying)
+        }
+        
+        
+        if let rawSifchainTokenRegistry = dictionary?["sifchain_token_registry"] as? NSDictionary {
+            self.sifchain_token_registry = SifChainTokens.init(rawSifchainTokenRegistry)
         }
     }
 }
@@ -606,5 +615,43 @@ public struct BandOrcleActiveValidators {
                 addresses.append(rawAddress)
             }
         })
+    }
+}
+
+public struct SifChainTokens {
+    var registry: SifTokenRegistry?
+    
+    init(_ dictionary: NSDictionary?) {
+        let rawRegistry = dictionary?["registry"] as? NSDictionary
+        self.registry = SifTokenRegistry.init(rawRegistry)
+    }
+}
+
+public struct SifTokenRegistry {
+    var entries = Array<SifTokenEntry>()
+    
+    init(_ dictionary: NSDictionary?) {
+        let rawEntries = dictionary?["entries"] as? Array<NSDictionary>
+        rawEntries?.forEach({ rawEntry in
+            entries.append(SifTokenEntry.init(rawEntry))
+        })
+    }
+}
+
+public struct SifTokenEntry {
+    var denom: String?
+    var decimals: Int16?
+    var base_denom: String?
+    var is_whitelisted: Bool?
+    var ibc_counterparty_denom: String?
+    
+    init(_ dictionary: NSDictionary?) {
+        self.denom = dictionary?["denom"] as? String
+        self.base_denom = dictionary?["base_denom"] as? String
+        self.is_whitelisted = dictionary?["is_whitelisted"] as? Bool
+        self.ibc_counterparty_denom = dictionary?["ibc_counterparty_denom"] as? String
+        if let rawDecimal = dictionary?["decimals"] as? String {
+            self.decimals = Int16(rawDecimal)
+        }
     }
 }

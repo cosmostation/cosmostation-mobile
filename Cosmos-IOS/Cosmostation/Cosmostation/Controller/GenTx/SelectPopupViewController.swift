@@ -59,10 +59,10 @@ class SelectPopupViewController: BaseViewController, SBCardPopupContent, UITable
             self.popupTitle.text = NSLocalizedString("select_account", comment: "")
             self.toAccountList = BaseData.instance.selectAllAccountsByChain(toChain!)
             
-        } else if (type == SELECT_POPUP_OSMOSIS_COIN_IN || type == SELECT_POPUP_KAVA_SWAP_IN || type == SELECT_POPUP_GRAVITY_SWAP_IN) {
+        } else if (type == SELECT_POPUP_OSMOSIS_COIN_IN || type == SELECT_POPUP_KAVA_SWAP_IN || type == SELECT_POPUP_GRAVITY_SWAP_IN || type == SELECT_POPUP_SIF_SWAP_IN) {
             self.popupTitle.text = NSLocalizedString("str_select_coin_swap_in", comment: "")
             
-        } else if (type == SELECT_POPUP_OSMOSIS_COIN_OUT || type == SELECT_POPUP_KAVA_SWAP_OUT || type == SELECT_POPUP_GRAVITY_SWAP_OUT) {
+        } else if (type == SELECT_POPUP_OSMOSIS_COIN_OUT || type == SELECT_POPUP_KAVA_SWAP_OUT || type == SELECT_POPUP_GRAVITY_SWAP_OUT || type == SELECT_POPUP_SIF_SWAP_OUT) {
             self.popupTitle.text = NSLocalizedString("str_select_coin_swap_out", comment: "")
             
         } else if (type == SELECT_POPUP_IBC_CHAIN) {
@@ -92,6 +92,10 @@ class SelectPopupViewController: BaseViewController, SBCardPopupContent, UITable
             esHeight = (CGFloat)((ibcRelayer.count * 55) + 55)
         } else if (type == SELECT_POPUP_STARNAME_DOMAIN) {
             esHeight = (CGFloat)((starnameDomains.count * 55) + 55)
+        } else if (type == SELECT_POPUP_SIF_SWAP_IN) {
+            esHeight = (CGFloat)((toCoinList.count * 55) + 55)
+        } else if (type == SELECT_POPUP_SIF_SWAP_OUT) {
+            esHeight = (CGFloat)((toCoinList.count * 55) + 55)
         }
         esHeight = (esHeight > 350) ? 350 : esHeight
         cardView.frame = CGRect(x: cardView.frame.origin.x, y: cardView.frame.origin.y, width: cardView.frame.size.width, height: esHeight)
@@ -108,9 +112,9 @@ class SelectPopupViewController: BaseViewController, SBCardPopupContent, UITable
             return toAccountList.count
         } else if (type == SELECT_POPUP_STARNAME_ACCOUNT || type == SELECT_POPUP_IBC_RECIPIENT) {
             return toAccountList.count
-        } else if (type == SELECT_POPUP_OSMOSIS_COIN_IN || type == SELECT_POPUP_KAVA_SWAP_IN || type == SELECT_POPUP_GRAVITY_SWAP_IN) {
+        } else if (type == SELECT_POPUP_OSMOSIS_COIN_IN || type == SELECT_POPUP_KAVA_SWAP_IN || type == SELECT_POPUP_GRAVITY_SWAP_IN || type == SELECT_POPUP_SIF_SWAP_IN) {
             return toCoinList.count
-        } else if (type == SELECT_POPUP_OSMOSIS_COIN_OUT || type == SELECT_POPUP_KAVA_SWAP_OUT || type == SELECT_POPUP_GRAVITY_SWAP_OUT) {
+        } else if (type == SELECT_POPUP_OSMOSIS_COIN_OUT || type == SELECT_POPUP_KAVA_SWAP_OUT || type == SELECT_POPUP_GRAVITY_SWAP_OUT || type == SELECT_POPUP_SIF_SWAP_OUT) {
             return toCoinList.count
         } else if (type == SELECT_POPUP_IBC_CHAIN) {
             return ibcToChain.count
@@ -277,6 +281,20 @@ class SelectPopupViewController: BaseViewController, SBCardPopupContent, UITable
         } else if (type == SELECT_POPUP_STARNAME_DOMAIN) {
             let cell = tableView.dequeueReusableCell(withIdentifier:"SelectTextCell") as? SelectTextCell
             cell!.selectTextLabel.text = starnameDomains[indexPath.row]
+            return cell!
+            
+        } else if (type == SELECT_POPUP_SIF_SWAP_IN) {
+            let cell = tableView.dequeueReusableCell(withIdentifier:"SelectCoinCell") as? SelectCoinCell
+            let swapInDenom = toCoinList[indexPath.row]
+            WUtils.DpSifCoinImg(cell!.coinImg, swapInDenom)
+            cell!.coinTitle.text = WUtils.getSifCoinName(swapInDenom)
+            return cell!
+            
+        } else if (type == SELECT_POPUP_SIF_SWAP_OUT) {
+            let cell = tableView.dequeueReusableCell(withIdentifier:"SelectCoinCell") as? SelectCoinCell
+            let swapInDenom = toCoinList[indexPath.row]
+            WUtils.DpSifCoinImg(cell!.coinImg, swapInDenom)
+            cell!.coinTitle.text = WUtils.getSifCoinName(swapInDenom)
             return cell!
             
         } else {

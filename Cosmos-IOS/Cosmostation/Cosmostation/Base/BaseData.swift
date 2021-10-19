@@ -88,6 +88,9 @@ final class BaseData : NSObject{
     var mGravityPoolTokens_gRPC = Array<Coin>()
     var mGravityManager_gRPC = Array<GDexManager>()
     
+    var mSifDexPools_gRPC = Array<Sifnode_Clp_V1_Pool>()
+    var mSifDexMyAssets_gRPC = Array<Sifnode_Clp_V1_Asset>()
+    
     public override init() {
         super.init();
         if database == nil {
