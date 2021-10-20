@@ -510,6 +510,10 @@ let GAS_FEE_RATE_TINY_FETCH                 = "0.00";
 let GAS_FEE_RATE_LOW_FETCH                  = "0.00";
 let GAS_FEE_RATE_AVERAGE_FETCH              = "0.00";
 
+let GAS_FEE_RATE_TINY_BITCANNA              = "0.025"
+let GAS_FEE_RATE_LOW_BITCANNA               = "0.025"
+let GAS_FEE_RATE_AVERAGE_BITCANNA           = "0.025"
+
 let GAS_FEE_AMOUNT_LOW                      = "100000"
 let GAS_FEE_AMOUNT_MID                      = "200000"
 let GAS_FEE_AMOUNT_HIGH                     = "300000"

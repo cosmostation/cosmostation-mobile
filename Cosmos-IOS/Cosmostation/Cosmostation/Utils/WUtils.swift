@@ -3540,7 +3540,7 @@ public class WUtils {
     
     static func getGasRate(_ chain:ChainType, _ position: Int) -> NSDecimalNumber {
         if (chain == ChainType.COSMOS_MAIN || chain == ChainType.AKASH_MAIN || chain == ChainType.RIZON_MAIN ||
-                chain == ChainType.JUNO_MAIN || chain == ChainType.REGEN_MAIN || chain == ChainType.BITCANA_MAIN ||
+                chain == ChainType.JUNO_MAIN || chain == ChainType.REGEN_MAIN ||
                 chain == ChainType.COSMOS_TEST || chain == ChainType.RIZON_TEST || chain == ChainType.ALTHEA_TEST ||
                 chain == ChainType.UMEE_TEST || chain == ChainType.AXELAR_TEST) {
             if (position == 0) {
@@ -3657,6 +3657,15 @@ public class WUtils {
                 return NSDecimalNumber.init(string: GAS_FEE_RATE_LOW_FETCH)
             } else {
                 return NSDecimalNumber.init(string: GAS_FEE_RATE_AVERAGE_FETCH)
+            }
+            
+        } else if (chain == ChainType.BITCANA_MAIN) {
+            if (position == 0) {
+                return NSDecimalNumber.init(string: GAS_FEE_RATE_TINY_BITCANNA)
+            } else if (position == 1) {
+                return NSDecimalNumber.init(string: GAS_FEE_RATE_LOW_BITCANNA)
+            } else {
+                return NSDecimalNumber.init(string: GAS_FEE_RATE_AVERAGE_BITCANNA)
             }
             
         }
