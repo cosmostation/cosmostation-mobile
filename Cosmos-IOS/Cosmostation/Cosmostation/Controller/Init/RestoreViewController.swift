@@ -264,6 +264,18 @@ class RestoreViewController: BaseViewController , UICollectionViewDelegate, UICo
         })
         junoAction.setValue(UIImage(named: "chainJuno")?.withRenderingMode(.alwaysOriginal), forKey: "image")
         
+        let regenAction = UIAlertAction(title: NSLocalizedString("chain_title_regen", comment: ""), style: .default, handler: {_ in
+            self.chainType = ChainType.REGEN_MAIN
+            self.initViewUpdate()
+        })
+        regenAction.setValue(UIImage(named: "chainJuno")?.withRenderingMode(.alwaysOriginal), forKey: "image")
+        
+        let bitcannaAction = UIAlertAction(title: NSLocalizedString("chain_title_bitcanna", comment: ""), style: .default, handler: {_ in
+            self.chainType = ChainType.BITCANA_MAIN
+            self.initViewUpdate()
+        })
+        bitcannaAction.setValue(UIImage(named: "chainJuno")?.withRenderingMode(.alwaysOriginal), forKey: "image")
+        
         
         let cosmosTestAction = UIAlertAction(title: NSLocalizedString("chain_title_test_cosmos", comment: ""), style: .default, handler: {_ in
             self.chainType = ChainType.COSMOS_TEST
@@ -356,7 +368,9 @@ class RestoreViewController: BaseViewController , UICollectionViewDelegate, UICo
         showAlert.addAction(osmosisAction)
         showAlert.addAction(mediAction)
         showAlert.addAction(emoneyAction)
+        showAlert.addAction(regenAction)
         showAlert.addAction(junoAction)
+        showAlert.addAction(bitcannaAction)
         showAlert.addAction(secretAction)
         
         if (ChainType.SUPPRT_CHAIN().contains(ChainType.COSMOS_TEST)) {

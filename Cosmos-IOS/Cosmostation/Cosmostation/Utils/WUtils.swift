@@ -2922,7 +2922,7 @@ public class WUtils {
         } else if (chain == ChainType.REGEN_MAIN) {
             label.text = "REGEN"
             label.textColor = COLOR_REGEN
-        } else if (chain == ChainType.JUNO_MAIN) {
+        } else if (chain == ChainType.BITCANA_MAIN) {
             label.text = "BCNA"
             label.textColor = COLOR_BITCANNA
         }
