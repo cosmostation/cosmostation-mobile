@@ -1593,47 +1593,6 @@ public class WUtils {
         return available.adding(lock).adding(delegated).adding(unbonding).adding(reward)
     }
     
-//    static func marketPrice(_ chain: ChainType) -> String {
-//        var result = "usdt"
-//        if (isGRPC(chain)) {
-//            result = result + "," + getMainDenom(chain)
-//            BaseData.instance.mIbcTokens.forEach { ibcToken in
-//                if (ibcToken.auth == true) {
-//                    result = result + "," + ibcToken.base_denom!
-//                }
-//            }
-//            if (chain == ChainType.OSMOSIS_MAIN) {
-//                result = result + ",uion"
-//            } else if (chain == ChainType.SIF_MAIN) {
-//                result = result + ",rowan"
-//                for balance in BaseData.instance.mMyBalances_gRPC {
-//                    if (balance.denom != getMainDenom(chain) && balance.denom.starts(with: "c")) {
-//                        result = result + "," + balance.denom.substring(from: 1)
-//                    }
-//                }
-//
-//            }
-//        }
-//
-//        else if (chain == ChainType.BINANCE_MAIN || chain == ChainType.BINANCE_TEST) {
-//            result = result + ",bnb"
-//
-//        } else if (chain == ChainType.OKEX_MAIN || chain == ChainType.OKEX_TEST) {
-//            result = result + ",okb,okt"
-//
-//        } else if (chain == ChainType.KAVA_MAIN || chain == ChainType.KAVA_TEST) {
-//            result = result + ",ukava,hard,swp,usdx,btc,bnb,xrp,busd"
-//
-//        } else if (chain == ChainType.KI_MAIN) {
-//            result = result + ",uxki"
-//
-//        } else if (chain == ChainType.SECRET_MAIN) {
-//            result = result + ",uscrt"
-//
-//        }
-//        return result
-//    }
-    
     static func getAllExToken(_ symbol: String) -> NSDecimalNumber {
         let dataBase = BaseData.instance
         if (symbol == OKEX_MAIN_DENOM) {
@@ -2159,6 +2118,24 @@ public class WUtils {
             }
             amountLabel.attributedText = displayAmount2(coin.amount, amountLabel.font, 6, 6)
             
+        } else if (chainType == ChainType.REGEN_MAIN) {
+            if (coin.denom == REGNE_MAIN_DENOM) {
+                WUtils.setDenomTitle(chainType, denomLabel)
+            } else {
+                denomLabel.textColor = .white
+                denomLabel.text = coin.denom.uppercased()
+            }
+            amountLabel.attributedText = displayAmount2(coin.amount, amountLabel.font, 6, 6)
+            
+        } else if (chainType == ChainType.BITCANA_MAIN) {
+            if (coin.denom == BITCANA_MAIN_DENOM) {
+                WUtils.setDenomTitle(chainType, denomLabel)
+            } else {
+                denomLabel.textColor = .white
+                denomLabel.text = coin.denom.uppercased()
+            }
+            amountLabel.attributedText = displayAmount2(coin.amount, amountLabel.font, 6, 6)
+            
         }
     }
     
@@ -2448,6 +2425,24 @@ public class WUtils {
             }
             amountLabel.attributedText = displayAmount2(amount, amountLabel.font, 6, 6)
             
+        } else if (chainType == ChainType.REGEN_MAIN) {
+            if (denom == REGNE_MAIN_DENOM) {
+                WUtils.setDenomTitle(chainType, denomLabel)
+            } else {
+                denomLabel.textColor = .white
+                denomLabel.text = denom.uppercased()
+            }
+            amountLabel.attributedText = displayAmount2(amount, amountLabel.font, 6, 6)
+            
+        } else if (chainType == ChainType.BITCANA_MAIN) {
+            if (denom == BITCANA_MAIN_DENOM) {
+                WUtils.setDenomTitle(chainType, denomLabel)
+            } else {
+                denomLabel.textColor = .white
+                denomLabel.text = denom.uppercased()
+            }
+            amountLabel.attributedText = displayAmount2(amount, amountLabel.font, 6, 6)
+            
         }
             
     }
@@ -2540,6 +2535,10 @@ public class WUtils {
             return COLOR_EMONEY
         } else if (chain == ChainType.JUNO_MAIN) {
             return COLOR_JUNO
+        } else if (chain == ChainType.REGEN_MAIN) {
+            return COLOR_REGEN
+        } else if (chain == ChainType.BITCANA_MAIN) {
+            return COLOR_BITCANNA
         }
         return COLOR_DARK_GRAY
     }
@@ -2593,6 +2592,10 @@ public class WUtils {
             return COLOR_EMONEY_DARK
         } else if (chain == ChainType.JUNO_MAIN) {
             return COLOR_JUNO_DARK
+        } else if (chain == ChainType.REGEN_MAIN) {
+            return COLOR_REGEN_DARK
+        } else if (chain == ChainType.BITCANA_MAIN) {
+            return COLOR_BITCANNA_DARK
         }
         return COLOR_DARK_GRAY
     }
@@ -2646,6 +2649,10 @@ public class WUtils {
             return TRANS_BG_COLOR_EMONEY
         } else if (chain == ChainType.JUNO_MAIN) {
             return TRANS_BG_COLOR_JUNO
+        } else if (chain == ChainType.REGEN_MAIN) {
+            return TRANS_BG_COLOR_REGEN
+        } else if (chain == ChainType.BITCANA_MAIN) {
+            return TRANS_BG_COLOR_BITCANNA
         }
         return COLOR_BG_GRAY
     }
@@ -2703,6 +2710,10 @@ public class WUtils {
             return "NGM"
         } else if (chain == ChainType.JUNO_MAIN) {
             return "JUNO"
+        } else if (chain == ChainType.REGEN_MAIN) {
+            return "REGEN"
+        } else if (chain == ChainType.BITCANA_MAIN) {
+            return "BCNA"
         }
         return ""
     }
@@ -2750,6 +2761,10 @@ public class WUtils {
             return RIZON_MAIN_DENOM
         } else if (chain == ChainType.JUNO_MAIN) {
             return JUNO_MAIN_DENOM
+        } else if (chain == ChainType.REGEN_MAIN) {
+            return REGNE_MAIN_DENOM
+        } else if (chain == ChainType.BITCANA_MAIN) {
+            return BITCANA_MAIN_DENOM
         }
         
         else if (chain == ChainType.COSMOS_TEST) {
@@ -2904,6 +2919,12 @@ public class WUtils {
         } else if (chain == ChainType.JUNO_MAIN) {
             label.text = "JUNO"
             label.textColor = COLOR_JUNO
+        } else if (chain == ChainType.REGEN_MAIN) {
+            label.text = "REGEN"
+            label.textColor = COLOR_REGEN
+        } else if (chain == ChainType.JUNO_MAIN) {
+            label.text = "BCNA"
+            label.textColor = COLOR_BITCANNA
         }
     }
     
@@ -2950,6 +2971,10 @@ public class WUtils {
             return ChainType.RIZON_MAIN
         } else if (chainS == CHAIN_JUNO_S) {
             return ChainType.JUNO_MAIN
+        } else if (chainS == CHAIN_REGEN_S) {
+            return ChainType.REGEN_MAIN
+        } else if (chainS == CHAIN_BITCANA_S) {
+            return ChainType.BITCANA_MAIN
         }
         
         else if (chainS == CHAIN_COSMOS_TEST_S) {
@@ -3023,6 +3048,10 @@ public class WUtils {
             return CHAIN_RIZON_S
         } else if (chain == ChainType.JUNO_MAIN) {
             return CHAIN_JUNO_S
+        } else if (chain == ChainType.REGEN_MAIN) {
+            return CHAIN_REGEN_S
+        } else if (chain == ChainType.BITCANA_MAIN) {
+            return CHAIN_BITCANA_S
         }
         
         else if (chain == ChainType.COSMOS_TEST) {
@@ -3984,8 +4013,7 @@ public class WUtils {
             return EMONEY_VAL_URL + opAddress + ".png";
         } else if (chain == ChainType.JUNO_MAIN) {
             return JUNO_VAL_URL + opAddress + ".png";
-        }
-        else if (chain == ChainType.KAVA_MAIN || chain == ChainType.KAVA_TEST) {
+        } else if (chain == ChainType.KAVA_MAIN || chain == ChainType.KAVA_TEST) {
             return KAVA_VAL_URL + opAddress + ".png";
         } else if (chain == ChainType.BAND_MAIN) {
             return BAND_VAL_URL + opAddress + ".png";
@@ -4007,6 +4035,10 @@ public class WUtils {
             return UMEE_VAL_URL + opAddress + ".png";
         } else if (chain == ChainType.AXELAR_TEST) {
             return AXELAR_VAL_URL + opAddress + ".png";
+        } else if (chain == ChainType.REGEN_MAIN) {
+            return REGEN_VAL_URL + opAddress + ".png";
+        } else if (chain == ChainType.BITCANA_MAIN) {
+            return BITCANNA_VAL_URL + opAddress + ".png";
         }
         return ""
     }
@@ -4041,6 +4073,12 @@ public class WUtils {
             
         } else if (chain == ChainType.JUNO_MAIN) {
             return EXPLORER_JUNO + "txs/" + hash
+            
+        } else if (chain == ChainType.REGEN_MAIN) {
+            return EXPLORER_REGEN + "txs/" + hash
+            
+        } else if (chain == ChainType.BITCANA_MAIN) {
+            return EXPLORER_BITCANNA + "txs/" + hash
             
         }
         
@@ -4169,6 +4207,12 @@ public class WUtils {
         } else if (chain == ChainType.JUNO_MAIN) {
             return EXPLORER_JUNO + "account/" + address
             
+        } else if (chain == ChainType.REGEN_MAIN) {
+            return EXPLORER_REGEN + "account/" + address
+            
+        } else if (chain == ChainType.BITCANA_MAIN) {
+            return EXPLORER_BITCANNA + "account/" + address
+            
         }
         
         else if (chain == ChainType.COSMOS_TEST) {
@@ -4266,6 +4310,12 @@ public class WUtils {
         } else if (chain == ChainType.JUNO_MAIN) {
             return EXPLORER_JUNO + "proposals/" + proposalId
             
+        } else if (chain == ChainType.REGEN_MAIN) {
+            return EXPLORER_REGEN + "proposals/" + proposalId
+            
+        } else if (chain == ChainType.BITCANA_MAIN) {
+            return EXPLORER_BITCANNA + "proposals/" + proposalId
+            
         }
         
         else if (chain == ChainType.COSMOS_TEST) {
@@ -4360,6 +4410,12 @@ public class WUtils {
         } else if (chain == ChainType.JUNO_MAIN) {
             return UIImage(named: "tokenJuno")
             
+        } else if (chain == ChainType.REGEN_MAIN) {
+            return UIImage(named: "tokenRegen")
+            
+        } else if (chain == ChainType.BITCANA_MAIN) {
+            return UIImage(named: "tokenBitcanna")
+            
         }
         
         else if (chain == ChainType.ALTHEA_TEST) {
@@ -4398,8 +4454,8 @@ public class WUtils {
         else if (chain == ChainType.EMONEY_MAIN) { return UIImage(named: "chainEmoney") }
         else if (chain == ChainType.RIZON_MAIN) { return UIImage(named: "chainRizon") }
         else if (chain == ChainType.JUNO_MAIN) { return UIImage(named: "chainJuno") }
-        
         else if (chain == ChainType.REGEN_MAIN) { return UIImage(named: "chainRegen") }
+        else if (chain == ChainType.BITCANA_MAIN) { return UIImage(named: "chainBitcanna") }
         
         else if (chain == ChainType.COSMOS_TEST) { return UIImage(named: "cosmosTestChainImg") }
         else if (chain == ChainType.IRIS_TEST) { return UIImage(named: "irisTestChainImg") }
@@ -4434,8 +4490,8 @@ public class WUtils {
         else if (chain == ChainType.EMONEY_MAIN) { return "(E-Money Mainnet)" }
         else if (chain == ChainType.RIZON_MAIN) { return "(Rizon Mainnet)" }
         else if (chain == ChainType.JUNO_MAIN) { return "(Juno Mainnet)" }
-        
         else if (chain == ChainType.REGEN_MAIN) { return "(Regen Mainnet)" }
+        else if (chain == ChainType.BITCANA_MAIN) { return "(Bitcanna Mainnet)" }
         
         else if (chain == ChainType.COSMOS_TEST) { return "(StarGate Testnet)" }
         else if (chain == ChainType.IRIS_TEST) { return "(Bifrost Testnet)" }
@@ -4471,8 +4527,8 @@ public class WUtils {
         else if (chain == ChainType.EMONEY_MAIN) { return "E-MONEY" }
         else if (chain == ChainType.RIZON_MAIN) { return "RIZON" }
         else if (chain == ChainType.JUNO_MAIN) { return "JUNO" }
-        
         else if (chain == ChainType.REGEN_MAIN) { return "REGEN" }
+        else if (chain == ChainType.BITCANA_MAIN) { return "BITCANNA" }
         
         else if (chain == ChainType.COSMOS_TEST) { return "STARGATE" }
         else if (chain == ChainType.IRIS_TEST) { return "BIFROST" }
@@ -4519,10 +4575,10 @@ public class WUtils {
             return ChainType.RIZON_MAIN
         } else if (chainId?.contains("juno-") == true) {
             return ChainType.JUNO_MAIN
-        }
-        
-        else if (chainId?.contains("regen-") == true) {
+        } else if (chainId?.contains("regen-") == true) {
             return ChainType.REGEN_MAIN
+        } else if (chainId?.contains("bitcanna-") == true) {
+            return ChainType.BITCANA_MAIN
         }
         return nil
     }
@@ -4556,8 +4612,8 @@ public class WUtils {
         else if (address?.starts(with: "emoney1") == true && chain == ChainType.EMONEY_MAIN) { return true }
         else if (address?.starts(with: "rizon1") == true && chain == ChainType.RIZON_MAIN) { return true }
         else if (address?.starts(with: "juno1") == true && chain == ChainType.JUNO_MAIN) { return true }
-        
         else if (address?.starts(with: "regen1") == true && chain == ChainType.REGEN_MAIN) { return true }
+        else if (address?.starts(with: "bcna1") == true && chain == ChainType.BITCANA_MAIN) { return true }
         
         else if (address?.starts(with: "althea1") == true && chain == ChainType.ALTHEA_TEST) { return true }
         else if (address?.starts(with: "umee1") == true && chain == ChainType.UMEE_TEST) { return true }
@@ -4592,6 +4648,8 @@ public class WUtils {
         else if (address?.starts(with: "emoney1") == true) { return [ChainType.EMONEY_MAIN] }
         else if (address?.starts(with: "rizon1") == true) { return [ChainType.RIZON_MAIN] }
         else if (address?.starts(with: "juno1") == true) { return [ChainType.JUNO_MAIN] }
+        else if (address?.starts(with: "regen1") == true) { return [ChainType.REGEN_MAIN] }
+        else if (address?.starts(with: "bcna1") == true) { return [ChainType.BITCANA_MAIN] }
         
         else if (address?.starts(with: "tbnb1") == true) { return [ChainType.BINANCE_TEST] }
         else if (address?.starts(with: "rizon1") == true) { return [ChainType.RIZON_TEST] }
