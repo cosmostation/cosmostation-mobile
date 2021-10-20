@@ -565,6 +565,28 @@ class MainTabTokenViewController: BaseViewController, UITableViewDelegate, UITab
             let alljuno = WUtils.getAllMainAsset(JUNO_MAIN_DENOM)
             cell?.tokenAmount.attributedText = WUtils.displayAmount2(alljuno.stringValue, cell!.tokenAmount.font, 6, 6)
             cell?.tokenValue.attributedText = WUtils.dpUserCurrencyValue(JUNO_MAIN_DENOM, alljuno, 6, cell!.tokenValue.font)
+            
+        } else if (coin.denom == REGNE_MAIN_DENOM) {
+            cell?.tokenImg.image = UIImage(named: "tokenRegen")
+            cell?.tokenSymbol.text = "REGEN"
+            cell?.tokenSymbol.textColor = COLOR_REGEN
+            cell?.tokenTitle.text = ""
+            cell?.tokenDescription.text = "Regen Staking Token"
+            
+            let allRegen = WUtils.getAllMainAsset(REGNE_MAIN_DENOM)
+            cell?.tokenAmount.attributedText = WUtils.displayAmount2(allRegen.stringValue, cell!.tokenAmount.font, 6, 6)
+            cell?.tokenValue.attributedText = WUtils.dpUserCurrencyValue(REGNE_MAIN_DENOM, allRegen, 6, cell!.tokenValue.font)
+            
+        } else if (coin.denom == BITCANA_MAIN_DENOM) {
+            cell?.tokenImg.image = UIImage(named: "tokenBitcanna")
+            cell?.tokenSymbol.text = "BCNA"
+            cell?.tokenSymbol.textColor = COLOR_BITCANNA
+            cell?.tokenTitle.text = ""
+            cell?.tokenDescription.text = "Bitcanna Staking Token"
+            
+            let allBnca = WUtils.getAllMainAsset(BITCANA_MAIN_DENOM)
+            cell?.tokenAmount.attributedText = WUtils.displayAmount2(allBnca.stringValue, cell!.tokenAmount.font, 6, 6)
+            cell?.tokenValue.attributedText = WUtils.dpUserCurrencyValue(BITCANA_MAIN_DENOM, allBnca, 6, cell!.tokenValue.font)
         }
         
         
