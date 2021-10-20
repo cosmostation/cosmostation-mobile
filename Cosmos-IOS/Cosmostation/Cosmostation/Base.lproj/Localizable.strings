@@ -166,6 +166,10 @@
 "send_guide_msg_emoney" = "A network for the next generation fiat-backed stablecoins for the Internet of Money.";
 "send_guide_title_juno" = "Juno Chain";
 "send_guide_msg_juno" = "Interoperable smart contract network built with the Cosmos SDK. Highly scalable, robust, secure and easy to deploy.";
+"send_guide_title_regen" = "Regen Network";
+"send_guide_msg_regen" = "A Cosmos SDK based PoS blockchain designed to utilize ecological data and climate markets.";
+"send_guide_title_bitcanna" = "BitCanna Network";
+"send_guide_msg_bitcanna" = "A Cosmos SDK-based decentralized payment network and supply chain for legal cannabis industry.";
 "send_guide_btn_home" = "Home";
 "send_guide_btn_blog" = "Blog";
 "send_guide_btn_market" = "Market";

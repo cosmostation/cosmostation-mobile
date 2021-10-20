@@ -165,6 +165,10 @@
 "send_guide_msg_emoney" = "인터넷 화폐를 위한 차세대 법정화폐 기반 스테이블 코인 구현을 지향하는 네트워크입니다.";
 "send_guide_title_juno" = "Juno Chain";
 "send_guide_msg_juno" = "Cosmos SDK 기반의 상호 운용 가능한 스마트 컨트랙트 네트워크. 확장성, 속도, 보안, 그리고 유저 친화적인 개발환경을 제공합니다.";
+"send_guide_title_regen" = "Regen Network";
+"send_guide_msg_regen" = "Regen은 친환경 데이터와 환경보호 활동를 위해 설계된 코스모스 기반 지분증명 블록체인입니다.";
+"send_guide_title_bitcanna" = "BitCanna Network";
+"send_guide_msg_bitcanna" = "네덜란드를 중심으로 유렵 내 카나비스의 공급망과 거래용 화폐($BCNA)를 제공하는 Cosmos SDK 기반 탈중앙화 네트워크.";
 "send_guide_btn_home" = "Home";
 "send_guide_btn_blog" = "Blog";
 "send_guide_btn_market" = "Market";
