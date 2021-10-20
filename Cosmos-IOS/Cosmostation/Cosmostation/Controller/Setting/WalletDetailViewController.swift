@@ -234,6 +234,20 @@ class WalletDetailViewController: BaseViewController, PasswordViewDelegate {
             constraint2.priority = .defaultHigh
             constraint1.priority = .defaultLow
             
+        } else if (chainType == ChainType.REGEN_MAIN) {
+            chainImg.image = UIImage(named: "chainRegen")
+            keyPath.text = BASE_PATH.appending(account!.account_path)
+            cardPush.isHidden = true
+            constraint2.priority = .defaultHigh
+            constraint1.priority = .defaultLow
+            
+        } else if (chainType == ChainType.BITCANA_MAIN) {
+            chainImg.image = UIImage(named: "chainBitcanna")
+            keyPath.text = BASE_PATH.appending(account!.account_path)
+            cardPush.isHidden = true
+            constraint2.priority = .defaultHigh
+            constraint1.priority = .defaultLow
+            
         }
         
         

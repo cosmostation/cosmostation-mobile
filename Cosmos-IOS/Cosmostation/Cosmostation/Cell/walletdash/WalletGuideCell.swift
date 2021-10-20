@@ -161,6 +161,16 @@ class WalletGuideCell: UITableViewCell {
             guideImg.image = UIImage(named: "infoiconJuno")
             guideTitle.text = NSLocalizedString("send_guide_title_juno", comment: "")
             guideMsg.text = NSLocalizedString("send_guide_msg_juno", comment: "")
+            
+        } else if (chainType == ChainType.REGEN_MAIN) {
+            guideImg.image = UIImage(named: "infoiconRegen")
+            guideTitle.text = NSLocalizedString("send_guide_title_regen", comment: "")
+            guideMsg.text = NSLocalizedString("send_guide_msg_regen", comment: "")
+            
+        } else if (chainType == ChainType.BITCANA_MAIN) {
+            guideImg.image = UIImage(named: "infoiconBitcanna")
+            guideTitle.text = NSLocalizedString("send_guide_title_bitcanna", comment: "")
+            guideMsg.text = NSLocalizedString("send_guide_msg_bitcanna", comment: "")
         }
         
     }

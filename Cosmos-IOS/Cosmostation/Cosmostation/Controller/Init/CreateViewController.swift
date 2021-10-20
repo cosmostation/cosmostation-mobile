@@ -237,6 +237,18 @@ class CreateViewController: BaseViewController, PasswordViewDelegate{
         })
         junoAction.setValue(UIImage(named: "chainJuno")?.withRenderingMode(.alwaysOriginal), forKey: "image")
         
+        let regenAction = UIAlertAction(title: NSLocalizedString("chain_title_regen", comment: ""), style: .default, handler: {_ in
+            self.chainType = ChainType.REGEN_MAIN
+            self.onGenNewKey()
+        })
+        regenAction.setValue(UIImage(named: "chainJuno")?.withRenderingMode(.alwaysOriginal), forKey: "image")
+        
+        let bitcannaAction = UIAlertAction(title: NSLocalizedString("chain_title_bitcanna", comment: ""), style: .default, handler: {_ in
+            self.chainType = ChainType.BITCANA_MAIN
+            self.onGenNewKey()
+        })
+        bitcannaAction.setValue(UIImage(named: "chainJuno")?.withRenderingMode(.alwaysOriginal), forKey: "image")
+        
         let secretAction = UIAlertAction(title: NSLocalizedString("chain_title_secret", comment: ""), style: .default, handler: {_ in
             self.chainType = ChainType.SECRET_MAIN
             self.onGenNewKey()
@@ -335,7 +347,9 @@ class CreateViewController: BaseViewController, PasswordViewDelegate{
         showAlert.addAction(osmosisAction)
         showAlert.addAction(mediAction)
         showAlert.addAction(emoneyAction)
+        showAlert.addAction(regenAction)
         showAlert.addAction(junoAction)
+        showAlert.addAction(bitcannaAction)
         showAlert.addAction(secretAction)
         
         if (ChainType.SUPPRT_CHAIN().contains(ChainType.COSMOS_TEST)) {
