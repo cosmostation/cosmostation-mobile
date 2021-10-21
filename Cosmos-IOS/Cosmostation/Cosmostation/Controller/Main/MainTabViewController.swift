@@ -108,13 +108,13 @@ class MainTabViewController: UITabBarController, UITabBarControllerDelegate, SBC
         let accountSelectVC = UIStoryboard(name: "MainStoryboard", bundle: nil).instantiateViewController(withIdentifier: "AccountSelectViewController") as! AccountSelectViewController
         accountSelectVC.modalPresentationStyle = .overFullScreen
         accountSelectVC.resultDelegate = self
-
+        
         sourceVC.view.superview?.insertSubview(accountSelectVC.view, aboveSubview: sourceVC.view)
         accountSelectVC.view.transform = CGAffineTransform(translationX: 0, y: -sourceVC.view.frame.size.height)
         UIView.animate(withDuration: 0.3, animations: {
             accountSelectVC.view.transform = CGAffineTransform(translationX: 0, y: 0)
-            }) { (Finished) in
-                sourceVC.present(accountSelectVC, animated: false, completion: nil)
+        }) { _ in
+            sourceVC.present(accountSelectVC, animated: false, completion: nil)
         }
     }
     
@@ -1414,8 +1414,8 @@ class MainTabViewController: UITabBarController, UITabBarControllerDelegate, SBC
     func addAccount(_ chain: ChainType) {
         targetChain = chain
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(610), execute: {
-            let popupContent = AddViewController.create()
-            let cardPopup = SBCardPopupViewController(contentViewController: popupContent)
+            let popupVC = NewAccountTypePopup(nibName: "NewAccountTypePopup", bundle: nil)
+            let cardPopup = SBCardPopupViewController(contentViewController: popupVC)
             cardPopup.resultDelegate = self
             cardPopup.show(onViewController: self)
         })
