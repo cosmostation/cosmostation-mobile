@@ -15,12 +15,11 @@ class AccountSelectViewController: BaseViewController, UITableViewDelegate, UITa
     @IBOutlet weak var chainTableView: UITableView!
     @IBOutlet weak var accountTableView: UITableView!
     
-    var mAccounts = Array<Account>()
     var mSelectedChain = 0;
+    var mSelectedAccounts = Array<Account>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         account = BaseData.instance.selectAccountById(id: BaseData.instance.getRecentAccountId())
         mSelectedChain = BaseData.instance.getRecentChain()
         
@@ -37,17 +36,13 @@ class AccountSelectViewController: BaseViewController, UITableViewDelegate, UITa
         onRefechUserInfo()
         
         let dismissTap1 = UITapGestureRecognizer(target: self, action: #selector(tableTapped))
-        let dismissTap2 = UITapGestureRecognizer(target: self, action: #selector(tableTapped))
         self.accountTableView.backgroundView = UIView()
         self.chainTableView.backgroundView = UIView()
         self.accountTableView.backgroundView?.addGestureRecognizer(dismissTap1)
-        self.chainTableView.backgroundView?.addGestureRecognizer(dismissTap2)
-        
     }
     
-    
     @objc public func tableTapped() {
-//        self.dismiss(animated: false, completion: nil)
+        self.dismiss(animated: false, completion: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,14 +56,10 @@ class AccountSelectViewController: BaseViewController, UITableViewDelegate, UITa
     
     
     func onRefechUserInfo() {
-        if (mSelectedChain == 0) {
-            self.mAccounts = BaseData.instance.selectAllAccounts()
-        } else {
-            let selectedChain = ChainType.SUPPRT_CHAIN()[mSelectedChain - 1]
-            self.mAccounts = BaseData.instance.selectAllAccountsByChain(selectedChain)
-        }
+        let selectedChain = ChainType.SUPPRT_CHAIN()[mSelectedChain]
+        self.mSelectedAccounts = BaseData.instance.selectAllAccountsByChain(selectedChain)
         
-        self.mAccounts.sort{
+        self.mSelectedAccounts.sort{
             return $0.account_sort_order < $1.account_sort_order
         }
         self.accountTableView.reloadData()
@@ -77,17 +68,13 @@ class AccountSelectViewController: BaseViewController, UITableViewDelegate, UITa
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (tableView == chainTableView) {
-            return ChainType.SUPPRT_CHAIN().count + 1
+            return ChainType.SUPPRT_CHAIN().count
             
         } else {
-            if (mSelectedChain == 0) {
-                return mAccounts.count
+            if (mSelectedAccounts.count < 5) {
+                return mSelectedAccounts.count + 1
             } else {
-                if (mAccounts.count < 5) {
-                    return mAccounts.count + 1
-                } else {
-                    return mAccounts.count
-                }
+                return mSelectedAccounts.count
             }
         }
     }
@@ -95,29 +82,21 @@ class AccountSelectViewController: BaseViewController, UITableViewDelegate, UITa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (tableView == chainTableView) {
             let cell:ManageChainCell? = tableView.dequeueReusableCell(withIdentifier:"ManageChainCell") as? ManageChainCell
-            if (indexPath.row == 0) {
-                cell?.chainImg.isHidden = true
-                cell?.chainName.isHidden = true
-                cell?.chainAll.isHidden = false
-                
-            } else {
-                let selectedChain = ChainType.SUPPRT_CHAIN()[indexPath.row - 1]
-                cell?.chainImg.isHidden = false
-                cell?.chainName.isHidden = false
-                cell?.chainAll.isHidden = true
-                cell?.chainImg.image = WUtils.getChainImg(selectedChain)
-                cell?.chainName.text = WUtils.getChainTitle2(selectedChain)
-                
-            }
+            let selectedChain = ChainType.SUPPRT_CHAIN()[indexPath.row]
+            cell?.chainImg.isHidden = false
+            cell?.chainName.isHidden = false
+            cell?.chainAll.isHidden = true
+            cell?.chainImg.image = WUtils.getChainImg(selectedChain)
+            cell?.chainName.text = WUtils.getChainTitle2(selectedChain)
             return cell!
             
         } else {
-            if (mAccounts.count <= indexPath.row) {
+            if (mSelectedAccounts.count <= indexPath.row) {
                 let cell:ManageAccountAddCell? = tableView.dequeueReusableCell(withIdentifier:"ManageAccountAddCell") as? ManageAccountAddCell
                 return cell!
             }
             
-            let account = mAccounts[indexPath.row]
+            let account = mSelectedAccounts[indexPath.row]
             let cell:AccountPopupCell? = tableView.dequeueReusableCell(withIdentifier:"AccountPopupCell") as? AccountPopupCell
             let userChain = WUtils.getChainType(account.account_base_chain)
             
@@ -158,13 +137,14 @@ class AccountSelectViewController: BaseViewController, UITableViewDelegate, UITa
                 BaseData.instance.setRecentChain(mSelectedChain)
                 self.onRefechUserInfo()
             }
-        } else if (mAccounts.count <= indexPath.row) {
-            let toAddChain:ChainType = ChainType.SUPPRT_CHAIN()[mSelectedChain - 1]
+            
+        } else if (mSelectedAccounts.count <= indexPath.row) {
+            let toAddChain:ChainType = ChainType.SUPPRT_CHAIN()[mSelectedChain]
             self.resultDelegate?.addAccount(toAddChain)
             self.dismiss(animated: false, completion: nil)
             
         } else {
-            self.resultDelegate?.accountSelected(Int(mAccounts[indexPath.row].account_id))
+            self.resultDelegate?.accountSelected(Int(mSelectedAccounts[indexPath.row].account_id))
             self.dismiss(animated: false, completion: nil)
         }
     }
