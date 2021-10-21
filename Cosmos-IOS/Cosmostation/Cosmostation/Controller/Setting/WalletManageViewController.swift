@@ -174,4 +174,8 @@ class WalletManageViewController: BaseViewController, UITableViewDelegate, UITab
             }
         })
     }
+    
+    @IBAction func onClickAddNew(_ sender: UIButton) {
+    }
+    
 }

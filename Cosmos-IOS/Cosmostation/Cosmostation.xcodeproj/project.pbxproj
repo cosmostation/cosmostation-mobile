@@ -769,6 +769,8 @@
 		28A2A4C3271FF9140042ACC4 /* WalletBitcannaCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28A2A4C1271FF9140042ACC4 /* WalletBitcannaCell.xib */; };
 		28A2A4C627218D0B0042ACC4 /* NewAccountTypePopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A2A4C427218D0A0042ACC4 /* NewAccountTypePopup.swift */; };
 		28A2A4C727218D0B0042ACC4 /* NewAccountTypePopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28A2A4C527218D0A0042ACC4 /* NewAccountTypePopup.xib */; };
+		28A2A4CA2721B9030042ACC4 /* AccountSwitchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A2A4C82721B9030042ACC4 /* AccountSwitchViewController.swift */; };
+		28A2A4CB2721B9030042ACC4 /* AccountSwitchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28A2A4C92721B9030042ACC4 /* AccountSwitchViewController.xib */; };
 		28A37008269DA17000990696 /* tendermint_liquidity_v1beta1_liquidity.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A37002269DA16F00990696 /* tendermint_liquidity_v1beta1_liquidity.pb.swift */; };
 		28A37009269DA17000990696 /* tendermint_liquidity_v1beta1_tx.grpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A37003269DA16F00990696 /* tendermint_liquidity_v1beta1_tx.grpc.swift */; };
 		28A3700A269DA17000990696 /* tendermint_liquidity_v1beta1_genesis.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A37004269DA16F00990696 /* tendermint_liquidity_v1beta1_genesis.pb.swift */; };
@@ -1042,7 +1044,6 @@
 		E1069B14229698CB007517DC /* StepChangeCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1069B13229698CB007517DC /* StepChangeCheckViewController.swift */; };
 		E11338FD235D70D20011B61D /* ManageAccountAddCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11338FB235D70D20011B61D /* ManageAccountAddCell.swift */; };
 		E11338FE235D70D20011B61D /* ManageAccountAddCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E11338FC235D70D20011B61D /* ManageAccountAddCell.xib */; };
-		E1133900235D95FD0011B61D /* AccountSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11338FF235D95FD0011B61D /* AccountSelectViewController.swift */; };
 		E123FD3B233CCBF3004EC348 /* MainTabTokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E123FD3A233CCBF3004EC348 /* MainTabTokenViewController.swift */; };
 		E123FD3D233DEFE1004EC348 /* BnbAccountInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E123FD3C233DEFE1004EC348 /* BnbAccountInfo.swift */; };
 		E123FD3F233E0161004EC348 /* MainTabWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E123FD3E233E0161004EC348 /* MainTabWalletViewController.swift */; };
@@ -1974,6 +1975,8 @@
 		28A2A4C1271FF9140042ACC4 /* WalletBitcannaCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletBitcannaCell.xib; sourceTree = "<group>"; };
 		28A2A4C427218D0A0042ACC4 /* NewAccountTypePopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAccountTypePopup.swift; sourceTree = "<group>"; };
 		28A2A4C527218D0A0042ACC4 /* NewAccountTypePopup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewAccountTypePopup.xib; sourceTree = "<group>"; };
+		28A2A4C82721B9030042ACC4 /* AccountSwitchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSwitchViewController.swift; sourceTree = "<group>"; };
+		28A2A4C92721B9030042ACC4 /* AccountSwitchViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountSwitchViewController.xib; sourceTree = "<group>"; };
 		28A37002269DA16F00990696 /* tendermint_liquidity_v1beta1_liquidity.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tendermint_liquidity_v1beta1_liquidity.pb.swift; sourceTree = "<group>"; };
 		28A37003269DA16F00990696 /* tendermint_liquidity_v1beta1_tx.grpc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tendermint_liquidity_v1beta1_tx.grpc.swift; sourceTree = "<group>"; };
 		28A37004269DA16F00990696 /* tendermint_liquidity_v1beta1_genesis.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = tendermint_liquidity_v1beta1_genesis.pb.swift; sourceTree = "<group>"; };
@@ -2259,7 +2262,6 @@
 		E1069B13229698CB007517DC /* StepChangeCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepChangeCheckViewController.swift; sourceTree = "<group>"; };
 		E11338FB235D70D20011B61D /* ManageAccountAddCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageAccountAddCell.swift; sourceTree = "<group>"; };
 		E11338FC235D70D20011B61D /* ManageAccountAddCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ManageAccountAddCell.xib; sourceTree = "<group>"; };
-		E11338FF235D95FD0011B61D /* AccountSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSelectViewController.swift; sourceTree = "<group>"; };
 		E123FD3A233CCBF3004EC348 /* MainTabTokenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabTokenViewController.swift; sourceTree = "<group>"; };
 		E123FD3C233DEFE1004EC348 /* BnbAccountInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BnbAccountInfo.swift; sourceTree = "<group>"; };
 		E123FD3E233E0161004EC348 /* MainTabWalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabWalletViewController.swift; sourceTree = "<group>"; };
@@ -3870,11 +3872,12 @@
 				E1945E4B222E81C200A1436F /* VoteListViewController.swift */,
 				2845D87C246FAE16007CD497 /* VoteDetailsViewController.swift */,
 				E10492122347B41000A2980F /* WalletConnectViewController.swift */,
-				E11338FF235D95FD0011B61D /* AccountSelectViewController.swift */,
 				2827E10F23F3896C007CDB6E /* TxDetailViewController.swift */,
 				2877B8FA240E2A0200EFE369 /* TxDetailViewController.xib */,
 				28641F2A2601959E000AAEB8 /* TxDetailgRPCViewController.swift */,
 				28641F2B2601959E000AAEB8 /* TxDetailgRPCViewController.xib */,
+				28A2A4C82721B9030042ACC4 /* AccountSwitchViewController.swift */,
+				28A2A4C92721B9030042ACC4 /* AccountSwitchViewController.xib */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -4312,6 +4315,7 @@
 				28B325222637FDDD00275AED /* MemoMnemonicPopup.xib in Resources */,
 				2889FD832603484000CA9896 /* TxIncentiveHardCell.xib in Resources */,
 				28440C58271E7B6800B4A7C3 /* SifSwap0ViewController.xib in Resources */,
+				28A2A4CB2721B9030042ACC4 /* AccountSwitchViewController.xib in Resources */,
 				28E04593269B52290022A366 /* Swap0ViewController.xib in Resources */,
 				283EB77A26C8288400B9D28D /* EarnBondedCell.xib in Resources */,
 				28D7BE7E25F10636006EECD7 /* HardListMyStatusCell.xib in Resources */,
@@ -4930,6 +4934,7 @@
 				287AC63225FDF7260070837E /* cosmos_base_reflection_v1beta1_reflection.grpc.swift in Sources */,
 				2887BA4426DE278700CDA415 /* shentu_auth_v1alpha1_vesting.pb.swift in Sources */,
 				046E9043268C4995002CFFE1 /* BinanceSegwitAddrCoder.swift in Sources */,
+				28A2A4CA2721B9030042ACC4 /* AccountSwitchViewController.swift in Sources */,
 				28B4302A24F76AD500BD7BB2 /* OkTransfer.swift in Sources */,
 				04CFBD51269227680013150B /* TxIbcAcknowledgeCell.swift in Sources */,
 				28D7BE6525F0FC75006EECD7 /* HardMyDeposit.swift in Sources */,
@@ -5245,7 +5250,6 @@
 				287AC58725FDF7250070837E /* nft_nft.pb.swift in Sources */,
 				28B7857E26B3A7E4009F755F /* panacea_token_v2_tx.pb.swift in Sources */,
 				28CE973625872B7C006DEBEE /* Signer.swift in Sources */,
-				E1133900235D95FD0011B61D /* AccountSelectViewController.swift in Sources */,
 				287AC64825FDF7260070837E /* akash_cert_v1beta1_genesis.pb.swift in Sources */,
 				28E0458E269B35750022A366 /* FarmingViewController.swift in Sources */,
 				283EB78126C828AE00B9D28D /* EarnUnbondedCell.swift in Sources */,

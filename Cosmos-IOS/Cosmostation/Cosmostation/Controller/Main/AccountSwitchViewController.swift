@@ -1,23 +1,22 @@
 //
-//  AccountSelectViewController.swift
+//  AccountSwitchViewController.swift
 //  Cosmostation
 //
-//  Created by yongjoo on 21/10/2019.
-//  Copyright © 2019 wannabit. All rights reserved.
+//  Created by 정용주 on 2021/10/22.
+//  Copyright © 2021 wannabit. All rights reserved.
 //
 
 import UIKit
 
-class AccountSelectViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
+class AccountSwitchViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var resultDelegate: AccountSelectDelegate?
-    
+    var resultDelegate: AccountSwitchDelegate?
     @IBOutlet weak var chainTableView: UITableView!
     @IBOutlet weak var accountTableView: UITableView!
     
     var mSelectedChain = 0;
     var mSelectedAccounts = Array<Account>()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         account = BaseData.instance.selectAccountById(id: BaseData.instance.getRecentAccountId())
@@ -49,11 +48,6 @@ class AccountSelectViewController: BaseViewController, UITableViewDelegate, UITa
         super.viewWillAppear(animated)
         self.chainTableView.selectRow(at: IndexPath.init(item: mSelectedChain, section: 0), animated: false, scrollPosition: .middle)
     }
-
-    @IBAction func OnClose(_ sender: UIButton) {
-        self.dismiss(animated: false, completion: nil)
-    }
-    
     
     func onRefechUserInfo() {
         let selectedChain = ChainType.SUPPRT_CHAIN()[mSelectedChain]
@@ -64,7 +58,6 @@ class AccountSelectViewController: BaseViewController, UITableViewDelegate, UITa
         }
         self.accountTableView.reloadData()
     }
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (tableView == chainTableView) {
@@ -148,9 +141,16 @@ class AccountSelectViewController: BaseViewController, UITableViewDelegate, UITa
             self.dismiss(animated: false, completion: nil)
         }
     }
+    
+    @IBAction func onClose(_ sender: UIButton) {
+        self.dismiss(animated: false, completion: nil)
+    }
+
+    @IBAction func onClickAddNew(_ sender: UIButton) {
+    }
 }
 
-protocol AccountSelectDelegate{
+protocol AccountSwitchDelegate {
     func accountSelected (_ id:Int)
     func addAccount(_ chain:ChainType)
 }
