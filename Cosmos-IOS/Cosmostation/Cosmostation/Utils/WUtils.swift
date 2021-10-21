@@ -4631,7 +4631,7 @@ public class WUtils {
         return false
     }
     
-    static func getChainWithPrefix(_ address: String?) -> Array<ChainType>? {
+    static func getChainsFromAddress(_ address: String?) -> Array<ChainType>? {
         if (address?.starts(with: "0x") == true) {
             return [ChainType.OKEX_MAIN, ChainType.OKEX_TEST]
         }
@@ -4662,7 +4662,6 @@ public class WUtils {
         else if (address?.starts(with: "bcna1") == true) { return [ChainType.BITCANA_MAIN] }
         
         else if (address?.starts(with: "tbnb1") == true) { return [ChainType.BINANCE_TEST] }
-        else if (address?.starts(with: "rizon1") == true) { return [ChainType.RIZON_TEST] }
         else if (address?.starts(with: "althea1") == true) { return [ChainType.ALTHEA_TEST] }
         else if (address?.starts(with: "umee1") == true) { return [ChainType.UMEE_TEST] }
         else if (address?.starts(with: "axelar1") == true) { return [ChainType.AXELAR_TEST] }

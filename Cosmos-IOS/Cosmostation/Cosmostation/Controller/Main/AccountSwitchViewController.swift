@@ -14,14 +14,14 @@ class AccountSwitchViewController: BaseViewController, UITableViewDelegate, UITa
     @IBOutlet weak var chainTableView: UITableView!
     @IBOutlet weak var accountTableView: UITableView!
     
-    var mSelectedChain = 0;
-    var mSelectedAccounts = Array<Account>()
+    var selectedChain = 0;
+    var selectedAccounts = Array<Account>()
+    var toAddChain: ChainType?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        account = BaseData.instance.selectAccountById(id: BaseData.instance.getRecentAccountId())
-        mSelectedChain = BaseData.instance.getRecentChain()
-        
+        self.account = BaseData.instance.selectAccountById(id: BaseData.instance.getRecentAccountId())
+        self.selectedChain = BaseData.instance.getRecentChain()
         self.accountTableView.delegate = self
         self.accountTableView.dataSource = self
         self.accountTableView.separatorStyle = UITableViewCell.SeparatorStyle.none
@@ -46,14 +46,13 @@ class AccountSwitchViewController: BaseViewController, UITableViewDelegate, UITa
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.chainTableView.selectRow(at: IndexPath.init(item: mSelectedChain, section: 0), animated: false, scrollPosition: .middle)
+        self.chainTableView.selectRow(at: IndexPath.init(item: selectedChain, section: 0), animated: false, scrollPosition: .middle)
     }
     
     func onRefechUserInfo() {
-        let selectedChain = ChainType.SUPPRT_CHAIN()[mSelectedChain]
-        self.mSelectedAccounts = BaseData.instance.selectAllAccountsByChain(selectedChain)
-        
-        self.mSelectedAccounts.sort{
+        let selectedChain = ChainType.SUPPRT_CHAIN()[selectedChain]
+        self.selectedAccounts = BaseData.instance.selectAllAccountsByChain(selectedChain)
+        self.selectedAccounts.sort{
             return $0.account_sort_order < $1.account_sort_order
         }
         self.accountTableView.reloadData()
@@ -62,13 +61,8 @@ class AccountSwitchViewController: BaseViewController, UITableViewDelegate, UITa
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (tableView == chainTableView) {
             return ChainType.SUPPRT_CHAIN().count
-            
         } else {
-            if (mSelectedAccounts.count < 5) {
-                return mSelectedAccounts.count + 1
-            } else {
-                return mSelectedAccounts.count
-            }
+            return selectedAccounts.count
         }
     }
     
@@ -84,12 +78,7 @@ class AccountSwitchViewController: BaseViewController, UITableViewDelegate, UITa
             return cell!
             
         } else {
-            if (mSelectedAccounts.count <= indexPath.row) {
-                let cell:ManageAccountAddCell? = tableView.dequeueReusableCell(withIdentifier:"ManageAccountAddCell") as? ManageAccountAddCell
-                return cell!
-            }
-            
-            let account = mSelectedAccounts[indexPath.row]
+            let account = selectedAccounts[indexPath.row]
             let cell:AccountPopupCell? = tableView.dequeueReusableCell(withIdentifier:"AccountPopupCell") as? AccountPopupCell
             let userChain = WUtils.getChainType(account.account_base_chain)
             
@@ -124,20 +113,13 @@ class AccountSwitchViewController: BaseViewController, UITableViewDelegate, UITa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if (tableView == chainTableView) {
-            if (mSelectedChain != indexPath.row) {
-                mSelectedChain = indexPath.row
-                BaseData.instance.setRecentChain(mSelectedChain)
-                self.onRefechUserInfo()
-            }
+        if (tableView == chainTableView && selectedChain != indexPath.row) {
+            selectedChain = indexPath.row
+            BaseData.instance.setRecentChain(selectedChain)
+            self.onRefechUserInfo()
             
-        } else if (mSelectedAccounts.count <= indexPath.row) {
-            let toAddChain:ChainType = ChainType.SUPPRT_CHAIN()[mSelectedChain]
-            self.resultDelegate?.addAccount(toAddChain)
-            self.dismiss(animated: false, completion: nil)
-            
-        } else {
-            self.resultDelegate?.accountSelected(Int(mSelectedAccounts[indexPath.row].account_id))
+        } else if (tableView == accountTableView) {
+            self.resultDelegate?.accountSelected(Int(selectedAccounts[indexPath.row].account_id))
             self.dismiss(animated: false, completion: nil)
         }
     }
@@ -147,6 +129,18 @@ class AccountSwitchViewController: BaseViewController, UITableViewDelegate, UITa
     }
 
     @IBAction func onClickAddNew(_ sender: UIButton) {
+        self.onShowSelectChainDialog()
+    }
+    
+    override func onChainSelected(_ chainType: ChainType) {
+        self.toAddChain = chainType
+        if (BaseData.instance.selectAllAccountsByChain(toAddChain!).count >= MAX_WALLET_PER_CHAIN) {
+            self.onShowToast(NSLocalizedString("error_max_account_number", comment: ""))
+            
+        } else {
+            self.resultDelegate?.addAccount(toAddChain!)
+            self.dismiss(animated: false, completion: nil)
+        }
     }
 }
 

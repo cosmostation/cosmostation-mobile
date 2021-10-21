@@ -684,6 +684,7 @@ support@cosmostation.io";
 "error_noting_repay_asset" = "상환할 내역이 없습니다.";
 "error_remain_borrow_small" = "상환 후 남는 대출 금액이 $10 이하입니다.";
 "error_alreay_rizon_swap" = "이미 진행중인 스왑요청이 있습니다.";
+"error_max_account_number" = "이 체인에 더 이상 계정을 추가 할 수 없습니다.";
 
 
 

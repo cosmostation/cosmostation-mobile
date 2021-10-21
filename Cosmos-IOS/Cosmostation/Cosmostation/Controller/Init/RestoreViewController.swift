@@ -276,12 +276,13 @@ class RestoreViewController: BaseViewController , UICollectionViewDelegate, UICo
                         .replacingOccurrences(of: " ", with: "")
                 }
             }
-            if(words.count < 23) {
+            if (words.count < 23) {
                 mCurrentPosition = words.count
             } else {
                 mCurrentPosition = 23
             }
             updateFocus()
+            updateWordCnt()
             return;
         }
         if let myString = UIPasteboard.general.string {

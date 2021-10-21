@@ -14,20 +14,17 @@ class WalletManageViewController: BaseViewController, UITableViewDelegate, UITab
     @IBOutlet weak var chainTableView: UITableView!
     @IBOutlet weak var accountTableView: UITableView!
     
-    var mSelectedChain = 0;
-    var mSelectedAccounts = Array<Account>()
+    var selectedChain = 0;
+    var selectedAccounts = Array<Account>()
+    var toAddChain: ChainType?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        mSelectedChain = BaseData.instance.getRecentChain()
-        print("mSelectedChain ", mSelectedChain)
-        
+        self.selectedChain = BaseData.instance.getRecentChain()
         self.accountTableView.delegate = self
         self.accountTableView.dataSource = self
         self.accountTableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         self.accountTableView.register(UINib(nibName: "ManageAccountCell", bundle: nil), forCellReuseIdentifier: "ManageAccountCell")
-        self.accountTableView.register(UINib(nibName: "ManageAccountAddCell", bundle: nil), forCellReuseIdentifier: "ManageAccountAddCell")
         
         self.chainTableView.delegate = self
         self.chainTableView.dataSource = self
@@ -49,7 +46,7 @@ class WalletManageViewController: BaseViewController, UITableViewDelegate, UITab
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        self.chainTableView.selectRow(at: IndexPath.init(item: mSelectedChain, section: 0), animated: false, scrollPosition: .middle)
+        self.chainTableView.selectRow(at: IndexPath.init(item: selectedChain, section: 0), animated: false, scrollPosition: .middle)
     }
     
     @objc public func onStartEdit() {
@@ -57,8 +54,8 @@ class WalletManageViewController: BaseViewController, UITableViewDelegate, UITab
     }
     
     func onRefechUserInfo() {
-        let selectedChain = ChainType.SUPPRT_CHAIN()[mSelectedChain]
-        self.mSelectedAccounts = BaseData.instance.selectAllAccountsByChain(selectedChain)
+        let selectedChain = ChainType.SUPPRT_CHAIN()[selectedChain]
+        self.selectedAccounts = BaseData.instance.selectAllAccountsByChain(selectedChain)
         self.sortWallet()
         self.accountTableView.reloadData()
     }
@@ -66,14 +63,8 @@ class WalletManageViewController: BaseViewController, UITableViewDelegate, UITab
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (tableView == chainTableView) {
             return ChainType.SUPPRT_CHAIN().count
-            
         } else if (tableView == accountTableView) {
-            if (mSelectedAccounts.count < 5) {
-                return mSelectedAccounts.count + 1
-            } else {
-                return mSelectedAccounts.count
-            }
-            
+            return selectedAccounts.count
         } else {
             return 0
         }
@@ -91,15 +82,9 @@ class WalletManageViewController: BaseViewController, UITableViewDelegate, UITab
             return cell!
             
         } else {
-            if (mSelectedAccounts.count <= indexPath.row) {
-                let cell:ManageAccountAddCell? = tableView.dequeueReusableCell(withIdentifier:"ManageAccountAddCell") as? ManageAccountAddCell
-                return cell!
-            }
-            
-            let account = mSelectedAccounts[indexPath.row]
+            let account = selectedAccounts[indexPath.row]
             let cell:ManageAccountCell? = tableView.dequeueReusableCell(withIdentifier:"ManageAccountCell") as? ManageAccountCell
             let userChain = WUtils.getChainType(account.account_base_chain)
-            
             if (account.account_has_private) {
                 cell?.keyImg.image = cell?.keyImg.image!.withRenderingMode(.alwaysTemplate)
                 cell?.keyImg.tintColor = WUtils.getChainColor(userChain)
@@ -123,31 +108,22 @@ class WalletManageViewController: BaseViewController, UITableViewDelegate, UITab
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if (tableView == chainTableView) {
-            if (mSelectedChain != indexPath.row) {
-                mSelectedChain = indexPath.row
-                BaseData.instance.setRecentChain(mSelectedChain)
-                self.onRefechUserInfo()
-            }
-        } else {
-            if (mSelectedAccounts.count <= indexPath.row) {
-                let popupVC = NewAccountTypePopup(nibName: "NewAccountTypePopup", bundle: nil)
-                let cardPopup = SBCardPopupViewController(contentViewController: popupVC)
-                cardPopup.resultDelegate = self
-                cardPopup.show(onViewController: self)
-                
-            } else {
-                let walletDetailVC = WalletDetailViewController(nibName: "WalletDetailViewController", bundle: nil)
-                walletDetailVC.hidesBottomBarWhenPushed = true
-                walletDetailVC.accountId = self.mSelectedAccounts[indexPath.row].account_id
-                self.navigationItem.title = ""
-                self.navigationController?.pushViewController(walletDetailVC, animated: true)
-            }
+        if (tableView == chainTableView && selectedChain != indexPath.row) {
+            selectedChain = indexPath.row
+            BaseData.instance.setRecentChain(selectedChain)
+            self.onRefechUserInfo()
+            
+        } else if (tableView == accountTableView) {
+            let walletDetailVC = WalletDetailViewController(nibName: "WalletDetailViewController", bundle: nil)
+            walletDetailVC.hidesBottomBarWhenPushed = true
+            walletDetailVC.accountId = self.selectedAccounts[indexPath.row].account_id
+            self.navigationItem.title = ""
+            self.navigationController?.pushViewController(walletDetailVC, animated: true)
         }
     }
     
     func sortWallet() {
-        self.mSelectedAccounts.sort{
+        self.selectedAccounts.sort{
             return $0.account_sort_order < $1.account_sort_order
         }
     }
@@ -157,11 +133,11 @@ class WalletManageViewController: BaseViewController, UITableViewDelegate, UITab
             var tagetVC:BaseViewController?
             if(result == 1) {
                 tagetVC = UIStoryboard(name: "Init", bundle: nil).instantiateViewController(withIdentifier: "CreateViewController") as! CreateViewController
-                tagetVC?.chainType = ChainType.SUPPRT_CHAIN()[self.mSelectedChain]
+                tagetVC?.chainType = self.toAddChain!
                 
             } else if(result == 2) {
                 tagetVC = UIStoryboard(name: "Init", bundle: nil).instantiateViewController(withIdentifier: "RestoreViewController") as! RestoreViewController
-                tagetVC?.chainType = ChainType.SUPPRT_CHAIN()[self.mSelectedChain]
+                tagetVC?.chainType = self.toAddChain!
                 
             } else if(result == 3) {
                 tagetVC = UIStoryboard(name: "Init", bundle: nil).instantiateViewController(withIdentifier: "AddAddressViewController") as! AddAddressViewController
@@ -176,6 +152,19 @@ class WalletManageViewController: BaseViewController, UITableViewDelegate, UITab
     }
     
     @IBAction func onClickAddNew(_ sender: UIButton) {
+        self.onShowSelectChainDialog()
+    }
+    
+    override func onChainSelected(_ chainType: ChainType) {
+        self.toAddChain = chainType
+        if (BaseData.instance.selectAllAccountsByChain(toAddChain!).count >= MAX_WALLET_PER_CHAIN) {
+            self.onShowToast(NSLocalizedString("error_max_account_number", comment: ""))
+            
+        } else {let popupVC = NewAccountTypePopup(nibName: "NewAccountTypePopup", bundle: nil)
+            let cardPopup = SBCardPopupViewController(contentViewController: popupVC)
+            cardPopup.resultDelegate = self
+            cardPopup.show(onViewController: self)
+        }
     }
     
 }

@@ -403,7 +403,7 @@ let PASSWORD_RESUKT_CANCEL                  = 1
 let PASSWORD_RESUKT_FAIL                    = 2
 let PASSWORD_RESUKT_OK_FOR_DELETE           = 3
 
-
+let MAX_WALLET_PER_CHAIN                    = 5
 let BASE_PATH                               = "m/44'/118'/0'/0/"
 let BNB_BASE_PATH                           = "m/44'/714'/0'/0/"
 let KAVA_BASE_PATH                          = "m/44'/459'/0'/0/"

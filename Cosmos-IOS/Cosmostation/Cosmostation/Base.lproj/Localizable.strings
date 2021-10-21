@@ -685,6 +685,7 @@ support@cosmostation.io";
 "error_noting_repay_asset" = "Noting to be repaid";
 "error_remain_borrow_small" = "Remain borrow amount less than $10";
 "error_alreay_rizon_swap" = "There is already a swap request in progress.";
+"error_max_account_number" = "No more accounts can be added to this chain.";
 
 
 
