@@ -1773,6 +1773,9 @@ class MainTabWalletViewController: BaseViewController, UITableViewDelegate, UITa
             guard let url = URL(string: "https://www.coingecko.com/en/coins/bitcanna") else { return }
             self.onShowSafariWeb(url)
             
+        } else if (chainType! == ChainType.JUNO_MAIN) {
+            guard let url = URL(string: "https://www.coingecko.com/en/coins/juno-network") else { return }
+            self.onShowSafariWeb(url)
         }
         
         
