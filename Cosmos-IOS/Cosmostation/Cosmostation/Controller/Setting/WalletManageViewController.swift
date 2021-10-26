@@ -9,33 +9,27 @@
 import UIKit
 import Alamofire
 
-class WalletManageViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, UITableViewDragDelegate, UITableViewDropDelegate, SBCardPopupDelegate {
+class WalletManageViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, SBCardPopupDelegate {
     
     @IBOutlet weak var chainTableView: UITableView!
     @IBOutlet weak var accountTableView: UITableView!
     
-    var mAccounts = Array<Account>()
-    var mSelectedChain = 0;
-    var isEditMode = false;
+    var displayChains = Array<ChainType>()
+    var displayAccounts = Array<Account>()
+    var selectedChain: ChainType!
+    var toAddChain: ChainType?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        mSelectedChain = BaseData.instance.getRecentChain()
-        
         self.accountTableView.delegate = self
         self.accountTableView.dataSource = self
         self.accountTableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         self.accountTableView.register(UINib(nibName: "ManageAccountCell", bundle: nil), forCellReuseIdentifier: "ManageAccountCell")
-        self.accountTableView.register(UINib(nibName: "ManageAccountAddCell", bundle: nil), forCellReuseIdentifier: "ManageAccountAddCell")
-        self.accountTableView.dragDelegate = self
-        self.accountTableView.dropDelegate = self
         
         self.chainTableView.delegate = self
         self.chainTableView.dataSource = self
         self.chainTableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         self.chainTableView.register(UINib(nibName: "ManageChainCell", bundle: nil), forCellReuseIdentifier: "ManageChainCell")
-        self.onRefechUserInfo()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,95 +39,53 @@ class WalletManageViewController: BaseViewController, UITableViewDelegate, UITab
         self.navigationItem.title = NSLocalizedString("title_wallet_manage", comment: "");
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        self.chainTableView.selectRow(at: IndexPath.init(item: mSelectedChain, section: 0), animated: false, scrollPosition: .middle)
-    }
-    
-    func updateOptionBtn() {
-        if (mSelectedChain == 0 && isEditMode) {
-            let rightBarButtonItem = UIBarButtonItem.init(image: UIImage(named: "finishBtn"), style: .done, target: self, action: #selector(onStopEdit))
-            self.navigationItem.rightBarButtonItem = rightBarButtonItem
-        } else if (mSelectedChain == 0 && !isEditMode) {
-            let rightBarButtonItem = UIBarButtonItem.init(image: UIImage(named: "sortingBtn"), style: .done, target: self, action: #selector(onStartEdit))
-            self.navigationItem.rightBarButtonItem = rightBarButtonItem
-        } else {
-            self.navigationItem.rightBarButtonItem = nil
-        }
+        
+        let rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .done, target: self, action: #selector(onStartEdit))
+        self.navigationItem.rightBarButtonItem = rightBarButtonItem
+        
+        self.onRefechUserInfo()
     }
     
     @objc public func onStartEdit() {
-        self.isEditMode = true
-        self.accountTableView.reloadData()
-        self.updateOptionBtn()
-        self.accountTableView.dragInteractionEnabled = true
-    }
-    
-    @objc public func onStopEdit() {
-        self.isEditMode = false
-        self.accountTableView.reloadData()
-        self.updateOptionBtn()
-        self.accountTableView.dragInteractionEnabled = false
+        let walletEditVC = WalletChainEditViewController(nibName: "WalletChainEditViewController", bundle: nil)
+        walletEditVC.hidesBottomBarWhenPushed = true
+        self.navigationItem.title = ""
+        self.navigationController?.pushViewController(walletEditVC, animated: true)
     }
     
     func onRefechUserInfo() {
-        if (mSelectedChain == 0) {
-            self.mAccounts = BaseData.instance.selectAllAccounts()
-        } else {
-            let selectedChain = ChainType.SUPPRT_CHAIN()[mSelectedChain - 1]
-            self.mAccounts = BaseData.instance.selectAllAccountsByChain(selectedChain)
-        }
+        self.displayChains = BaseData.instance.dpSortedChains()
+        self.selectedChain = BaseData.instance.getRecentChain()
+        self.displayAccounts = BaseData.instance.selectAllAccountsByChain(selectedChain)
         self.sortWallet()
+        self.chainTableView.reloadData()
         self.accountTableView.reloadData()
-        self.updateOptionBtn()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (tableView == chainTableView) {
-            return ChainType.SUPPRT_CHAIN().count + 1
-            
+            return displayChains.count
+        } else if (tableView == accountTableView) {
+            return displayAccounts.count
         } else {
-            if (mSelectedChain == 0) {
-                return mAccounts.count
-            } else {
-                if (mAccounts.count < 5) {
-                    return mAccounts.count + 1
-                } else {
-                    return mAccounts.count
-                }
-            }
+            return 0
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (tableView == chainTableView) {
             let cell:ManageChainCell? = tableView.dequeueReusableCell(withIdentifier:"ManageChainCell") as? ManageChainCell
-            if (indexPath.row == 0) {
-                cell?.chainImg.isHidden = true
-                cell?.chainName.isHidden = true
-                cell?.chainAll.isHidden = false
-                
-            } else {
-                let selectedChain = ChainType.SUPPRT_CHAIN()[indexPath.row - 1]
-                cell?.chainImg.isHidden = false
-                cell?.chainName.isHidden = false
-                cell?.chainAll.isHidden = true
-                cell?.chainImg.image = WUtils.getChainImg(selectedChain)
-                cell?.chainName.text = WUtils.getChainTitle2(selectedChain)
-            }
+            let selected = displayChains[indexPath.row]
+            cell?.chainImg.image = WUtils.getChainImg(selected)
+            cell?.chainName.text = WUtils.getChainTitle2(selected)
+            if (selected == selectedChain) { cell?.onSetView(true) }
+            else { cell?.onSetView(false) }
             return cell!
             
         } else {
-            if (mAccounts.count <= indexPath.row) {
-                let cell:ManageAccountAddCell? = tableView.dequeueReusableCell(withIdentifier:"ManageAccountAddCell") as? ManageAccountAddCell
-                return cell!
-            }
-            
-            let account = mAccounts[indexPath.row]
+            let account = displayAccounts[indexPath.row]
             let cell:ManageAccountCell? = tableView.dequeueReusableCell(withIdentifier:"ManageAccountCell") as? ManageAccountCell
             let userChain = WUtils.getChainType(account.account_base_chain)
-            
             if (account.account_has_private) {
                 cell?.keyImg.image = cell?.keyImg.image!.withRenderingMode(.alwaysTemplate)
                 cell?.keyImg.tintColor = WUtils.getChainColor(userChain)
@@ -148,17 +100,6 @@ class WalletManageViewController: BaseViewController, UITableViewDelegate, UITab
             cell?.address.text = address
             cell?.amount.attributedText = WUtils.displayAmount2(account.account_last_total, cell!.amount.font, 0, 6)
             WUtils.setDenomTitle(userChain, cell!.amountDenom)
-            if (isEditMode) {
-                cell?.arrowImg.image = UIImage(named: "changeIc")
-                cell?.arrowConstraint.constant = 10
-                cell?.arrowConstraint2.constant = 10
-                cell?.arrowConstraint3.constant = 10
-            } else {
-                cell?.arrowImg.image = UIImage(named: "arrowNextGr")
-                cell?.arrowConstraint.constant = 4
-                cell?.arrowConstraint2.constant = 4
-                cell?.arrowConstraint3.constant = 4
-            }
             return cell!
         }
     }
@@ -168,69 +109,22 @@ class WalletManageViewController: BaseViewController, UITableViewDelegate, UITab
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if (tableView == chainTableView) {
-            if (mSelectedChain != indexPath.row) {
-                mSelectedChain = indexPath.row
-                BaseData.instance.setRecentChain(mSelectedChain)
-                self.isEditMode = false
-                self.onRefechUserInfo()
-            }
-        } else if (!isEditMode) {
-            if (mAccounts.count <= indexPath.row) {
-                let popupContent = AddViewController.create()
-                let cardPopup = SBCardPopupViewController(contentViewController: popupContent)
-                cardPopup.resultDelegate = self
-                cardPopup.show(onViewController: self)
-                
-            } else {
-                let walletDetailVC = WalletDetailViewController(nibName: "WalletDetailViewController", bundle: nil)
-                walletDetailVC.hidesBottomBarWhenPushed = true
-                walletDetailVC.accountId = self.mAccounts[indexPath.row].account_id
-                self.navigationItem.title = ""
-                self.navigationController?.pushViewController(walletDetailVC, animated: true)
-            }
+        if (tableView == chainTableView ) {
+            selectedChain = displayChains[indexPath.row]
+            BaseData.instance.setRecentChain(selectedChain)
+            self.onRefechUserInfo()
+            
+        } else if (tableView == accountTableView) {
+            let walletDetailVC = WalletDetailViewController(nibName: "WalletDetailViewController", bundle: nil)
+            walletDetailVC.hidesBottomBarWhenPushed = true
+            walletDetailVC.accountId = self.displayAccounts[indexPath.row].account_id
+            self.navigationItem.title = ""
+            self.navigationController?.pushViewController(walletDetailVC, animated: true)
         }
-    }
-    
-    func tableView(_ tableView: UITableView, dragPreviewParametersForRowAt indexPath: IndexPath) -> UIDragPreviewParameters? {
-        let param = UIDragPreviewParameters()
-        param.backgroundColor = .clear
-        return param
-    }
-    
-    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        let itemProvider = NSItemProvider(object: self.mAccounts[indexPath.row])
-        let dragItem = UIDragItem(itemProvider: itemProvider)
-        return [dragItem]
-    }
-    
-    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
-        guard let destinationIndexPath = coordinator.destinationIndexPath,
-            let sourceIndexPath = coordinator.items[0].sourceIndexPath else{
-            return
-        }
-        let sourceItem = self.mAccounts[sourceIndexPath.row]
-        self.mAccounts.remove(at: sourceIndexPath.row)
-        self.mAccounts.insert(sourceItem, at: destinationIndexPath.row)
-        DispatchQueue.main.async {
-            for i in 0 ... (self.mAccounts.count - 1) {
-                self.mAccounts[i].account_sort_order = Int64(i)
-            }
-            BaseData.instance.updateSortOrder(self.mAccounts)
-            self.accountTableView.reloadData()
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, canHandle session: UIDropSession) -> Bool {
-        return session.canLoadObjects(ofClass: Account.self)
-    }
-
-    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
-        return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
     }
     
     func sortWallet() {
-        self.mAccounts.sort{
+        self.displayAccounts.sort{
             return $0.account_sort_order < $1.account_sort_order
         }
     }
@@ -240,21 +134,38 @@ class WalletManageViewController: BaseViewController, UITableViewDelegate, UITab
             var tagetVC:BaseViewController?
             if(result == 1) {
                 tagetVC = UIStoryboard(name: "Init", bundle: nil).instantiateViewController(withIdentifier: "CreateViewController") as! CreateViewController
-                tagetVC?.chainType = ChainType.SUPPRT_CHAIN()[self.mSelectedChain - 1]
+                tagetVC?.chainType = self.toAddChain!
                 
             } else if(result == 2) {
                 tagetVC = UIStoryboard(name: "Init", bundle: nil).instantiateViewController(withIdentifier: "RestoreViewController") as! RestoreViewController
-                tagetVC?.chainType = ChainType.SUPPRT_CHAIN()[self.mSelectedChain - 1]
+                tagetVC?.chainType = self.toAddChain!
                 
             } else if(result == 3) {
                 tagetVC = UIStoryboard(name: "Init", bundle: nil).instantiateViewController(withIdentifier: "AddAddressViewController") as! AddAddressViewController
                 
             }
-            if(tagetVC != nil) {
+            if (tagetVC != nil) {
                 tagetVC?.hidesBottomBarWhenPushed = true
                 self.navigationItem.title = ""
                 self.navigationController?.pushViewController(tagetVC!, animated: true)
             }
         })
     }
+    
+    @IBAction func onClickAddNew(_ sender: UIButton) {
+        self.onShowSelectChainDialog()
+    }
+    
+    override func onChainSelected(_ chainType: ChainType) {
+        self.toAddChain = chainType
+        if (BaseData.instance.selectAllAccountsByChain(toAddChain!).count >= MAX_WALLET_PER_CHAIN) {
+            self.onShowToast(NSLocalizedString("error_max_account_number", comment: ""))
+            
+        } else {let popupVC = NewAccountTypePopup(nibName: "NewAccountTypePopup", bundle: nil)
+            let cardPopup = SBCardPopupViewController(contentViewController: popupVC)
+            cardPopup.resultDelegate = self
+            cardPopup.show(onViewController: self)
+        }
+    }
+    
 }

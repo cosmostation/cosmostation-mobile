@@ -14,7 +14,7 @@ import GRPC
 import NIO
 import SwiftProtobuf
 
-class MainTabViewController: UITabBarController, UITabBarControllerDelegate, SBCardPopupDelegate, AccountSelectDelegate {
+class MainTabViewController: UITabBarController, UITabBarControllerDelegate, SBCardPopupDelegate, AccountSwitchDelegate {
     
     var mAccount: Account!
     var mChainType: ChainType!
@@ -105,16 +105,16 @@ class MainTabViewController: UITabBarController, UITabBarControllerDelegate, SBC
     
     func onShowAccountSwicth() {
         let sourceVC = self.selectedViewController!
-        let accountSelectVC = UIStoryboard(name: "MainStoryboard", bundle: nil).instantiateViewController(withIdentifier: "AccountSelectViewController") as! AccountSelectViewController
-        accountSelectVC.modalPresentationStyle = .overFullScreen
-        accountSelectVC.resultDelegate = self
-
-        sourceVC.view.superview?.insertSubview(accountSelectVC.view, aboveSubview: sourceVC.view)
-        accountSelectVC.view.transform = CGAffineTransform(translationX: 0, y: -sourceVC.view.frame.size.height)
+        let accountSwitchVC = AccountSwitchViewController(nibName: "AccountSwitchViewController", bundle: nil)
+        accountSwitchVC.modalPresentationStyle = .overFullScreen
+        accountSwitchVC.resultDelegate = self
+        
+        sourceVC.view.superview?.insertSubview(accountSwitchVC.view, aboveSubview: sourceVC.view)
+        accountSwitchVC.view.transform = CGAffineTransform(translationX: 0, y: -sourceVC.view.frame.size.height)
         UIView.animate(withDuration: 0.3, animations: {
-            accountSelectVC.view.transform = CGAffineTransform(translationX: 0, y: 0)
-            }) { (Finished) in
-                sourceVC.present(accountSelectVC, animated: false, completion: nil)
+            accountSwitchVC.view.transform = CGAffineTransform(translationX: 0, y: 0)
+        }) { _ in
+            sourceVC.present(accountSwitchVC, animated: false, completion: nil)
         }
     }
     
@@ -1414,8 +1414,8 @@ class MainTabViewController: UITabBarController, UITabBarControllerDelegate, SBC
     func addAccount(_ chain: ChainType) {
         targetChain = chain
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(610), execute: {
-            let popupContent = AddViewController.create()
-            let cardPopup = SBCardPopupViewController(contentViewController: popupContent)
+            let popupVC = NewAccountTypePopup(nibName: "NewAccountTypePopup", bundle: nil)
+            let cardPopup = SBCardPopupViewController(contentViewController: popupVC)
             cardPopup.resultDelegate = self
             cardPopup.show(onViewController: self)
         })

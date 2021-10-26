@@ -548,6 +548,17 @@ class WalletDetailViewController: BaseViewController, PasswordViewDelegate {
     }
     
     @IBAction func onClickDelete(_ sender: Any) {
+        let dpChains = BaseData.instance.dpSortedChains()
+        var accountSum = 0;
+        dpChains.forEach { chain in
+            let accountNum = BaseData.instance.selectAllAccountsByChain(chain).count
+            accountSum = accountSum + accountNum
+        }
+        if (accountSum <= 1) {
+            self.onShowToast(NSLocalizedString("error_reserve_1_account", comment: ""))
+            return
+        }
+        
         let deleteAlert = UIAlertController(title: NSLocalizedString("delete_wallet", comment: ""), message: NSLocalizedString("delete_wallet_msg", comment: ""), preferredStyle: .alert)
         deleteAlert.addAction(UIAlertAction(title: NSLocalizedString("delete", comment: ""), style: .destructive, handler: { _ in
             self.confirmDelete()

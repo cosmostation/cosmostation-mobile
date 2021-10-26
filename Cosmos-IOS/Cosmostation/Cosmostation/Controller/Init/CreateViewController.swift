@@ -82,18 +82,18 @@ class CreateViewController: BaseViewController, PasswordViewDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.mnemonicLayers = [self.mneminicLayer0, self.mneminicLayer1, self.mneminicLayer2, self.mneminicLayer3,
-                          self.mneminicLayer4, self.mneminicLayer5, self.mneminicLayer6, self.mneminicLayer7,
-                          self.mneminicLayer8, self.mneminicLayer9, self.mneminicLayer10, self.mneminicLayer11,
-                          self.mneminicLayer12, self.mneminicLayer13, self.mneminicLayer14, self.mneminicLayer15,
-                          self.mneminicLayer16, self.mneminicLayer17, self.mneminicLayer18, self.mneminicLayer19,
-                          self.mneminicLayer20, self.mneminicLayer21, self.mneminicLayer22, self.mneminicLayer23]
+                               self.mneminicLayer4, self.mneminicLayer5, self.mneminicLayer6, self.mneminicLayer7,
+                               self.mneminicLayer8, self.mneminicLayer9, self.mneminicLayer10, self.mneminicLayer11,
+                               self.mneminicLayer12, self.mneminicLayer13, self.mneminicLayer14, self.mneminicLayer15,
+                               self.mneminicLayer16, self.mneminicLayer17, self.mneminicLayer18, self.mneminicLayer19,
+                               self.mneminicLayer20, self.mneminicLayer21, self.mneminicLayer22, self.mneminicLayer23]
         
         self.mnemonicLabels = [self.mnemonic0, self.mnemonic1, self.mnemonic2, self.mnemonic3,
-                          self.mnemonic4, self.mnemonic5, self.mnemonic6, self.mnemonic7,
-                          self.mnemonic8, self.mnemonic9, self.mnemonic10, self.mnemonic11,
-                          self.mnemonic12, self.mnemonic13, self.mnemonic14, self.mnemonic15,
-                          self.mnemonic16, self.mnemonic17, self.mnemonic18, self.mnemonic19,
-                          self.mnemonic20, self.mnemonic21, self.mnemonic22, self.mnemonic23]
+                               self.mnemonic4, self.mnemonic5, self.mnemonic6, self.mnemonic7,
+                               self.mnemonic8, self.mnemonic9, self.mnemonic10, self.mnemonic11,
+                               self.mnemonic12, self.mnemonic13, self.mnemonic14, self.mnemonic15,
+                               self.mnemonic16, self.mnemonic17, self.mnemonic18, self.mnemonic19,
+                               self.mnemonic20, self.mnemonic21, self.mnemonic22, self.mnemonic23]
     
         self.addressView.isHidden = true
         self.mnemonicView.isHidden = true
@@ -101,7 +101,7 @@ class CreateViewController: BaseViewController, PasswordViewDelegate{
         self.nextBtn.isHidden = true
         
         if (chainType == nil) {
-            self.onShowChainType()
+            self.onShowSelectChainDialog()
         } else {
             self.onGenNewKey()
         }
@@ -115,282 +115,10 @@ class CreateViewController: BaseViewController, PasswordViewDelegate{
         self.navigationController?.navigationBar.shadowImage = UIImage()
     }
     
-    func onShowChainType() {
-        let showAlert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
-        let cosmosAction = UIAlertAction(title: NSLocalizedString("chain_title_cosmos", comment: ""), style: .default, handler: { _ in
-            self.chainType = ChainType.COSMOS_MAIN
-            self.onGenNewKey()
-        })
-        cosmosAction.setValue(UIImage(named: "cosmosWhMain")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let irisAction = UIAlertAction(title: NSLocalizedString("chain_title_iris", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.IRIS_MAIN
-            self.onGenNewKey()
-        })
-        irisAction.setValue(UIImage(named: "irisWh")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let bnbAction = UIAlertAction(title: NSLocalizedString("chain_title_bnb", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.BINANCE_MAIN
-            self.onGenNewKey()
-        })
-        bnbAction.setValue(UIImage(named: "binanceChImg")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let okexAction = UIAlertAction(title: NSLocalizedString("chain_title_okex", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.OKEX_MAIN
-            self.onGenNewKey()
-        })
-        okexAction.setValue(UIImage(named: "okexChainImg")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let cryptoAction = UIAlertAction(title: NSLocalizedString("chain_title_crypto", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.CRYPTO_MAIN
-            self.onGenNewKey()
-        })
-        cryptoAction.setValue(UIImage(named: "chaincrypto")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let iovAction = UIAlertAction(title: NSLocalizedString("chain_title_iov", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.IOV_MAIN
-            self.onGenNewKey()
-        })
-        iovAction.setValue(UIImage(named: "chainStarname")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let kavaAction = UIAlertAction(title: NSLocalizedString("chain_title_kava", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.KAVA_MAIN
-            self.onGenNewKey()
-        })
-        kavaAction.setValue(UIImage(named: "kavaImg")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let bandAction = UIAlertAction(title: NSLocalizedString("chain_title_band", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.BAND_MAIN
-            self.onGenNewKey()
-        })
-        bandAction.setValue(UIImage(named: "chainBandprotocal")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let persisAction = UIAlertAction(title: NSLocalizedString("chain_title_persis", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.PERSIS_MAIN
-            self.onGenNewKey()
-        })
-        persisAction.setValue(UIImage(named: "chainpersistence")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let certikAction = UIAlertAction(title: NSLocalizedString("chain_title_certik", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.CERTIK_MAIN
-            self.onGenNewKey()
-        })
-        certikAction.setValue(UIImage(named: "certikChainImg")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let akashAction = UIAlertAction(title: NSLocalizedString("chain_title_akash", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.AKASH_MAIN
-            self.onGenNewKey()
-        })
-        akashAction.setValue(UIImage(named: "akashChainImg")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let sentinelAction = UIAlertAction(title: NSLocalizedString("chain_title_sentinel", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.SENTINEL_MAIN
-            self.onGenNewKey()
-        })
-        sentinelAction.setValue(UIImage(named: "chainsentinel")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let fetchAction = UIAlertAction(title: NSLocalizedString("chain_title_fetch", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.FETCH_MAIN
-            self.onGenNewKey()
-        })
-        fetchAction.setValue(UIImage(named: "chainfetchai")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let sifAction = UIAlertAction(title: NSLocalizedString("chain_title_sif", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.SIF_MAIN
-            self.onGenNewKey()
-        })
-        sifAction.setValue(UIImage(named: "chainsifchain")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let kiAction = UIAlertAction(title: NSLocalizedString("chain_title_ki", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.KI_MAIN
-            self.onGenNewKey()
-        })
-        kiAction.setValue(UIImage(named: "chainKifoundation")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let osmosisAction = UIAlertAction(title: NSLocalizedString("chain_title_osmosis", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.OSMOSIS_MAIN
-            self.onGenNewKey()
-        })
-        osmosisAction.setValue(UIImage(named: "chainOsmosis")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let mediAction = UIAlertAction(title: NSLocalizedString("chain_title_medi", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.MEDI_MAIN
-            self.onGenNewKey()
-        })
-        mediAction.setValue(UIImage(named: "chainMedibloc")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let emoneyAction = UIAlertAction(title: NSLocalizedString("chain_title_emoney", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.EMONEY_MAIN
-            self.onGenNewKey()
-        })
-        emoneyAction.setValue(UIImage(named: "chainEmoney")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let rizonAction = UIAlertAction(title: NSLocalizedString("chain_title_rizon", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.RIZON_MAIN
-            self.onGenNewKey()
-        })
-        rizonAction.setValue(UIImage(named: "chainRizon")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let junoAction = UIAlertAction(title: NSLocalizedString("chain_title_juno", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.JUNO_MAIN
-            self.onGenNewKey()
-        })
-        junoAction.setValue(UIImage(named: "chainJuno")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let regenAction = UIAlertAction(title: NSLocalizedString("chain_title_regen", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.REGEN_MAIN
-            self.onGenNewKey()
-        })
-        regenAction.setValue(UIImage(named: "chainJuno")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let bitcannaAction = UIAlertAction(title: NSLocalizedString("chain_title_bitcanna", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.BITCANA_MAIN
-            self.onGenNewKey()
-        })
-        bitcannaAction.setValue(UIImage(named: "chainJuno")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let secretAction = UIAlertAction(title: NSLocalizedString("chain_title_secret", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.SECRET_MAIN
-            self.onGenNewKey()
-        })
-        secretAction.setValue(UIImage(named: "secretChainImg")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let cosmosTestAction = UIAlertAction(title: NSLocalizedString("chain_title_test_cosmos", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.COSMOS_TEST
-            self.onGenNewKey()
-        })
-        cosmosTestAction.setValue(UIImage(named: "cosmosTestChainImg")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let irisTestAction = UIAlertAction(title: NSLocalizedString("chain_title_test_iris", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.IRIS_TEST
-            self.onGenNewKey()
-        })
-        irisTestAction.setValue(UIImage(named: "irisTestChainImg")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let bnbTestAction = UIAlertAction(title: NSLocalizedString("chain_title_test_bnb", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.BINANCE_TEST
-            self.onGenNewKey()
-        })
-        bnbTestAction.setValue(UIImage(named: "binancetestnet")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let kavaTestAction = UIAlertAction(title: NSLocalizedString("chain_title_kava_test", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.KAVA_TEST
-            self.onGenNewKey()
-        })
-        kavaTestAction.setValue(UIImage(named: "kavaTestImg")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let iovTestAction = UIAlertAction(title: NSLocalizedString("chain_title_iov_test", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.IOV_TEST
-            self.onGenNewKey()
-        })
-        iovTestAction.setValue(UIImage(named: "iovTestnetImg")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let okTestAction = UIAlertAction(title: NSLocalizedString("chain_title_okex_test", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.OKEX_TEST
-            self.onGenNewKey()
-        })
-        okTestAction.setValue(UIImage(named: "okexTestnetImg")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let certikTestAction = UIAlertAction(title: NSLocalizedString("chain_title_certik_test", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.CERTIK_TEST
-            self.onGenNewKey()
-        })
-        certikTestAction.setValue(UIImage(named: "certikTestnetImg")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let rizonTestAction = UIAlertAction(title: NSLocalizedString("chain_title_rizon_test", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.RIZON_TEST
-            self.onGenNewKey()
-        })
-        rizonTestAction.setValue(UIImage(named: "testnetRizon")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let mediTestAction = UIAlertAction(title: NSLocalizedString("chain_title_medi_test", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.MEDI_TEST
-            self.onGenNewKey()
-        })
-        mediTestAction.setValue(UIImage(named: "testnetMedibloc")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let altheaTestAction = UIAlertAction(title: NSLocalizedString("chain_title_althea_test", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.ALTHEA_TEST
-            self.onGenNewKey()
-        })
-        altheaTestAction.setValue(UIImage(named: "testnetAlthea")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let umeeTestAction = UIAlertAction(title: NSLocalizedString("chain_title_umee_test", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.UMEE_TEST
-            self.onGenNewKey()
-        })
-        umeeTestAction.setValue(UIImage(named: "testnetUmee")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        let axelarTestAction = UIAlertAction(title: NSLocalizedString("chain_title_axelar_test", comment: ""), style: .default, handler: {_ in
-            self.chainType = ChainType.AXELAR_TEST
-            self.onGenNewKey()
-        })
-        axelarTestAction.setValue(UIImage(named: "testnetAxelar")?.withRenderingMode(.alwaysOriginal), forKey: "image")
-        
-        
-        showAlert.addAction(cosmosAction)
-        showAlert.addAction(irisAction)
-        showAlert.addAction(bnbAction)
-        showAlert.addAction(okexAction)
-        showAlert.addAction(kavaAction)
-        showAlert.addAction(bandAction)
-        showAlert.addAction(persisAction)
-        showAlert.addAction(iovAction)
-        showAlert.addAction(certikAction)
-        showAlert.addAction(akashAction)
-        showAlert.addAction(sentinelAction)
-        showAlert.addAction(fetchAction)
-        showAlert.addAction(cryptoAction)
-        showAlert.addAction(sifAction)
-        showAlert.addAction(kiAction)
-        showAlert.addAction(rizonAction)
-        showAlert.addAction(osmosisAction)
-        showAlert.addAction(mediAction)
-        showAlert.addAction(emoneyAction)
-        showAlert.addAction(regenAction)
-        showAlert.addAction(junoAction)
-        showAlert.addAction(bitcannaAction)
-        showAlert.addAction(secretAction)
-        
-        if (ChainType.SUPPRT_CHAIN().contains(ChainType.COSMOS_TEST)) {
-            showAlert.addAction(cosmosTestAction)
-        }
-        if (ChainType.SUPPRT_CHAIN().contains(ChainType.IRIS_TEST)) {
-            showAlert.addAction(irisTestAction)
-        }
-        if (ChainType.SUPPRT_CHAIN().contains(ChainType.BINANCE_TEST)) {
-            showAlert.addAction(bnbTestAction)
-        }
-        if (ChainType.SUPPRT_CHAIN().contains(ChainType.KAVA_TEST)) {
-            showAlert.addAction(kavaTestAction)
-        }
-        if (ChainType.SUPPRT_CHAIN().contains(ChainType.IOV_TEST)) {
-            showAlert.addAction(iovTestAction)
-        }
-        if (ChainType.SUPPRT_CHAIN().contains(ChainType.OKEX_TEST)) {
-            showAlert.addAction(okTestAction)
-        }
-        if (ChainType.SUPPRT_CHAIN().contains(ChainType.CERTIK_TEST)) {
-            showAlert.addAction(certikTestAction)
-        }
-        if (ChainType.SUPPRT_CHAIN().contains(ChainType.RIZON_TEST)) {
-            showAlert.addAction(rizonTestAction)
-        }
-        if (ChainType.SUPPRT_CHAIN().contains(ChainType.MEDI_TEST)) {
-            showAlert.addAction(mediTestAction)
-        }
-        if (ChainType.SUPPRT_CHAIN().contains(ChainType.ALTHEA_TEST)) {
-            showAlert.addAction(altheaTestAction)
-        }
-        if (ChainType.SUPPRT_CHAIN().contains(ChainType.UMEE_TEST)) {
-            showAlert.addAction(umeeTestAction)
-        }
-        if (ChainType.SUPPRT_CHAIN().contains(ChainType.AXELAR_TEST)) {
-            showAlert.addAction(axelarTestAction)
-        }
-        self.present(showAlert, animated: true, completion: nil)
+    override func onChainSelected(_ chainType: ChainType) {
+        self.chainType = chainType
+        self.onGenNewKey()
     }
-    
     
     func onGenNewKey() {
         guard let words = try? Mnemonic.create(strength: .hight, language: .english) else {
@@ -472,11 +200,6 @@ class CreateViewController: BaseViewController, PasswordViewDelegate{
                 self.checkedPassword = true
                 self.onUpdateView()
             })
-            
-        } else if (result == PASSWORD_RESUKT_CANCEL) {
-            
-        } else if (result == PASSWORD_RESUKT_FAIL) {
-            
         }
     }
     
@@ -513,11 +236,17 @@ class CreateViewController: BaseViewController, PasswordViewDelegate{
             DispatchQueue.main.async(execute: {
                 self.hideWaittingAlert()
                 if(keyResult && insertResult > 0) {
+                    var hiddenChains = BaseData.instance.userHideChains()
+                    if (hiddenChains.contains(chain)) {
+                        if let position = hiddenChains.firstIndex { $0 == chain } {
+                            hiddenChains.remove(at: position)
+                        }
+                        BaseData.instance.setUserHiddenChains(hiddenChains)
+                    }
+                    BaseData.instance.setLastTab(0)
                     BaseData.instance.setRecentAccountId(insertResult)
+                    BaseData.instance.setRecentChain(chain)
                     self.onStartMainTab()
-                } else {
-                    //TODO Error control
-                    print("ERROR!!")
                 }
             });
         }

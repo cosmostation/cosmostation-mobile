@@ -20,10 +20,8 @@ class ManageChainCell: UITableViewCell {
         super.awakeFromNib()
         self.selectionStyle = .none
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
+    
+    func onSetView(_ selected: Bool) {
         if (selected) {
             chainCard.borderColor = UIColor.init(hexString: "#9ca2ac", alpha: 1.0)
             chainName.textColor = UIColor.white
@@ -35,7 +33,6 @@ class ManageChainCell: UITableViewCell {
             chainAll.textColor = UIColor.init(hexString: "#4b4f54")
             chainImg.alpha = 0.1
         }
-        
     }
     
 }
