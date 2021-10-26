@@ -13,6 +13,7 @@ let SUPPORT_BEP3_SWAP                   = true;
 
 let KEY_RECENT_ACCOUNT                  = "KEY_RECENT_ACCOUNT"
 let KEY_RECENT_CHAIN                    = "KEY_RECENT_CHAIN"
+let KEY_RECENT_CHAIN_S                  = "KEY_RECENT_CHAIN_S"
 let KEY_ALL_VAL_SORT                    = "KEY_ALL_VAL_SORT"
 let KEY_MY_VAL_SORT                     = "KEY_MY_VAL_SORT"
 let KEY_LAST_TAB                        = "KEY_LAST_TAB"
@@ -23,6 +24,8 @@ let KEY_USING_BIO_AUTH                  = "KEY_USING_BIO_AUTH"
 let KEY_ENGINER_MODE                    = "KEY_ENGINER_MODE"
 let KEY_FCM_TOKEN                       = "KEY_FCM_TOKEN"
 let KEY_KAVA_TESTNET_WARN               = "KEY_KAVA_TESTNET_WARN"
+let KEY_USER_HIDEN_CHAINS               = "KEY_USER_HIDEN_CHAINS"
+let KEY_USER_SORTED_CHAINS              = "KEY_USER_SORTED_CHAINS"
 let KEY_PRE_EVENT_HIDE                  = "KEY_PRE_EVENT_HIDE"
 
 let STATION_URL                         = "https://api-utility.cosmostation.io/";

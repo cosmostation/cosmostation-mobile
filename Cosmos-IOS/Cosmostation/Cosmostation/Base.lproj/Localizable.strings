@@ -573,6 +573,7 @@ support@cosmostation.io";
 "title_ibc_transfer" = "IBC Send";
 "title_sif_dex" = "SifChain Dex";
 "title_sif_incentive" = "Incentive Claim";
+"title_edit_chain" = "Edit Chains";
 
 
 "proposal_type_basic" = "Basic";
@@ -686,6 +687,8 @@ support@cosmostation.io";
 "error_remain_borrow_small" = "Remain borrow amount less than $10";
 "error_alreay_rizon_swap" = "There is already a swap request in progress.";
 "error_max_account_number" = "No more accounts can be added to this chain.";
+"error_reserve_1_account" = "Please reserve at least 1 account to displayed.";
+"error_hided_chain" = "Hidden Chain.";
 
 
 

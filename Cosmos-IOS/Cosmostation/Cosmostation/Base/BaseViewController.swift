@@ -133,6 +133,15 @@ class BaseViewController: UIViewController {
             } else {
                 BaseData.instance.setRecentAccountId(BaseData.instance.selectAllAccounts()[0].account_id)
             }
+            
+            for chain in BaseData.instance.dpSortedChains() {
+                let accountNum = BaseData.instance.selectAllAccountsByChain(chain).count
+                if (accountNum > 0) {
+                    BaseData.instance.setRecentAccountId(BaseData.instance.selectAllAccountsByChain(chain)[0].account_id)
+                    break
+                }
+            }
+            
             DispatchQueue.main.async(execute: {
                 self.hideWaittingAlert()
                 self.onShowToast(NSLocalizedString("wallet_delete_complete", comment: ""))

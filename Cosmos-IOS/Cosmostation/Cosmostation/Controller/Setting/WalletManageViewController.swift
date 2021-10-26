@@ -14,13 +14,13 @@ class WalletManageViewController: BaseViewController, UITableViewDelegate, UITab
     @IBOutlet weak var chainTableView: UITableView!
     @IBOutlet weak var accountTableView: UITableView!
     
-    var selectedChain = 0;
-    var selectedAccounts = Array<Account>()
+    var displayChains = Array<ChainType>()
+    var displayAccounts = Array<Account>()
+    var selectedChain: ChainType!
     var toAddChain: ChainType?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.selectedChain = BaseData.instance.getRecentChain()
         self.accountTableView.delegate = self
         self.accountTableView.dataSource = self
         self.accountTableView.separatorStyle = UITableViewCell.SeparatorStyle.none
@@ -30,7 +30,6 @@ class WalletManageViewController: BaseViewController, UITableViewDelegate, UITab
         self.chainTableView.dataSource = self
         self.chainTableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         self.chainTableView.register(UINib(nibName: "ManageChainCell", bundle: nil), forCellReuseIdentifier: "ManageChainCell")
-        self.onRefechUserInfo()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -41,30 +40,33 @@ class WalletManageViewController: BaseViewController, UITableViewDelegate, UITab
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         
-        let rightBarButtonItem = UIBarButtonItem.init(image: UIImage(named: "iconEdit"), style: .done, target: self, action: #selector(onStartEdit))
+        let rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .done, target: self, action: #selector(onStartEdit))
         self.navigationItem.rightBarButtonItem = rightBarButtonItem
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        self.chainTableView.selectRow(at: IndexPath.init(item: selectedChain, section: 0), animated: false, scrollPosition: .middle)
+        
+        self.onRefechUserInfo()
     }
     
     @objc public func onStartEdit() {
-        print("onStartEdit")
+        let walletEditVC = WalletChainEditViewController(nibName: "WalletChainEditViewController", bundle: nil)
+        walletEditVC.hidesBottomBarWhenPushed = true
+        self.navigationItem.title = ""
+        self.navigationController?.pushViewController(walletEditVC, animated: true)
     }
     
     func onRefechUserInfo() {
-        let selectedChain = ChainType.SUPPRT_CHAIN()[selectedChain]
-        self.selectedAccounts = BaseData.instance.selectAllAccountsByChain(selectedChain)
+        self.displayChains = BaseData.instance.dpSortedChains()
+        self.selectedChain = BaseData.instance.getRecentChain()
+        self.displayAccounts = BaseData.instance.selectAllAccountsByChain(selectedChain)
         self.sortWallet()
+        self.chainTableView.reloadData()
         self.accountTableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (tableView == chainTableView) {
-            return ChainType.SUPPRT_CHAIN().count
+            return displayChains.count
         } else if (tableView == accountTableView) {
-            return selectedAccounts.count
+            return displayAccounts.count
         } else {
             return 0
         }
@@ -73,16 +75,15 @@ class WalletManageViewController: BaseViewController, UITableViewDelegate, UITab
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (tableView == chainTableView) {
             let cell:ManageChainCell? = tableView.dequeueReusableCell(withIdentifier:"ManageChainCell") as? ManageChainCell
-            let selectedChain = ChainType.SUPPRT_CHAIN()[indexPath.row]
-            cell?.chainImg.isHidden = false
-            cell?.chainName.isHidden = false
-            cell?.chainAll.isHidden = true
-            cell?.chainImg.image = WUtils.getChainImg(selectedChain)
-            cell?.chainName.text = WUtils.getChainTitle2(selectedChain)
+            let selected = displayChains[indexPath.row]
+            cell?.chainImg.image = WUtils.getChainImg(selected)
+            cell?.chainName.text = WUtils.getChainTitle2(selected)
+            if (selected == selectedChain) { cell?.onSetView(true) }
+            else { cell?.onSetView(false) }
             return cell!
             
         } else {
-            let account = selectedAccounts[indexPath.row]
+            let account = displayAccounts[indexPath.row]
             let cell:ManageAccountCell? = tableView.dequeueReusableCell(withIdentifier:"ManageAccountCell") as? ManageAccountCell
             let userChain = WUtils.getChainType(account.account_base_chain)
             if (account.account_has_private) {
@@ -108,22 +109,22 @@ class WalletManageViewController: BaseViewController, UITableViewDelegate, UITab
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if (tableView == chainTableView && selectedChain != indexPath.row) {
-            selectedChain = indexPath.row
+        if (tableView == chainTableView ) {
+            selectedChain = displayChains[indexPath.row]
             BaseData.instance.setRecentChain(selectedChain)
             self.onRefechUserInfo()
             
         } else if (tableView == accountTableView) {
             let walletDetailVC = WalletDetailViewController(nibName: "WalletDetailViewController", bundle: nil)
             walletDetailVC.hidesBottomBarWhenPushed = true
-            walletDetailVC.accountId = self.selectedAccounts[indexPath.row].account_id
+            walletDetailVC.accountId = self.displayAccounts[indexPath.row].account_id
             self.navigationItem.title = ""
             self.navigationController?.pushViewController(walletDetailVC, animated: true)
         }
     }
     
     func sortWallet() {
-        self.selectedAccounts.sort{
+        self.displayAccounts.sort{
             return $0.account_sort_order < $1.account_sort_order
         }
     }

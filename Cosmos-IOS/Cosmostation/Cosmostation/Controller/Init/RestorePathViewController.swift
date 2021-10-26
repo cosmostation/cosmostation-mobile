@@ -260,10 +260,17 @@ class RestorePathViewController: BaseViewController, UITableViewDelegate, UITabl
             DispatchQueue.main.async(execute: {
                 self.hideWaittingAlert()
                 if(keyResult && insertResult > 0) {
+                    var hiddenChains = BaseData.instance.userHideChains()
+                    if (hiddenChains.contains(chain)) {
+                        if let position = hiddenChains.firstIndex { $0 == chain } {
+                            hiddenChains.remove(at: position)
+                        }
+                        BaseData.instance.setUserHiddenChains(hiddenChains)
+                    }
+                    BaseData.instance.setLastTab(0)
                     BaseData.instance.setRecentAccountId(insertResult)
+                    BaseData.instance.setRecentChain(chain)
                     self.onStartMainTab()
-                } else {
-                    //TODO Error control
                 }
             });
         }
@@ -303,10 +310,17 @@ class RestorePathViewController: BaseViewController, UITableViewDelegate, UITabl
             DispatchQueue.main.async(execute: {
                 self.hideWaittingAlert()
                 if(keyResult && updateResult > 0) {
+                    var hiddenChains = BaseData.instance.userHideChains()
+                    if (hiddenChains.contains(chain)) {
+                        if let position = hiddenChains.firstIndex { $0 == chain } {
+                            hiddenChains.remove(at: position)
+                        }
+                        BaseData.instance.setUserHiddenChains(hiddenChains)
+                    }
+                    BaseData.instance.setLastTab(0)
                     BaseData.instance.setRecentAccountId(existedAccount!.account_id)
+                    BaseData.instance.setRecentChain(chain)
                     self.onStartMainTab()
-                } else {
-                    //TODO Error control
                 }
             });
         }

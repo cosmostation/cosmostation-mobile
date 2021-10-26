@@ -117,18 +117,6 @@ final class BaseData : NSObject{
         return nil
     }
     
-//    func getIbcSendableChains() -> Array<ChainType> {
-//        var result = Array<ChainType>()
-//        for ibcPath in mIbcPaths {
-//            if ibcPath.paths.filter({ $0.auth == true }).first != nil {
-//                if let chainType = WUtils.getChainTypeByChainId(ibcPath.chain_id) {
-//                    result.append(chainType)
-//                }
-//            }
-//        }
-//        return result
-//    }
-    
     func getIbcSendableRelayers() -> Array<IbcPath> {
         var result = Array<IbcPath>()
         for ibcPath in mIbcPaths {
@@ -138,16 +126,6 @@ final class BaseData : NSObject{
         }
         return result
     }
-    
-//    func getIbcRollbackChain(_ denom: String) -> Array<ChainType> {
-//        var result = Array<ChainType>()
-//        if let ibcToken = getIbcToken(denom.replacingOccurrences(of: "ibc/", with: "")) {
-//            if let chainType = WUtils.getChainTypeByChainId(ibcToken.counter_party?.chain_id) {
-//                result.append(chainType)
-//            }
-//        }
-//        return result
-//    }
     
     func getIbcRollbackRelayer(_ denom: String) -> Array<IbcPath> {
         var result = Array<IbcPath>()
@@ -160,17 +138,6 @@ final class BaseData : NSObject{
         }
         return result
     }
-    
-//    func getIbcCounterChainId(_ channelId: String?) -> String {
-//        for ibcPath in mIbcPaths {
-//            for path in ibcPath.paths {
-//                if (path.channel_id == channelId) {
-//                    return ibcPath.chain_id ?? ""
-//                }
-//            }
-//        }
-//        return ""
-//    }
     
     func getBaseDenom(_ denom: String) -> String {
         if (denom.starts(with: "ibc/")) {
@@ -501,22 +468,33 @@ final class BaseData : NSObject{
     }
     
     func getRecentAccountId() -> Int64 {
-        return Int64(UserDefaults.standard.integer(forKey: KEY_RECENT_ACCOUNT))
-    }
-    
-    func setRecentChain(_ id : Int) {
-        UserDefaults.standard.set(id, forKey: KEY_RECENT_CHAIN)
-    }
-    
-    func getRecentChain() -> Int {
-        let position = Int(UserDefaults.standard.integer(forKey: KEY_RECENT_CHAIN))
-        if (ChainType.SUPPRT_CHAIN().count < position) {
-            return 0
+        let account = selectAccountById(id: Int64(UserDefaults.standard.integer(forKey: KEY_RECENT_ACCOUNT)))
+        let chainType = WUtils.getChainType(account!.account_base_chain)!
+        if (dpSortedChains().contains(chainType))  {
+            return Int64(UserDefaults.standard.integer(forKey: KEY_RECENT_ACCOUNT))
+            
         } else {
-            return position
+            for dpChain in dpSortedChains() {
+                if (selectAllAccountsByChain(dpChain).count > 0) {
+                    return selectAllAccountsByChain(dpChain)[0].account_id
+                }
+            }
+            return Int64(UserDefaults.standard.integer(forKey: KEY_RECENT_ACCOUNT))
         }
     }
     
+    func setRecentChain(_ chain : ChainType) {
+        UserDefaults.standard.set(WUtils.getChainDBName(chain), forKey: KEY_RECENT_CHAIN_S)
+    }
+    
+    func getRecentChain() -> ChainType {
+        let chain = WUtils.getChainType(UserDefaults.standard.string(forKey: KEY_RECENT_CHAIN_S) ?? CHAIN_COSMOS_S)!
+        if (userSortedChains().contains(chain)) {
+            return chain
+        } else {
+            return ChainType.COSMOS_MAIN
+        }
+    }
     
     func setAllValidatorSort(_ sort : Int64) {
         UserDefaults.standard.set(sort, forKey: KEY_ALL_VAL_SORT)
@@ -685,6 +663,89 @@ final class BaseData : NSObject{
             return true
         }
         return false
+    }
+    
+    func getUserHiddenChains() -> Array<String>? {
+        return UserDefaults.standard.stringArray(forKey: KEY_USER_HIDEN_CHAINS) ?? []
+    }
+    
+    func setUserHiddenChains(_ hidedChains: Array<ChainType>) {
+        var toHideChain = Array<String>()
+        hidedChains.forEach { chainType in
+            toHideChain.append(WUtils.getChainDBName(chainType))
+        }
+        UserDefaults.standard.set(toHideChain, forKey: KEY_USER_HIDEN_CHAINS)
+    }
+    
+    func getUserSortedChains() -> Array<String>? {
+        return UserDefaults.standard.stringArray(forKey: KEY_USER_SORTED_CHAINS) ?? []
+    }
+    
+    func setUserSortedChains(_ displayedChains: Array<ChainType>) {
+        var toDisplayChain = Array<String>()
+        displayedChains.forEach { chainType in
+            toDisplayChain.append(WUtils.getChainDBName(chainType))
+        }
+        UserDefaults.standard.set(toDisplayChain, forKey: KEY_USER_SORTED_CHAINS)
+    }
+    
+    func userDisplayChains() -> Array<ChainType> {
+        var result = Array<ChainType>()
+        let allChains = ChainType.SUPPRT_CHAIN().dropFirst()
+        let hiddenChains = userHideChains()
+        allChains.forEach { chain in
+            if (hiddenChains.contains(chain) == false) {
+                result.append(chain)
+            }
+        }
+        return result;
+    }
+    
+    func userHideChains() -> Array<ChainType> {
+        var result = Array<ChainType>()
+        let allChains = ChainType.SUPPRT_CHAIN().dropFirst()
+        let hiddenChainS = getUserHiddenChains()
+        allChains.forEach { chain in
+            if (hiddenChainS?.contains(WUtils.getChainDBName(chain)) == true) {
+                result.append(chain)
+            }
+        }
+        return result;
+    }
+    
+    func userSortedChains() -> Array<ChainType> {
+        var result = Array<ChainType>()
+        let rawDpChains = userDisplayChains()
+        let orderedChainS = getUserHiddenChains()
+        orderedChainS?.forEach({ chainS in
+            if (rawDpChains.contains(WUtils.getChainType(chainS)!) == true) {
+                result.append(WUtils.getChainType(chainS)!)
+            }
+        })
+        rawDpChains.forEach { chain in
+            if (result.contains(chain) == false) {
+                result.append(chain)
+            }
+        }
+        return result;
+    }
+    
+    func dpSortedChains() -> Array<ChainType> {
+        var result = Array<ChainType>()
+        result.append(ChainType.COSMOS_MAIN)
+        let rawDpChains = userDisplayChains()
+        let orderedChainS = getUserHiddenChains()
+        orderedChainS?.forEach({ chainS in
+            if (rawDpChains.contains(WUtils.getChainType(chainS)!) == true) {
+                result.append(WUtils.getChainType(chainS)!)
+            }
+        })
+        rawDpChains.forEach { chain in
+            if (result.contains(chain) == false) {
+                result.append(chain)
+            }
+        }
+        return result;
     }
     
     

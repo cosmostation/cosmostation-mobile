@@ -220,9 +220,15 @@ class HtlcResultViewController: BaseViewController, UITableViewDelegate, UITable
     }
     
     @IBAction func onClickReceivedWallet(_ sender: UIButton) {
-        BaseData.instance.setRecentAccountId(mHtlcToAccount!.account_id)
-        BaseData.instance.setLastTab(1)
-        self.onStartMainTab()
+        if (BaseData.instance.dpSortedChains().contains(WUtils.getChainType(mHtlcToAccount!.account_base_chain)!)) {
+            BaseData.instance.setRecentAccountId(mHtlcToAccount!.account_id)
+            BaseData.instance.setLastTab(1)
+            self.onStartMainTab()
+            
+        } else {
+            self.onShowToast(NSLocalizedString("error_hided_chain", comment: ""))
+            return
+        }
     }
     
     
