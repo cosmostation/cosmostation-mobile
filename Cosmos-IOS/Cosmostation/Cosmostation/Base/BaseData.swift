@@ -811,12 +811,6 @@ final class BaseData : NSObject{
                 print(error)
             }
             
-//            let createPasswordTable = DB_PASSWORD.create { (table) in
-//                table.column(DB_PASSWORD_ID, primaryKey: true)
-//                table.column(DB_PASSWORD_RESOURCE)
-//            }
-//            try self.database.run(createPasswordTable)
-            
             let createBalanceTable = DB_BALANCE.create(ifNotExists: true) { (table) in
                 table.column(DB_BALANCE_ID, primaryKey: true)
                 table.column(DB_BALANCE_ACCOUNT_ID)

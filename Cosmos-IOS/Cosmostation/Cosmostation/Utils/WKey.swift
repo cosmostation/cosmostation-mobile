@@ -519,6 +519,10 @@ class WKey {
         return getHDKeyFromWords(mnemonic, account).publicKey.data
     }
     
+    static func getPrivateKey(_ hex: String) -> PrivateKey? {
+        return PrivateKey.init(pk: hex, coin: .bitcoin)
+    }
+    
     static func getStdTx(_ words: [String], _ msgList: Array<Msg>, _ stdMsg: StdSignMsg, _ account: Account, _ fee: Fee, _ memo: String) -> StdTx {
         let pKey = getHDKeyFromWords(words, account)
         let encoder = JSONEncoder()

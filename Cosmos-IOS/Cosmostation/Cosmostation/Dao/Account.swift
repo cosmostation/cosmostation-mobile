@@ -115,86 +115,86 @@ public class Account : NSObject, Codable, NSItemProviderReading, NSItemProviderW
         self.account_balances = balances
     }
     
-    func getAtomBalance() -> NSDecimalNumber {
-        var result = NSDecimalNumber.zero
-        for balance in self.account_balances {
-            if (balance.balance_denom == COSMOS_MAIN_DENOM) {
-                result = WUtils.plainStringToDecimal(balance.balance_amount)
-            }
-        }
-        return result
-    }
-    
-    func getIrisBalance() -> NSDecimalNumber {
-        var result = NSDecimalNumber.zero
-        for balance in self.account_balances {
-            if (balance.balance_denom == IRIS_MAIN_DENOM) {
-                result = WUtils.plainStringToDecimal(balance.balance_amount)
-            }
-        }
-        return result
-    }
-    
-    func getBnbBalance() -> NSDecimalNumber {
-        var result = NSDecimalNumber.zero
-        for balance in self.account_balances {
-            if (balance.balance_denom == BNB_MAIN_DENOM) {
-                result = WUtils.plainStringToDecimal(balance.balance_amount)
-            }
-        }
-        return result
-    }
-    
-    func getKavaBalance() -> NSDecimalNumber {
-        var result = NSDecimalNumber.zero
-        for balance in self.account_balances {
-            if (balance.balance_denom == KAVA_MAIN_DENOM) {
-                result = WUtils.plainStringToDecimal(balance.balance_amount)
-            }
-        }
-        return result
-    }
-    
-    func getIovBalance() -> NSDecimalNumber {
-        var result = NSDecimalNumber.zero
-        for balance in self.account_balances {
-            if (balance.balance_denom == IOV_MAIN_DENOM || balance.balance_denom == IOV_TEST_DENOM) {
-                result = WUtils.plainStringToDecimal(balance.balance_amount)
-            }
-        }
-        return result
-    }
-    
-    func getBandBalance() -> NSDecimalNumber {
-        var result = NSDecimalNumber.zero
-        for balance in self.account_balances {
-            if (balance.balance_denom == BAND_MAIN_DENOM) {
-                result = WUtils.plainStringToDecimal(balance.balance_amount)
-            }
-        }
-        return result
-    }
-    
-    func getTokenBalance(_ symbol:String) -> NSDecimalNumber {
-        var result = NSDecimalNumber.zero
-        for balance in self.account_balances {
-            if (balance.balance_denom == symbol) {
-                result = WUtils.plainStringToDecimal(balance.balance_amount)
-            }
-        }
-        return result
-    }
-    
-    func getTokenCoin(_ symbol:String) -> Coin {
-        var result = Coin.init()
-        for balance in self.account_balances {
-            if (balance.balance_denom == symbol) {
-                result.amount = balance.balance_amount
-                result.denom = balance.balance_denom
-            }
-        }
-        return result
-    }
+//    func getAtomBalance() -> NSDecimalNumber {
+//        var result = NSDecimalNumber.zero
+//        for balance in self.account_balances {
+//            if (balance.balance_denom == COSMOS_MAIN_DENOM) {
+//                result = WUtils.plainStringToDecimal(balance.balance_amount)
+//            }
+//        }
+//        return result
+//    }
+//    
+//    func getIrisBalance() -> NSDecimalNumber {
+//        var result = NSDecimalNumber.zero
+//        for balance in self.account_balances {
+//            if (balance.balance_denom == IRIS_MAIN_DENOM) {
+//                result = WUtils.plainStringToDecimal(balance.balance_amount)
+//            }
+//        }
+//        return result
+//    }
+//    
+//    func getBnbBalance() -> NSDecimalNumber {
+//        var result = NSDecimalNumber.zero
+//        for balance in self.account_balances {
+//            if (balance.balance_denom == BNB_MAIN_DENOM) {
+//                result = WUtils.plainStringToDecimal(balance.balance_amount)
+//            }
+//        }
+//        return result
+//    }
+//    
+//    func getKavaBalance() -> NSDecimalNumber {
+//        var result = NSDecimalNumber.zero
+//        for balance in self.account_balances {
+//            if (balance.balance_denom == KAVA_MAIN_DENOM) {
+//                result = WUtils.plainStringToDecimal(balance.balance_amount)
+//            }
+//        }
+//        return result
+//    }
+//    
+//    func getIovBalance() -> NSDecimalNumber {
+//        var result = NSDecimalNumber.zero
+//        for balance in self.account_balances {
+//            if (balance.balance_denom == IOV_MAIN_DENOM || balance.balance_denom == IOV_TEST_DENOM) {
+//                result = WUtils.plainStringToDecimal(balance.balance_amount)
+//            }
+//        }
+//        return result
+//    }
+//    
+//    func getBandBalance() -> NSDecimalNumber {
+//        var result = NSDecimalNumber.zero
+//        for balance in self.account_balances {
+//            if (balance.balance_denom == BAND_MAIN_DENOM) {
+//                result = WUtils.plainStringToDecimal(balance.balance_amount)
+//            }
+//        }
+//        return result
+//    }
+//    
+//    func getTokenBalance(_ symbol:String) -> NSDecimalNumber {
+//        var result = NSDecimalNumber.zero
+//        for balance in self.account_balances {
+//            if (balance.balance_denom == symbol) {
+//                result = WUtils.plainStringToDecimal(balance.balance_amount)
+//            }
+//        }
+//        return result
+//    }
+//    
+//    func getTokenCoin(_ symbol:String) -> Coin {
+//        var result = Coin.init()
+//        for balance in self.account_balances {
+//            if (balance.balance_denom == symbol) {
+//                result.amount = balance.balance_amount
+//                result.denom = balance.balance_denom
+//            }
+//        }
+//        return result
+//    }
     
     func dpAddress(_ chain: ChainType?) -> String {
         if (chain == ChainType.OKEX_MAIN || chain == ChainType.OKEX_TEST) {
