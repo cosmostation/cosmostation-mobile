@@ -172,7 +172,7 @@ class WalletDetailViewController: BaseViewController, PasswordViewDelegate {
             } else if (account!.account_custom_path == 3) {
                 keyPath.text = ETH_LEDGER_LEGACY_PATH.appending(String(account!.account_path))
             } else {
-                keyPath.text = FETCH_BASE_PATH.appending(String(account!.account_path))
+                keyPath.text = BASE_PATH.appending(String(account!.account_path))
             }
             cardPush.isHidden = true
             constraint2.priority = .defaultHigh
