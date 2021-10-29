@@ -64,6 +64,31 @@ class BaseViewController: UIViewController {
         
     }
     
+    public func showDBWaittingAlert() {
+        let attributedTitle = NSAttributedString(string: "DB Upgrade", attributes: [
+            NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18),
+            NSAttributedString.Key.foregroundColor : UIColor.white
+        ])
+        let attributedMsg = NSAttributedString(string: "\n\n\n\nPlease Wait\n(Do not close)", attributes: [
+            NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
+            NSAttributedString.Key.foregroundColor : UIColor.white
+        ])
+        waitAlert = UIAlertController(title: "", message: "", preferredStyle: .alert)
+        waitAlert!.setValue(attributedTitle, forKey: "attributedTitle")
+        waitAlert!.setValue(attributedMsg, forKey: "attributedMessage")
+        let image = LoadingImageView(frame: CGRect(x: 0, y: 0, width: 58, height: 58))
+        waitAlert!.view.addSubview(image)
+        image.translatesAutoresizingMaskIntoConstraints = false
+        waitAlert!.view.addConstraint(NSLayoutConstraint(item: image, attribute: .centerX, relatedBy: .equal, toItem: waitAlert!.view, attribute: .centerX, multiplier: 1, constant: 0))
+        waitAlert!.view.addConstraint(NSLayoutConstraint(item: image, attribute: .centerY, relatedBy: .equal, toItem: waitAlert!.view, attribute: .centerY, multiplier: 1, constant: 0))
+        waitAlert!.view.addConstraint(NSLayoutConstraint(item: image, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 58.0))
+        waitAlert!.view.addConstraint(NSLayoutConstraint(item: image, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 58.0))
+        WUtils.clearBackgroundColor(of: waitAlert!.view)
+        self.present(waitAlert!, animated: true, completion: nil)
+        image.onStartAnimation()
+        
+    }
+    
     public func hideWaittingAlert() {
         if (waitAlert != nil) {
             waitAlert?.dismiss(animated: true, completion: nil)

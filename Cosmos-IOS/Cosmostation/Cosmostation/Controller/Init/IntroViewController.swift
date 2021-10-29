@@ -59,9 +59,27 @@ class IntroViewController: BaseViewController, PasswordViewDelegate {
         //update okex chain
         BaseData.instance.upgradeAaccountAddressforOk()
         
-        
-        print("onCheckKeyWayUpdated ", BaseData.instance.onCheckKeyWayUpdated())
-        
+//        //check for keyway udpate
+        if (BaseData.instance.onCheckKeyWayUpdated() == false) {
+            onCheckPassWordState()
+        } else {
+            onKeyWayUpdate()
+        }
+    }
+    
+    func onKeyWayUpdate() {
+        self.showDBWaittingAlert()
+        DispatchQueue.global().async {
+            BaseData.instance.upgradeKeyWay()
+
+            DispatchQueue.main.async(execute: {
+                self.hideWaittingAlert()
+                self.onCheckPassWordState()
+            });
+        }
+    }
+    
+    func onCheckPassWordState() {
         if (BaseData.instance.getUsingAppLock() == true && BaseData.instance.hasPassword() && !lockPasses) {
             let passwordVC = UIStoryboard(name: "Password", bundle: nil).instantiateViewController(withIdentifier: "PasswordViewController") as! PasswordViewController
             self.navigationItem.title = ""
@@ -74,7 +92,6 @@ class IntroViewController: BaseViewController, PasswordViewDelegate {
             self.onCheckAppVersion()
         }
     }
-    
     
     func onStartInitJob() {
         if (accounts!.count <= 0) {

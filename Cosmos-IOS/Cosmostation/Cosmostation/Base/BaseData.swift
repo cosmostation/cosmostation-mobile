@@ -1095,6 +1095,17 @@ final class BaseData : NSObject{
         }
     }
     
+    public func updateKeyWay(_ account: Account?, _ publicKey: String, _ fullPath: String) {
+        let target = DB_ACCOUNT.filter(DB_ACCOUNT_ID == account!.account_id)
+        do {
+            try database.run(target.update(DB_ACCOUNT_PUBLIC_KEY <- publicKey))
+            try database.run(target.update(DB_ACCOUNT_FULL_HD_PATH <- fullPath))
+        } catch {
+            print(error)
+        }
+        
+    }
+    
     public func updateSortOrder(_ accounts: Array<Account>) {
         for account in accounts {
             let target = DB_ACCOUNT.filter(DB_ACCOUNT_ID == account.account_id)
@@ -1134,8 +1145,22 @@ final class BaseData : NSObject{
         return false
     }
     
-    
-    
+    public func upgradeKeyWay() {
+        for account in selectAllAccounts() {
+            if (account.account_has_private == true && account.account_full_hd_path.isEmpty == true) {
+                let words = KeychainWrapper.standard.string(forKey: account.account_uuid.sha1())?.trimmingCharacters(in: .whitespacesAndNewlines).components(separatedBy: " ")
+                let privateKey = WKey.getHDKeyFromWords(words!, account)
+                let privateKeyResult = KeychainWrapper.standard.set(privateKey.raw.hexEncodedString(), forKey: account.getPrivateKeySha1(), withAccessibility: .afterFirstUnlockThisDeviceOnly)
+                let fullPath = WUtils.getChainCustomPathS(WUtils.getChainType(account.account_base_chain)!,
+                                                          account.account_new_bip44,
+                                                          Int(account.account_custom_path),
+                                                          Int(account.account_path)!)
+                if (privateKeyResult) {
+                    self.updateKeyWay(account, privateKey.publicKey.data.hexEncodedString(), fullPath)
+                }
+            }
+        }
+    }
     
     public func hasPassword() -> Bool{
         if(KeychainWrapper.standard.hasValue(forKey: "password")) {
