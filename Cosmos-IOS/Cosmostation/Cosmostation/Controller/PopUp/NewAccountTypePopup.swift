@@ -29,6 +29,8 @@ class NewAccountTypePopup: BaseViewController, SBCardPopupContent {
     }
     
     @IBAction func onClickPrivateKey(_ sender: UIButton) {
+        popupViewController?.resultDelegate?.SBCardPopupResponse(type: 0, result: 4)
+        popupViewController?.close()
     }
     
     @IBAction func onClickAddress(_ sender: UIButton) {

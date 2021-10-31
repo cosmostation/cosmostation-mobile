@@ -58,6 +58,40 @@ class IntroViewController: BaseViewController, PasswordViewDelegate {
         super.viewDidAppear(animated)
         //update okex chain
         BaseData.instance.upgradeAaccountAddressforOk()
+        onCheckPassWordState()
+////        //check for keyway udpate
+//        if (BaseData.instance.onCheckKeyWayUpdated() == false) {
+//            onCheckPassWordState()
+//        } else {
+//            onKeyWayUpdate()
+//        }
+    }
+    
+//    func onKeyWayUpdate() {
+//        DispatchQueue.main.async(execute: {
+//            let dbAlert = UIAlertController(title: "DB Upgrading", message: " ", preferredStyle: .alert)
+//            self.present(dbAlert, animated: true, completion: nil)
+//            
+//            let allAccounts = BaseData.instance.selectAllAccounts()
+//            var progress = 0
+//            dbAlert.message = "\nplease wait\n\n1/" + String(allAccounts.count)
+//            DispatchQueue.global(qos: .background).async(execute: {
+//                for account in allAccounts {
+//                    BaseData.instance.upgradeKeyWay2(account)
+//                    progress += 1
+//                    DispatchQueue.main.async(flags: .barrier, execute: {
+//                        dbAlert.message = "\nplease wait\n\n" + String(progress) + "/" + String(allAccounts.count)
+//                    })
+//                }
+//                DispatchQueue.main.async(execute: {
+//                    dbAlert.dismiss(animated: true, completion: nil);
+//                    self.onCheckPassWordState()
+//                })
+//            })
+//        })
+//    }
+    
+    func onCheckPassWordState() {
         if (BaseData.instance.getUsingAppLock() == true && BaseData.instance.hasPassword() && !lockPasses) {
             let passwordVC = UIStoryboard(name: "Password", bundle: nil).instantiateViewController(withIdentifier: "PasswordViewController") as! PasswordViewController
             self.navigationItem.title = ""
@@ -70,7 +104,6 @@ class IntroViewController: BaseViewController, PasswordViewDelegate {
             self.onCheckAppVersion()
         }
     }
-    
     
     func onStartInitJob() {
         if (accounts!.count <= 0) {

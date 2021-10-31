@@ -132,16 +132,18 @@ class WalletManageViewController: BaseViewController, UITableViewDelegate, UITab
     func SBCardPopupResponse(type:Int, result: Int) {
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(490), execute: {
             var tagetVC:BaseViewController?
-            if(result == 1) {
+            if (result == 1) {
                 tagetVC = UIStoryboard(name: "Init", bundle: nil).instantiateViewController(withIdentifier: "CreateViewController") as! CreateViewController
                 tagetVC?.chainType = self.toAddChain!
                 
-            } else if(result == 2) {
+            } else if (result == 2) {
                 tagetVC = UIStoryboard(name: "Init", bundle: nil).instantiateViewController(withIdentifier: "RestoreViewController") as! RestoreViewController
                 tagetVC?.chainType = self.toAddChain!
                 
-            } else if(result == 3) {
+            } else if (result == 3) {
                 tagetVC = UIStoryboard(name: "Init", bundle: nil).instantiateViewController(withIdentifier: "AddAddressViewController") as! AddAddressViewController
+                
+            } else if (result == 4) {
                 
             }
             if (tagetVC != nil) {

@@ -10,6 +10,7 @@ import Foundation
 import CryptoSwift
 import HDWalletKit
 
+
 class WKey {
     
     static func getMasterKeyFromWords(_ m: [String]) -> PrivateKey {
@@ -211,7 +212,7 @@ class WKey {
             return generateAddressFromPriv("ex", pKey.raw)
             
         } else {
-            return WKey.getHDKeyDpAddressWithPath(masterKey, path: path, chain: chain, newbip)
+            return getHDKeyDpAddressWithPath(masterKey, path: path, chain: chain, newbip)
         }
     }
     
@@ -460,7 +461,7 @@ class WKey {
         
         var result = ""
         let convert = try? WKey.convertBits(from: 8, to: 5, pad: true, idata: address)
-        result = Bech32().encode("ex", values: convert!)
+        result = Bech32().encode(prefix, values: convert!)
         return result
     }
     
@@ -518,6 +519,11 @@ class WKey {
     static func getPublicRaw(_ mnemonic: [String], _ account: Account) -> Data {
         return getHDKeyFromWords(mnemonic, account).publicKey.data
     }
+    
+    static func getPrivateKey(_ hex: String, _ chaincode: String) -> PrivateKey {
+        return PrivateKey.init(pk: hex, chainCode: chaincode)!
+    }
+    
     
     static func getStdTx(_ words: [String], _ msgList: Array<Msg>, _ stdMsg: StdSignMsg, _ account: Account, _ fee: Fee, _ memo: String) -> StdTx {
         let pKey = getHDKeyFromWords(words, account)

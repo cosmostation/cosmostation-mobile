@@ -3082,6 +3082,85 @@ public class WUtils {
         return ""
     }
     
+    static func getChainBasePathS(_ chain: ChainType, _ endPath: Int) -> String {
+        if (chain == ChainType.BINANCE_MAIN || chain == ChainType.BINANCE_TEST) {
+            return BNB_BASE_PATH + String(endPath)
+        } else if (chain == ChainType.KAVA_MAIN || chain == ChainType.KAVA_TEST) {
+            return KAVA_BASE_PATH + String(endPath)
+        } else if (chain == ChainType.IOV_MAIN || chain == ChainType.IOV_TEST) {
+            return IOV_BASE_PATH + String(endPath)
+        } else if (chain == ChainType.BAND_MAIN) {
+            return BAND_BASE_PATH + String(endPath)
+        } else if (chain == ChainType.SECRET_MAIN) {
+            return SECRET_BASE_PATH + String(endPath)
+        } else if (chain == ChainType.OKEX_MAIN || chain == ChainType.OKEX_TEST) {
+            return OK_BASE_PATH + String(endPath)
+        } else if (chain == ChainType.PERSIS_MAIN) {
+            return PERSIS_BASE_PATH + String(endPath)
+        } else if (chain == ChainType.CRYPTO_MAIN) {
+            return CRYPTO_BASE_PATH + String(endPath)
+        } else if (chain == ChainType.MEDI_MAIN) {
+            return MEDI_BASE_PATH + String(endPath)
+        } else if (chain == ChainType.ALTHEA_TEST) {
+            return ALTHEA_BASE_PATH + String(endPath)
+        }
+        return BASE_PATH + String(endPath)
+    }
+    
+    static func getChainCustomPathS(_ chain: ChainType, _ newBip: Bool, _ customPath: Int, _ endPath: Int) -> String {
+        if (chain == ChainType.BINANCE_MAIN || chain == ChainType.BINANCE_TEST) {
+            return BNB_BASE_PATH + String(endPath)
+        } else if (chain == ChainType.IOV_MAIN || chain == ChainType.IOV_TEST) {
+            return IOV_BASE_PATH + String(endPath)
+        } else if (chain == ChainType.BAND_MAIN) {
+            return BAND_BASE_PATH + String(endPath)
+        } else if (chain == ChainType.OKEX_MAIN || chain == ChainType.OKEX_TEST) {
+            return OK_BASE_PATH + String(endPath)
+        } else if (chain == ChainType.PERSIS_MAIN) {
+            return PERSIS_BASE_PATH + String(endPath)
+        } else if (chain == ChainType.CRYPTO_MAIN) {
+            return CRYPTO_BASE_PATH + String(endPath)
+        } else if (chain == ChainType.MEDI_MAIN) {
+            return MEDI_BASE_PATH + String(endPath)
+        } else if (chain == ChainType.ALTHEA_TEST) {
+            return ALTHEA_BASE_PATH + String(endPath)
+        }
+        
+        //TODO custom Path
+        else if (chain == ChainType.KAVA_MAIN || chain == ChainType.KAVA_TEST) {
+            if (newBip) {
+                return KAVA_BASE_PATH + String(endPath)
+            } else {
+                return BASE_PATH + String(endPath)
+            }
+            
+        }
+        else if (chain == ChainType.SECRET_MAIN) {
+            if (newBip) {
+                return BASE_PATH + String(endPath)
+            } else {
+                return SECRET_BASE_PATH + String(endPath)
+            }
+            
+        } else if (chain == ChainType.FETCH_MAIN) {
+            if (customPath == 1) {
+                return ETH_NON_LEDGER_PATH + String(endPath)
+                
+            } else if (customPath == 2) {
+                return ETH_LEDGER_LIVE_PATH_1 + String(endPath) + ETH_LEDGER_LIVE_PATH_2
+                
+            } else if (customPath == 3) {
+                return ETH_LEDGER_LEGACY_PATH + String(endPath)
+                
+            } else {
+                return BASE_PATH + String(endPath)
+            }
+        }
+        return BASE_PATH + String(endPath)
+    }
+    
+    
+    
     static func getChainTypeInt(_ chainS:String) -> Int {
         if (chainS == CHAIN_COSMOS_S ) {
             return 1
@@ -3470,7 +3549,7 @@ public class WUtils {
             return gasRate.multiplying(by: gasAmount, withBehavior: handler0)
             
         } else if (chain == ChainType.OSMOSIS_MAIN) {
-            let gasRate = NSDecimalNumber.init(string: GAS_FEE_RATE_AVERAGE_OSMOSIS)
+            let gasRate = NSDecimalNumber.init(string: GAS_FEE_RATE_TINY_OSMOSIS)
             let gasAmount = getEstimateGasAmount(chain, type, valCnt)
             return gasRate.multiplying(by: gasAmount, withBehavior: handler0)
             

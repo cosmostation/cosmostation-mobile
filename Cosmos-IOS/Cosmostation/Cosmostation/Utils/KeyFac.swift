@@ -13,7 +13,7 @@ class KeyFac {
     static func getDpAddressPath(_ mnemonic: [String], _ path:Int, _ chain:ChainType, _ newbip:Bool) -> String {
         var resultAddress = ""
         if (BaseData.instance.getUsingEnginerMode()) {
-            resultAddress = OldKey.getDpAddressPath(mnemonic, path, chain, newbip)
+            resultAddress = CKey.getDpAddressPath(mnemonic, path, chain, newbip)
         } else {
             resultAddress = WKey.getDpAddressPath(mnemonic, path, chain, newbip)
         }
@@ -23,7 +23,7 @@ class KeyFac {
     static func getDpAddressFetchCustomPath(_ mnemonic: [String], _ path: UInt32, _ chain: ChainType, _ pathType: Int) -> String {
         var resultAddress = ""
         if (BaseData.instance.getUsingEnginerMode()) {
-            resultAddress = OldKey.getDpAddressFetchCustomPath(mnemonic, path, chain, pathType)
+            resultAddress = CKey.getDpAddressFetchCustomPath(mnemonic, path, chain, pathType)
         } else {
             resultAddress = WKey.getDpAddressFetchCustomPath(mnemonic, path, chain, pathType)
         }
@@ -32,7 +32,7 @@ class KeyFac {
     
     static func getPrivateRaw(_ mnemonic: [String], _ account: Account) -> Data {
         if (BaseData.instance.getUsingEnginerMode()) {
-            return OldKey.getPrivateRaw(mnemonic, account)
+            return CKey.getPrivateRaw(mnemonic, account)
         } else {
             return WKey.getPrivateRaw(mnemonic, account)
         }
@@ -40,7 +40,7 @@ class KeyFac {
     
     static func getPublicRaw(_ mnemonic: [String], _ account: Account) -> Data {
         if (BaseData.instance.getUsingEnginerMode()) {
-            return OldKey.getPublicRaw(mnemonic, account)
+            return CKey.getPublicRaw(mnemonic, account)
         } else {
             return WKey.getPublicRaw(mnemonic, account)
         }
@@ -48,7 +48,7 @@ class KeyFac {
     
     static func getStdTx(_ words: [String], _ msgList: Array<Msg>, _ stdMsg: StdSignMsg, _ account: Account, _ fee: Fee, _ memo: String) -> StdTx {
         if (BaseData.instance.getUsingEnginerMode()) {
-            return OldKey.getStdTx(words, msgList, stdMsg, account, fee, memo)
+            return CKey.getStdTx(words, msgList, stdMsg, account, fee, memo)
         } else {
             return WKey.getStdTx(words, msgList, stdMsg, account, fee, memo)
         }

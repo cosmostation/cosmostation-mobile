@@ -78,7 +78,7 @@ class RestorePathViewController: BaseViewController, UITableViewDelegate, UITabl
             if (self.customPath == 1) { cell?.pathLabel.text = ETH_NON_LEDGER_PATH.appending(String(indexPath.row)) }
             else if (self.customPath == 2) { cell?.pathLabel.text = ETH_LEDGER_LIVE_PATH_1.appending(String(indexPath.row)) + ETH_LEDGER_LIVE_PATH_2 }
             else if (self.customPath == 3) { cell?.pathLabel.text = ETH_LEDGER_LEGACY_PATH.appending(String(indexPath.row)) }
-            else { cell?.pathLabel.text = FETCH_BASE_PATH.appending(String(indexPath.row)) }
+            else { cell?.pathLabel.text = BASE_PATH.appending(String(indexPath.row)) }
             
         } else if (userChain == ChainType.MEDI_MAIN || userChain == ChainType.MEDI_TEST) {
             cell?.pathLabel.text = MEDI_BASE_PATH.appending(String(indexPath.row))
@@ -227,21 +227,24 @@ class RestorePathViewController: BaseViewController, UITableViewDelegate, UITabl
     func onGenAccount(_ mnemonic: [String], _ chain: ChainType, _ path: Int, _ newBip: Bool, _ customPath: Int) {
         self.showWaittingAlert()
         DispatchQueue.global().async {
+            
+            let newAccount = Account.init(isNew: true)
+            newAccount.account_path = String(path)
+            if (self.userChain == ChainType.FETCH_MAIN) {
+                newAccount.account_address = KeyFac.getDpAddressFetchCustomPath(mnemonic, UInt32(path), chain, customPath)
+            } else {
+                newAccount.account_address = KeyFac.getDpAddressPath(mnemonic, path, chain, newBip)
+            }
+            newAccount.account_base_chain = WUtils.getChainDBName(chain)
+            
             var resource: String = ""
             for word in self.userInputWords! {
                 resource = resource + " " + word
             }
+            let mnemonoicResult = KeychainWrapper.standard.set(resource, forKey: newAccount.account_uuid.sha1(), withAccessibility: .afterFirstUnlockThisDeviceOnly)
             
-            let newAccount = Account.init(isNew: true)
-            let keyResult = KeychainWrapper.standard.set(resource, forKey: newAccount.account_uuid.sha1(), withAccessibility: .afterFirstUnlockThisDeviceOnly)
             var insertResult :Int64 = -1
-            if(keyResult) {
-                if (self.userChain == ChainType.FETCH_MAIN) {
-                    newAccount.account_address = KeyFac.getDpAddressFetchCustomPath(mnemonic, UInt32(path), chain, customPath)
-                } else {
-                    newAccount.account_address = KeyFac.getDpAddressPath(mnemonic, path, chain, newBip)
-                }
-                newAccount.account_base_chain = WUtils.getChainDBName(chain)
+            if (mnemonoicResult) {
                 newAccount.account_has_private = true
                 newAccount.account_from_mnemonic = true
                 newAccount.account_path = String(path)
@@ -254,12 +257,13 @@ class RestorePathViewController: BaseViewController, UITableViewDelegate, UITabl
                 
                 if(insertResult < 0) {
                     KeychainWrapper.standard.removeObject(forKey: newAccount.account_uuid.sha1())
+                    KeychainWrapper.standard.removeObject(forKey: newAccount.getPrivateKeySha1())
                 }
             }
             
             DispatchQueue.main.async(execute: {
                 self.hideWaittingAlert()
-                if(keyResult && insertResult > 0) {
+                if (mnemonoicResult && insertResult > 0) {
                     var hiddenChains = BaseData.instance.userHideChains()
                     if (hiddenChains.contains(chain)) {
                         if let position = hiddenChains.firstIndex { $0 == chain } {

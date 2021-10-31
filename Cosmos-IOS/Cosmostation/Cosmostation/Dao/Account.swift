@@ -99,6 +99,10 @@ public class Account : NSObject, Codable, NSItemProviderReading, NSItemProviderW
         
     }
     
+    func getPrivateKeySha1() -> String {
+        return (account_uuid + "privateKey").sha1()
+    }
+    
     var account_balances = Array<Balance>()
     
     func getDpName() -> String {
@@ -115,66 +119,6 @@ public class Account : NSObject, Codable, NSItemProviderReading, NSItemProviderW
         self.account_balances = balances
     }
     
-    func getAtomBalance() -> NSDecimalNumber {
-        var result = NSDecimalNumber.zero
-        for balance in self.account_balances {
-            if (balance.balance_denom == COSMOS_MAIN_DENOM) {
-                result = WUtils.plainStringToDecimal(balance.balance_amount)
-            }
-        }
-        return result
-    }
-    
-    func getIrisBalance() -> NSDecimalNumber {
-        var result = NSDecimalNumber.zero
-        for balance in self.account_balances {
-            if (balance.balance_denom == IRIS_MAIN_DENOM) {
-                result = WUtils.plainStringToDecimal(balance.balance_amount)
-            }
-        }
-        return result
-    }
-    
-    func getBnbBalance() -> NSDecimalNumber {
-        var result = NSDecimalNumber.zero
-        for balance in self.account_balances {
-            if (balance.balance_denom == BNB_MAIN_DENOM) {
-                result = WUtils.plainStringToDecimal(balance.balance_amount)
-            }
-        }
-        return result
-    }
-    
-    func getKavaBalance() -> NSDecimalNumber {
-        var result = NSDecimalNumber.zero
-        for balance in self.account_balances {
-            if (balance.balance_denom == KAVA_MAIN_DENOM) {
-                result = WUtils.plainStringToDecimal(balance.balance_amount)
-            }
-        }
-        return result
-    }
-    
-    func getIovBalance() -> NSDecimalNumber {
-        var result = NSDecimalNumber.zero
-        for balance in self.account_balances {
-            if (balance.balance_denom == IOV_MAIN_DENOM || balance.balance_denom == IOV_TEST_DENOM) {
-                result = WUtils.plainStringToDecimal(balance.balance_amount)
-            }
-        }
-        return result
-    }
-    
-    func getBandBalance() -> NSDecimalNumber {
-        var result = NSDecimalNumber.zero
-        for balance in self.account_balances {
-            if (balance.balance_denom == BAND_MAIN_DENOM) {
-                result = WUtils.plainStringToDecimal(balance.balance_amount)
-            }
-        }
-        return result
-    }
-    
     func getTokenBalance(_ symbol:String) -> NSDecimalNumber {
         var result = NSDecimalNumber.zero
         for balance in self.account_balances {
@@ -184,7 +128,7 @@ public class Account : NSObject, Codable, NSItemProviderReading, NSItemProviderW
         }
         return result
     }
-    
+
     func getTokenCoin(_ symbol:String) -> Coin {
         var result = Coin.init()
         for balance in self.account_balances {

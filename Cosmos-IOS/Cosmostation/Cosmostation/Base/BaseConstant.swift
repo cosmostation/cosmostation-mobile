@@ -212,7 +212,6 @@ let DB_ACCOUNT_PUSHALARM            = Expression<Bool>("pushAlarm")
 let DB_ACCOUNT_NEW_BIP              = Expression<Bool>("newBip")            //using alternative ket gen path or type(OKex)
 let DB_ACCOUNT_CUSTOM_PATH          = Expression<Int64>("customPath")
 
-
 ////DB for Password
 //let DB_PASSWORD = Table("passwd")
 //let DB_PASSWORD_ID                  = Expression<Int64>("id")
@@ -418,7 +417,7 @@ let PERSIS_BASE_PATH                        = "m/44'/750'/0'/0/"
 let CRYPTO_BASE_PATH                        = "m/44'/394'/0'/0/"
 let MEDI_BASE_PATH                          = "m/44'/371'/0'/0/"
 let ALTHEA_BASE_PATH                        = "m/44'/60'/0'/0/"
-let FETCH_BASE_PATH                         = "m/44'/118'/0'/0/"
+//let FETCH_BASE_PATH                         = "m/44'/118'/0'/0/"
 let ETH_NON_LEDGER_PATH                     = "m/44'/60'/0'/0/"
 let ETH_LEDGER_LIVE_PATH_1                  = "m/44'/60'/"
 let ETH_LEDGER_LIVE_PATH_2                  = "'/0/0"

@@ -22,10 +22,10 @@
                     <rect key="frame" x="10" y="368" width="394" height="50"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fxo-lD-YLZ">
-                            <rect key="frame" x="0.0" y="0.0" width="192" height="50"/>
+                            <rect key="frame" x="0.0" y="0.0" width="394" height="50"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UWq-QA-oI5">
-                                    <rect key="frame" x="56" y="10" width="80" height="30"/>
+                                    <rect key="frame" x="157" y="10" width="80" height="30"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Restore with" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b0k-He-hhw">
                                             <rect key="frame" x="5" y="-1" width="70.5" height="14.5"/>
@@ -51,7 +51,7 @@
                                     </constraints>
                                 </view>
                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cS0-gy-cjQ">
-                                    <rect key="frame" x="0.0" y="0.0" width="192" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="394" height="50"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="50" id="sIt-2v-acG"/>
                                     </constraints>
@@ -85,14 +85,14 @@
                                 <constraint firstAttribute="trailing" secondItem="cS0-gy-cjQ" secondAttribute="trailing" id="zgA-F2-exi"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M3D-X6-Lt6">
-                            <rect key="frame" x="202" y="0.0" width="192" height="50"/>
+                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M3D-X6-Lt6">
+                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="50"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h2y-UK-jby">
-                                    <rect key="frame" x="56" y="10" width="80" height="30"/>
+                                    <rect key="frame" x="-40" y="10" width="80" height="30"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Restore with" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hKk-C7-Bk1">
-                                            <rect key="frame" x="5" y="-1" width="70.5" height="14.5"/>
+                                            <rect key="frame" x="4.5" y="-1" width="71" height="14.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <color key="textColor" red="0.019607843140000001" green="0.82352941180000006" blue="0.86666666670000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -115,7 +115,7 @@
                                     </constraints>
                                 </view>
                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bua-LS-aeD">
-                                    <rect key="frame" x="0.0" y="0.0" width="192" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="50"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="50" id="ZJM-1f-jUe"/>
                                     </constraints>

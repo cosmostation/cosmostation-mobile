@@ -206,20 +206,22 @@ class CreateViewController: BaseViewController, PasswordViewDelegate{
     func onGenAccount(_ chain:ChainType) {
         self.showWaittingAlert()
         DispatchQueue.global().async {
+            
+            let newAccount = Account.init(isNew: true)
+            newAccount.account_path = "0"
+            newAccount.account_address = self.dpAddress!
+            newAccount.account_base_chain = WUtils.getChainDBName(chain)
+            
             var resource: String = ""
             for word in self.mnemonicWords! {
                 resource = resource + " " + word
             }
+            let mnemonoicResult = KeychainWrapper.standard.set(resource, forKey: newAccount.account_uuid.sha1(), withAccessibility: .afterFirstUnlockThisDeviceOnly)
             
-            let newAccount = Account.init(isNew: true)
-            let keyResult = KeychainWrapper.standard.set(resource, forKey: newAccount.account_uuid.sha1(), withAccessibility: .afterFirstUnlockThisDeviceOnly)
             var insertResult :Int64 = -1
-            if(keyResult) {
-                newAccount.account_address = self.dpAddress!
-                newAccount.account_base_chain = WUtils.getChainDBName(chain)
+            if (mnemonoicResult) {
                 newAccount.account_has_private = true
                 newAccount.account_from_mnemonic = true
-                newAccount.account_path = "0"
                 newAccount.account_m_size = 24
                 newAccount.account_import_time = Date().millisecondsSince1970
                 if (chain == ChainType.KAVA_MAIN || chain == ChainType.KAVA_TEST || chain == ChainType.OKEX_MAIN || chain == ChainType.OKEX_TEST) {
@@ -230,12 +232,13 @@ class CreateViewController: BaseViewController, PasswordViewDelegate{
                 
                 if (insertResult < 0) {
                     KeychainWrapper.standard.removeObject(forKey: newAccount.account_uuid.sha1())
+                    KeychainWrapper.standard.removeObject(forKey: newAccount.getPrivateKeySha1())
                 }
             }
             
             DispatchQueue.main.async(execute: {
                 self.hideWaittingAlert()
-                if(keyResult && insertResult > 0) {
+                if (mnemonoicResult && insertResult > 0) {
                     var hiddenChains = BaseData.instance.userHideChains()
                     if (hiddenChains.contains(chain)) {
                         if let position = hiddenChains.firstIndex { $0 == chain } {
