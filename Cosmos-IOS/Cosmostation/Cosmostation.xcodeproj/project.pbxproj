@@ -171,7 +171,6 @@
 		282FF36223F532360028CC66 /* TxVoteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 282FF36023F532360028CC66 /* TxVoteCell.xib */; };
 		282FF36523F533AF0028CC66 /* TxUnknownCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282FF36323F533AF0028CC66 /* TxUnknownCell.swift */; };
 		282FF36623F533AF0028CC66 /* TxUnknownCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 282FF36423F533AF0028CC66 /* TxUnknownCell.xib */; };
-		28318E1C26B13B5100E18BEC /* BitcoinKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 284FD92E2695BC8F003F1A1E /* BitcoinKit.framework */; };
 		2834399B2531D13C00CCFADE /* StarName.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2834399A2531D13C00CCFADE /* StarName.storyboard */; };
 		2834399E2531D1A200CCFADE /* StarNameListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2834399D2531D1A200CCFADE /* StarNameListViewController.swift */; };
 		283439A12531D1CF00CCFADE /* MyDomainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283439A02531D1CF00CCFADE /* MyDomainViewController.swift */; };
@@ -1528,7 +1527,6 @@
 		284FBC8026DBE98500403FE2 /* TxSwapWithdrawCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TxSwapWithdrawCell.xib; sourceTree = "<group>"; };
 		284FBC8326DBE9A100403FE2 /* TxIncentiveSwapCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TxIncentiveSwapCell.swift; sourceTree = "<group>"; };
 		284FBC8426DBE9A100403FE2 /* TxIncentiveSwapCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TxIncentiveSwapCell.xib; sourceTree = "<group>"; };
-		284FD92E2695BC8F003F1A1E /* BitcoinKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BitcoinKit.framework; path = Carthage/Build/iOS/BitcoinKit.framework; sourceTree = "<group>"; };
 		284FF3C125A6C13E00505E7A /* OkAccountInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OkAccountInfo.swift; sourceTree = "<group>"; };
 		2852EAEE2681A4CC003A5E74 /* WalletOsmoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletOsmoCell.swift; sourceTree = "<group>"; };
 		2852EAEF2681A4CC003A5E74 /* WalletOsmoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletOsmoCell.xib; sourceTree = "<group>"; };
@@ -2464,7 +2462,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				28318E1C26B13B5100E18BEC /* BitcoinKit.framework in Frameworks */,
 				C10F8E8103FA540DE8D91196 /* Pods_Cosmostation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3654,7 +3651,6 @@
 		51090F06A9DC4E886F628890 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				284FD92E2695BC8F003F1A1E /* BitcoinKit.framework */,
 				BB20D291C0AF536BBDAE928C /* Pods_Cosmostation.framework */,
 			);
 			name = Frameworks;
@@ -4128,7 +4124,6 @@
 				E1945E21222E7C0600A1436F /* Frameworks */,
 				E1945E22222E7C0600A1436F /* Resources */,
 				5810D5D6DD2213420F19BF35 /* [CP] Embed Pods Frameworks */,
-				284FD9322695BC98003F1A1E /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -4485,24 +4480,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		284FD9322695BC98003F1A1E /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/BitcoinKit.framework",
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/carthage copy-frameworks\n";
-		};
 		5810D5D6DD2213420F19BF35 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
