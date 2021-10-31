@@ -3549,7 +3549,7 @@ public class WUtils {
             return gasRate.multiplying(by: gasAmount, withBehavior: handler0)
             
         } else if (chain == ChainType.OSMOSIS_MAIN) {
-            let gasRate = NSDecimalNumber.init(string: GAS_FEE_RATE_AVERAGE_OSMOSIS)
+            let gasRate = NSDecimalNumber.init(string: GAS_FEE_RATE_TINY_OSMOSIS)
             let gasAmount = getEstimateGasAmount(chain, type, valCnt)
             return gasRate.multiplying(by: gasAmount, withBehavior: handler0)
             

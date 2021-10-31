@@ -809,11 +809,11 @@ final class BaseData : NSObject{
             do { try self.database.run(DB_ACCOUNT.addColumn(DB_ACCOUNT_CUSTOM_PATH, defaultValue: 0)) }
             catch { print(error) }
             
-            do { try self.database.run(DB_ACCOUNT.addColumn(DB_ACCOUNT_PUBLIC_KEY, defaultValue: "")) }
-            catch { print(error) }
-            
-            do { try self.database.run(DB_ACCOUNT.addColumn(DB_ACCOUNT_FULL_HD_PATH, defaultValue: "")) }
-            catch { print(error) }
+//            do { try self.database.run(DB_ACCOUNT.addColumn(DB_ACCOUNT_PUBLIC_KEY, defaultValue: "")) }
+//            catch { print(error) }
+//
+//            do { try self.database.run(DB_ACCOUNT.addColumn(DB_ACCOUNT_FULL_HD_PATH, defaultValue: "")) }
+//            catch { print(error) }
             
             let createBalanceTable = DB_BALANCE.create(ifNotExists: true) { (table) in
                 table.column(DB_BALANCE_ID, primaryKey: true)
@@ -872,8 +872,7 @@ final class BaseData : NSObject{
                                       accountBD[DB_ACCOUNT_BASECHAIN], accountBD[DB_ACCOUNT_HAS_PRIVATE],  accountBD[DB_ACCOUNT_RESOURCE], accountBD[DB_ACCOUNT_FROM_MNEMONIC],
                                       accountBD[DB_ACCOUNT_PATH], accountBD[DB_ACCOUNT_IS_VALIDATOR], accountBD[DB_ACCOUNT_SEQUENCE_NUMBER], accountBD[DB_ACCOUNT_ACCOUNT_NUMBER],
                                       accountBD[DB_ACCOUNT_FETCH_TIME], accountBD[DB_ACCOUNT_M_SIZE], accountBD[DB_ACCOUNT_IMPORT_TIME], accountBD[DB_ACCOUNT_LAST_TOTAL],
-                                      accountBD[DB_ACCOUNT_SORT_ORDER], accountBD[DB_ACCOUNT_PUSHALARM], accountBD[DB_ACCOUNT_NEW_BIP], accountBD[DB_ACCOUNT_CUSTOM_PATH],
-                                      accountBD[DB_ACCOUNT_PUBLIC_KEY], accountBD[DB_ACCOUNT_FULL_HD_PATH]);
+                                      accountBD[DB_ACCOUNT_SORT_ORDER], accountBD[DB_ACCOUNT_PUSHALARM], accountBD[DB_ACCOUNT_NEW_BIP], accountBD[DB_ACCOUNT_CUSTOM_PATH]);
                 account.setBalances(selectBalanceById(accountId: account.account_id))
                 result.append(account);
             }
@@ -926,8 +925,7 @@ final class BaseData : NSObject{
                                       accountBD[DB_ACCOUNT_BASECHAIN], accountBD[DB_ACCOUNT_HAS_PRIVATE],  accountBD[DB_ACCOUNT_RESOURCE], accountBD[DB_ACCOUNT_FROM_MNEMONIC],
                                       accountBD[DB_ACCOUNT_PATH], accountBD[DB_ACCOUNT_IS_VALIDATOR], accountBD[DB_ACCOUNT_SEQUENCE_NUMBER], accountBD[DB_ACCOUNT_ACCOUNT_NUMBER],
                                       accountBD[DB_ACCOUNT_FETCH_TIME], accountBD[DB_ACCOUNT_M_SIZE], accountBD[DB_ACCOUNT_IMPORT_TIME], accountBD[DB_ACCOUNT_LAST_TOTAL],
-                                      accountBD[DB_ACCOUNT_SORT_ORDER], accountBD[DB_ACCOUNT_PUSHALARM], accountBD[DB_ACCOUNT_NEW_BIP], accountBD[DB_ACCOUNT_CUSTOM_PATH],
-                                      accountBD[DB_ACCOUNT_PUBLIC_KEY], accountBD[DB_ACCOUNT_FULL_HD_PATH])
+                                      accountBD[DB_ACCOUNT_SORT_ORDER], accountBD[DB_ACCOUNT_PUSHALARM], accountBD[DB_ACCOUNT_NEW_BIP], accountBD[DB_ACCOUNT_CUSTOM_PATH])
                 account.setBalances(selectBalanceById(accountId: account.account_id))
                 if (!ChainType.IS_SUPPORT_CHAIN(account.account_base_chain)) {
                     if (selectAllAccounts().count > 0) {
@@ -953,8 +951,7 @@ final class BaseData : NSObject{
                                accountBD[DB_ACCOUNT_BASECHAIN], accountBD[DB_ACCOUNT_HAS_PRIVATE],  accountBD[DB_ACCOUNT_RESOURCE], accountBD[DB_ACCOUNT_FROM_MNEMONIC],
                                accountBD[DB_ACCOUNT_PATH], accountBD[DB_ACCOUNT_IS_VALIDATOR], accountBD[DB_ACCOUNT_SEQUENCE_NUMBER], accountBD[DB_ACCOUNT_ACCOUNT_NUMBER],
                                accountBD[DB_ACCOUNT_FETCH_TIME], accountBD[DB_ACCOUNT_M_SIZE], accountBD[DB_ACCOUNT_IMPORT_TIME], accountBD[DB_ACCOUNT_LAST_TOTAL],
-                               accountBD[DB_ACCOUNT_SORT_ORDER], accountBD[DB_ACCOUNT_PUSHALARM], accountBD[DB_ACCOUNT_NEW_BIP], accountBD[DB_ACCOUNT_CUSTOM_PATH],
-                               accountBD[DB_ACCOUNT_PUBLIC_KEY], accountBD[DB_ACCOUNT_FULL_HD_PATH])
+                               accountBD[DB_ACCOUNT_SORT_ORDER], accountBD[DB_ACCOUNT_PUSHALARM], accountBD[DB_ACCOUNT_NEW_BIP], accountBD[DB_ACCOUNT_CUSTOM_PATH])
             }
             return nil
         } catch {
@@ -971,8 +968,7 @@ final class BaseData : NSObject{
                                accountBD[DB_ACCOUNT_BASECHAIN], accountBD[DB_ACCOUNT_HAS_PRIVATE],  accountBD[DB_ACCOUNT_RESOURCE], accountBD[DB_ACCOUNT_FROM_MNEMONIC],
                                accountBD[DB_ACCOUNT_PATH], accountBD[DB_ACCOUNT_IS_VALIDATOR], accountBD[DB_ACCOUNT_SEQUENCE_NUMBER], accountBD[DB_ACCOUNT_ACCOUNT_NUMBER],
                                accountBD[DB_ACCOUNT_FETCH_TIME], accountBD[DB_ACCOUNT_M_SIZE], accountBD[DB_ACCOUNT_IMPORT_TIME], accountBD[DB_ACCOUNT_LAST_TOTAL],
-                               accountBD[DB_ACCOUNT_SORT_ORDER], accountBD[DB_ACCOUNT_PUSHALARM], accountBD[DB_ACCOUNT_NEW_BIP], accountBD[DB_ACCOUNT_CUSTOM_PATH],
-                               accountBD[DB_ACCOUNT_PUBLIC_KEY], accountBD[DB_ACCOUNT_FULL_HD_PATH])
+                               accountBD[DB_ACCOUNT_SORT_ORDER], accountBD[DB_ACCOUNT_PUSHALARM], accountBD[DB_ACCOUNT_NEW_BIP], accountBD[DB_ACCOUNT_CUSTOM_PATH])
             }
             return nil
         } catch {
@@ -1095,17 +1091,6 @@ final class BaseData : NSObject{
         }
     }
     
-    public func updateKeyWay(_ account: Account?, _ publicKey: String, _ fullPath: String) {
-        let target = DB_ACCOUNT.filter(DB_ACCOUNT_ID == account!.account_id)
-        do {
-            try database.run(target.update(DB_ACCOUNT_PUBLIC_KEY <- publicKey))
-            try database.run(target.update(DB_ACCOUNT_FULL_HD_PATH <- fullPath))
-        } catch {
-            print(error)
-        }
-        
-    }
-    
     public func updateSortOrder(_ accounts: Array<Account>) {
         for account in accounts {
             let target = DB_ACCOUNT.filter(DB_ACCOUNT_ID == account.account_id)
@@ -1133,32 +1118,6 @@ final class BaseData : NSObject{
         } catch {
             print(error)
             return -1
-        }
-    }
-    
-    public func onCheckKeyWayUpdated() -> Bool {
-        for account in selectAllAccounts() {
-            if (account.account_has_private == true && account.account_full_hd_path.isEmpty == true) {
-                return true
-            }
-        }
-        return false
-    }
-    
-    public func upgradeKeyWay() {
-        for account in selectAllAccounts() {
-            if (account.account_has_private == true && account.account_full_hd_path.isEmpty == true) {
-                let words = KeychainWrapper.standard.string(forKey: account.account_uuid.sha1())?.trimmingCharacters(in: .whitespacesAndNewlines).components(separatedBy: " ")
-                let privateKey = WKey.getHDKeyFromWords(words!, account)
-                let privateKeyResult = KeychainWrapper.standard.set(privateKey.raw.hexEncodedString(), forKey: account.getPrivateKeySha1(), withAccessibility: .afterFirstUnlockThisDeviceOnly)
-                let fullPath = WUtils.getChainCustomPathS(WUtils.getChainType(account.account_base_chain)!,
-                                                          account.account_new_bip44,
-                                                          Int(account.account_custom_path),
-                                                          Int(account.account_path)!)
-                if (privateKeyResult) {
-                    self.updateKeyWay(account, privateKey.publicKey.data.hexEncodedString(), fullPath)
-                }
-            }
         }
     }
     

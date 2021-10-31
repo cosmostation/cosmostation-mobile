@@ -217,11 +217,9 @@ class CreateViewController: BaseViewController, PasswordViewDelegate{
                 resource = resource + " " + word
             }
             let mnemonoicResult = KeychainWrapper.standard.set(resource, forKey: newAccount.account_uuid.sha1(), withAccessibility: .afterFirstUnlockThisDeviceOnly)
-            let privateKey = WKey.getHDKeyFromWords(self.mnemonicWords!, newAccount)
-            let privateKeyResult = KeychainWrapper.standard.set(privateKey.raw.hexEncodedString(), forKey: newAccount.getPrivateKeySha1(), withAccessibility: .afterFirstUnlockThisDeviceOnly)
             
             var insertResult :Int64 = -1
-            if (mnemonoicResult && privateKeyResult) {
+            if (mnemonoicResult) {
                 newAccount.account_has_private = true
                 newAccount.account_from_mnemonic = true
                 newAccount.account_m_size = 24
@@ -230,8 +228,6 @@ class CreateViewController: BaseViewController, PasswordViewDelegate{
                     newAccount.account_new_bip44 = true
                 }
                 newAccount.account_sort_order = 9999
-                newAccount.account_public_key = privateKey.publicKey.data.hexEncodedString()
-                newAccount.account_full_hd_path = WUtils.getChainBasePathS(chain, 0)
                 insertResult = BaseData.instance.insertAccount(newAccount)
                 
                 if (insertResult < 0) {
@@ -242,7 +238,7 @@ class CreateViewController: BaseViewController, PasswordViewDelegate{
             
             DispatchQueue.main.async(execute: {
                 self.hideWaittingAlert()
-                if (mnemonoicResult && privateKeyResult && insertResult > 0) {
+                if (mnemonoicResult && insertResult > 0) {
                     var hiddenChains = BaseData.instance.userHideChains()
                     if (hiddenChains.contains(chain)) {
                         if let position = hiddenChains.firstIndex { $0 == chain } {

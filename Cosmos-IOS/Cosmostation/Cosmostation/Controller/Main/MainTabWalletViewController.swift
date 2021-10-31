@@ -85,7 +85,6 @@ class MainTabWalletViewController: BaseViewController, UITableViewDelegate, UITa
         self.totalCard.addGestureRecognizer(tapTotalCard)
         
         self.updateFloaty()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {

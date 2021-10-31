@@ -242,11 +242,9 @@ class RestorePathViewController: BaseViewController, UITableViewDelegate, UITabl
                 resource = resource + " " + word
             }
             let mnemonoicResult = KeychainWrapper.standard.set(resource, forKey: newAccount.account_uuid.sha1(), withAccessibility: .afterFirstUnlockThisDeviceOnly)
-            let privateKey = WKey.getHDKeyFromWords(self.userInputWords!, newAccount)
-            let privateKeyResult = KeychainWrapper.standard.set(privateKey.raw.hexEncodedString(), forKey: newAccount.getPrivateKeySha1(), withAccessibility: .afterFirstUnlockThisDeviceOnly)
             
             var insertResult :Int64 = -1
-            if (mnemonoicResult && privateKeyResult) {
+            if (mnemonoicResult) {
                 newAccount.account_has_private = true
                 newAccount.account_from_mnemonic = true
                 newAccount.account_path = String(path)
@@ -255,8 +253,6 @@ class RestorePathViewController: BaseViewController, UITableViewDelegate, UITabl
                 newAccount.account_new_bip44 = newBip
                 newAccount.account_custom_path = Int64(customPath)
                 newAccount.account_sort_order = 9999
-                newAccount.account_public_key = privateKey.publicKey.data.hexEncodedString()
-                newAccount.account_full_hd_path = WUtils.getChainCustomPathS(chain, newBip, customPath, path)
                 insertResult = BaseData.instance.insertAccount(newAccount)
                 
                 if(insertResult < 0) {
@@ -267,7 +263,7 @@ class RestorePathViewController: BaseViewController, UITableViewDelegate, UITabl
             
             DispatchQueue.main.async(execute: {
                 self.hideWaittingAlert()
-                if (mnemonoicResult && privateKeyResult && insertResult > 0) {
+                if (mnemonoicResult && insertResult > 0) {
                     var hiddenChains = BaseData.instance.userHideChains()
                     if (hiddenChains.contains(chain)) {
                         if let position = hiddenChains.firstIndex { $0 == chain } {
