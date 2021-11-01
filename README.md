@@ -12,6 +12,17 @@
 
 *:rocket: Developed / Developing by [Cosmostation](https://www.cosmostation.io/)*
 
+
+# Repo Migrated 
+This repo has been deprecated.<br/>Project continues to be operated by each OS.
+
+* [Android](https://github.com/cosmostation/cosmostation-android)
+* [iOS](https://github.com/cosmostation/cosmostation-ios)
+<br/>
+<br/>
+<br/>
+
+
 ## About
 
 Cosmostation wallet apps are non-custodial tendermint-based wallet that supports [Cosmos Network](https://https://cosmos.network/). 
