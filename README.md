@@ -4,7 +4,7 @@
 <p align="center">
   <a href="https://www.cosmostation.io" target="_blank" rel="noopener noreferrer"><img width="100" src="https://user-images.githubusercontent.com/20435620/55696624-d7df2e00-59f8-11e9-9126-edf9a40b11a8.png" alt="Cosmostation logo"></a>
 </p>
-<h1 align="center">Cosmostation Mobile Wallet</h1>
+<h1 align="center">Cosmostation Mobile Wallet<br/>(Deprecated)</h1>
 <h3 align="center">Welcome to Cosmostation's Open Source Mobile Apps!</h3>
 
 [![MIT](https://img.shields.io/apm/l/vim-mode.svg)](https://github.com/cosmostation/cosmosjs/blob/master/LICENSE)
